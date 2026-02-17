@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WikiWarriorsWebsite")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3abaf1a65237979bb7de22b943ccaf66d7ada9ae")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fc050e91da3fc59a546457a99dd7f420c26e6e62")]
 [assembly: System.Reflection.AssemblyProductAttribute("WikiWarriorsWebsite")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WikiWarriorsWebsite")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
