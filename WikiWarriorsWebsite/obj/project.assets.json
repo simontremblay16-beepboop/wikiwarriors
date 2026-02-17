@@ -8,23 +8,23 @@
     "net10.0": []
   },
   "packageFolders": {
-    "C:\\Users\\chris\\.nuget\\packages\\": {},
+    "C:\\Users\\gorg3\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\chris\\Documents\\College\\Computer Programming 24'-26'\\2026\\Winter\\CP 440 Major Project\\Project work\\Github Repo\\wikiwarriors\\WikiWarriorsWebsite\\WikiWarriorsWebsite.csproj",
+      "projectUniqueName": "C:\\Users\\gorg3\\Desktop\\Wikiwarriors\\WikiWarriorsWebsite\\WikiWarriorsWebsite.csproj",
       "projectName": "WikiWarriorsWebsite",
-      "projectPath": "C:\\Users\\chris\\Documents\\College\\Computer Programming 24'-26'\\2026\\Winter\\CP 440 Major Project\\Project work\\Github Repo\\wikiwarriors\\WikiWarriorsWebsite\\WikiWarriorsWebsite.csproj",
-      "packagesPath": "C:\\Users\\chris\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\chris\\Documents\\College\\Computer Programming 24'-26'\\2026\\Winter\\CP 440 Major Project\\Project work\\Github Repo\\wikiwarriors\\WikiWarriorsWebsite\\obj\\",
+      "projectPath": "C:\\Users\\gorg3\\Desktop\\Wikiwarriors\\WikiWarriorsWebsite\\WikiWarriorsWebsite.csproj",
+      "packagesPath": "C:\\Users\\gorg3\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\gorg3\\Desktop\\Wikiwarriors\\WikiWarriorsWebsite\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\chris\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\gorg3\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -33,7 +33,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

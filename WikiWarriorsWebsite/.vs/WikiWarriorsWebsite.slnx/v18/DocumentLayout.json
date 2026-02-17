@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\chris\\Documents\\College\\Computer Programming 24\u0027-26\u0027\\2026\\Winter\\CP 440 Major Project\\Project work\\Github Repo\\wikiwarriors\\WikiWarriorsWebsite\\",
+  "WorkspaceRootPath": "C:\\Users\\gorg3\\Desktop\\Wikiwarriors\\WikiWarriorsWebsite\\",
   "Documents": [],
   "DocumentGroupContainers": [
     {
@@ -22,6 +22,10 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{e506b91c-c606-466a-90a9-123d1d1e12b3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             }
           ]
         },
