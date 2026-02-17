@@ -1,7 +1,20 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\chris\\Documents\\College\\Computer Programming 24\u0027-26\u0027\\2026\\Winter\\CP 440 Major Project\\Project work\\Github Repo\\wikiwarriors\\WikiWarriorsWebsite\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{0C34CFFC-DD4A-BA40-10F7-F1C5C32F29BC}|WikiWarriorsWebsite.csproj|c:\\users\\chris\\documents\\college\\computer programming 24\u0027-26\u0027\\2026\\winter\\cp 440 major project\\project work\\github repo\\wikiwarriors\\wikiwarriorswebsite\\migrations\\20260217212411_updated modles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C34CFFC-DD4A-BA40-10F7-F1C5C32F29BC}|WikiWarriorsWebsite.csproj|solutionrelative:migrations\\20260217212411_updated modles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0C34CFFC-DD4A-BA40-10F7-F1C5C32F29BC}|WikiWarriorsWebsite.csproj|c:\\users\\chris\\documents\\college\\computer programming 24\u0027-26\u0027\\2026\\winter\\cp 440 major project\\project work\\github repo\\wikiwarriors\\wikiwarriorswebsite\\models\\fighter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C34CFFC-DD4A-BA40-10F7-F1C5C32F29BC}|WikiWarriorsWebsite.csproj|solutionrelative:models\\fighter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0C34CFFC-DD4A-BA40-10F7-F1C5C32F29BC}|WikiWarriorsWebsite.csproj|c:\\users\\chris\\documents\\college\\computer programming 24\u0027-26\u0027\\2026\\winter\\cp 440 major project\\project work\\github repo\\wikiwarriors\\wikiwarriorswebsite\\models\\fighthistory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C34CFFC-DD4A-BA40-10F7-F1C5C32F29BC}|WikiWarriorsWebsite.csproj|solutionrelative:models\\fighthistory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +22,46 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{c6f34f0d-7ae5-4f3a-be61-fe0c21ae9eb8}"
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "20260217212411_Updated Modles.cs",
+              "DocumentMoniker": "C:\\Users\\chris\\Documents\\College\\Computer Programming 24\u0027-26\u0027\\2026\\Winter\\CP 440 Major Project\\Project work\\Github Repo\\wikiwarriors\\WikiWarriorsWebsite\\Migrations\\20260217212411_Updated Modles.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260217212411_Updated Modles.cs",
+              "ToolTip": "C:\\Users\\chris\\Documents\\College\\Computer Programming 24\u0027-26\u0027\\2026\\Winter\\CP 440 Major Project\\Project work\\Github Repo\\wikiwarriors\\WikiWarriorsWebsite\\Migrations\\20260217212411_Updated Modles.cs",
+              "RelativeToolTip": "Migrations\\20260217212411_Updated Modles.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-17T21:24:12.281Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Fighter.cs",
+              "DocumentMoniker": "C:\\Users\\chris\\Documents\\College\\Computer Programming 24\u0027-26\u0027\\2026\\Winter\\CP 440 Major Project\\Project work\\Github Repo\\wikiwarriors\\WikiWarriorsWebsite\\Models\\Fighter.cs",
+              "RelativeDocumentMoniker": "Models\\Fighter.cs",
+              "ToolTip": "C:\\Users\\chris\\Documents\\College\\Computer Programming 24\u0027-26\u0027\\2026\\Winter\\CP 440 Major Project\\Project work\\Github Repo\\wikiwarriors\\WikiWarriorsWebsite\\Models\\Fighter.cs",
+              "RelativeToolTip": "Models\\Fighter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-17T21:20:48.563Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FightHistory.cs",
+              "DocumentMoniker": "C:\\Users\\chris\\Documents\\College\\Computer Programming 24\u0027-26\u0027\\2026\\Winter\\CP 440 Major Project\\Project work\\Github Repo\\wikiwarriors\\WikiWarriorsWebsite\\Models\\FightHistory.cs",
+              "RelativeDocumentMoniker": "Models\\FightHistory.cs",
+              "ToolTip": "C:\\Users\\chris\\Documents\\College\\Computer Programming 24\u0027-26\u0027\\2026\\Winter\\CP 440 Major Project\\Project work\\Github Repo\\wikiwarriors\\WikiWarriorsWebsite\\Models\\FightHistory.cs",
+              "RelativeToolTip": "Models\\FightHistory.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-17T21:14:07.136Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Bookmark",

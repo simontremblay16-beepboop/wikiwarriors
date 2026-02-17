@@ -1,7 +1,12 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using WikiWarriorsWebsite.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddDbContext<WikiWarriorsWebsiteContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("WikiWarriorsWebsiteContext") ?? throw new InvalidOperationException("Connection string 'WikiWarriorsWebsiteContext' not found.")));
 
 var app = builder.Build();
 
