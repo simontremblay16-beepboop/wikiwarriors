@@ -440,3 +440,4 @@ C:\Users\chris\Documents\College\Computer Programming 24'-26'\2026\Winter\CP 440
 C:\Users\chris\Documents\College\Computer Programming 24'-26'\2026\Winter\CP 440 Major Project\Project work\Github Repo\wikiwarriors\WikiWarriorsWebsite\obj\Debug\net10.0\WikiWarriorsWebsite.genruntimeconfig.cache
 C:\Users\chris\Documents\College\Computer Programming 24'-26'\2026\Winter\CP 440 Major Project\Project work\Github Repo\wikiwarriors\WikiWarriorsWebsite\obj\Debug\net10.0\ref\WikiWarriorsWebsite.dll
 >>>>>>> chrisranch
+C:\Users\user\Documents\Academics\2026\Major Project\Wiki Warriors Repo\wikiwarriors\WikiWarriorsWebsite\obj\Debug\net10.0\WikiWarriorsWebsite.csproj.AssemblyReference.cache
