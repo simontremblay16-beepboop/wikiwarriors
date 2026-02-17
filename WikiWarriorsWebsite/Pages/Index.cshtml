@@ -4,7 +4,53 @@
     ViewData["Title"] = "Home page";
 }
 
+<style>
+    .divRow {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .divFlexableRow {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    .decorationImage {
+        max-width: 20%
+    }
+    /* Two ATs before a media query, it's a workaround because ASP.NET misinterpets a single AT */
+    @@media screen and (max-width: 960px) {
+        .divFlexableRow {
+            flex-direction: column;
+        }
+    }
+</style>
+
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <div class="divFlexableRow">
+        <div class="divRow">
+            <img src="~/swordLeft.png" class="decorationImage" alt="Sword" />
+            <h1>
+                <a href="/">Wiki Warriors</a>
+            </h1>
+            <img src="~/swordRight.png" class="decorationImage" alt="Sword" />
+        </div>
+        <div class="divRow">
+            <img src="~/flame.png" class="decorationImage" alt="Cool Flames" />
+            <h2 style="color: maroon">
+                <a href="/fight">FIGHT</a>
+            </h2>
+            <img src="~/flame.png" class="decorationImage" alt="Cool Flames" />
+        </div>
+    </div>
+
+    <hr />
+    <p>Welcome to THE WIKI WARRIORS. A website all about sending wikipedia pages to "Fight" (Have a friendly competition) to the "Death" (Fainting, we don't condone violence)</p>
+
+    <div class="divFightOfTheDay"> ***Fight of the day goes here***</div>
+    <div class="divGlobalFights"> ***Global fights here***</div>
 </div>
