@@ -1,2 +1,0 @@
-# wikiwarriors
-We love wikipedia

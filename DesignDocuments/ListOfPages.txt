@@ -1,3 +1,0 @@
-index.html (Homepage)
-fightselection.html (Fight Selection Page)
-fightdepiction.html (Animates the Fight)

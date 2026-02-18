@@ -1,2 +1,0 @@
-List of Standards:
-- We will be using .NET 10 to develop the project
