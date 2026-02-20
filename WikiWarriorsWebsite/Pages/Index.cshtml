@@ -1,5 +1,6 @@
 ﻿@page
 @model IndexModel
+
 @{
     ViewData["Title"] = "Home page";
 }
@@ -27,5 +28,54 @@
     <p>Welcome to THE WIKI WARRIORS. A website all about sending wikipedia pages to "Fight" (Have a friendly competition) to the "Death" (Fainting, we don't condone violence)</p>
 
     <div class="divFightOfTheDay"> ***Fight of the day goes here***</div>
-    <div class="divGlobalFights"> ***Global fights here***</div>
+  
+        <table class="globalFightsTable">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FightHistory[0].FightDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FightHistory[0].Fighter1.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FightHistory[0].Fighter2.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FightHistory[0].Winner)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FightHistory[0].DailyFight)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.FightHistory)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FightDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Fighter1.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Fighter2.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Winner)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DailyFight)
+                        </td>
+                        <td>
+                            @* Redirect to pages goes below  *@
+                            <a asp-page = "" asp-route-id="@item.Fighter1Id">Fighter #1 Article</a> |
+                            <a asp-page = "" asp-route-id="@item.Fighter2Id">Fighter #2 Article</a> |
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        
 </div>
