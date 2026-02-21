@@ -4,3 +4,4 @@ It will display a list of the 17 most recent non-daily fights, in order of when 
 Users will also be able to click on each entry to be presented with the fights results popup, corrisponding to the fight that was clicked.
 
 (See RecentFightsListingsWireframe.png)
+![alt text](RecentFightsListingsWireframe.png)

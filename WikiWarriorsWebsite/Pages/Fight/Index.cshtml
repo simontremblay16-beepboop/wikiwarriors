@@ -1,0 +1,60 @@
+﻿@page
+@model WikiWarriorsWebsite.Pages.Fight.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FightHistory[0].Fighter1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FightHistory[0].Fighter2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FightHistory[0].Winner)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FightHistory[0].FightDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FightHistory[0].DailyFight)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.FightHistory) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fighter1.FighterId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fighter2.FighterId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Winner.FighterId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FightDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DailyFight)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.FightHistoryId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.FightHistoryId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.FightHistoryId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

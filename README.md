@@ -1,2 +1,2 @@
 # wikiwarriors
-We love wikipedia
+I love wikipedia
