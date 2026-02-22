@@ -4,6 +4,32 @@
     ViewData["Title"] = "Home page";
 }
 
+<style>
+    .divRow {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .divFlexableRow {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .decorationImage {
+        max-width: 20%
+    }
+    /* Two ATs before a media query, it's a workaround because ASP.NET misinterpets a single AT */
+    @@media screen and (max-width: 960px) {
+        .divFlexableRow {
+            flex-direction: column;
+        }
+    }
+</style>
+
 <div class="text-center">
 
     <div class="divFlexableRow">
