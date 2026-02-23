@@ -44,8 +44,7 @@ async function wikiSearch() {
     origin: * //For non-authenticated requests, specify the value *
 */
 
-    let request = `https://www.mediawiki.org/w/api.php?action=query&format=json&origin=*&prop=pageimages%7Credirects%7Cextracts&generator=search&formatversion=2&piprop=thumbnail%7Cname&pithumbsize=50&exchars=150&exlimit=1&exintro=1&explaintext=1&exsectionformat=wiki&gsrnamespace=0&gsrsearch=${search}`
-    //! Getting internal documents I think this might be a problem here I will need to fix that. 
+    let request = `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages%7Credirects%7Cextracts&generator=search&formatversion=2&piprop=thumbnail%7Cname&pithumbsize=100&exchars=150&exlimit=max&exintro&explaintext&exchars=450&exsectionformat=wiki&gsrnamespace=0&gsrsearch=${search}`;
 
     // https://www.w3schools.com/js/js_api_fetch.asp
     // https://www.w3schools.com/js/js_async_await.asp
@@ -85,13 +84,19 @@ function displaySearch (wikiSearchResults){
     // https://www.w3schools.com/jsref/jsref_map.asp
 
     // optional chaining ? 
+    
+    //template literals
     .map(
         search => {
             return(
-                `<button>
-                    <h5>${search.title}</h5>
-                    <img src="${search.thumbnail?.source}">     
-                    <p>${search.extract}</p>
+                `<button class="infoContainer">
+                    <img class="image" src="${search.thumbnail?.source}">  
+            
+                    <div class="infoSection">
+                        <h4 class="textTitle">${search.title}</h4>   
+                        <p class="text">${search.extract}</p>
+                    </div>
+
                 </button>`
             )
         }
@@ -103,7 +108,7 @@ function displaySearch (wikiSearchResults){
 
 
 function selectFighter (){
-
+    //https://www.w3schools.com/jsref/met_node_clonenode.asp#:~:text=The%20cloneNode%28%29%20method%20creates%20a%20copy%20of%20a,Default.%20Clone%20only%20the%20node%20and%20its%20attributes.
 }
 
 function saveFighter (){
