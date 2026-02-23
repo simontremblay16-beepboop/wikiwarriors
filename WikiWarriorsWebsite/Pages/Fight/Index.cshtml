@@ -4,6 +4,179 @@
 @{
     ViewData["Title"] = "Index";
 }
+<script>
+
+    const fightersFrames = [[[0, 0, 1, 0, 0],
+                           [1, 1, 1, 1, 1],
+                           [0, 0, 1, 0, 0],
+                           [0, 1, 0, 1, 0],
+                           [0, 1, 0, 1, 0]],
+
+                    [[0, 0, 1, 0, 0],
+                           [0, 1, 1, 1, 0],
+                           [1, 0, 1, 0, 1],
+                           [0, 1, 0, 1, 0],
+                           [0, 1, 0, 1, 0]]]
+    
+    document.addEventListener("DOMContentLoaded", documentReady);
+
+    // document ready event handler
+    // called automatically when pages done loading
+    function documentReady() {
+        // Animating fight
+        animateFighter(1);
+    animateFighter(2);
+        
+    }
+
+        function animateFighter (fighterNum) {
+        const fighterFrame = fightersFrames[fighterNum - 1];
+        console.log(fighterFrame)
+        for (let x = 0; x < 5; x ++) {
+            for (let y = 0; y < 5; y ++) {
+                if (!fighterFrame[y][x]) {
+                    var element = document.getElementsByClassName('image' + x + y)[fighterNum - 1];
+                    element.style.display = 'none';
+                }
+            }
+        }
+
+    }
+</script>
+<style>
+    .divRow {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .imgSquare {
+        object-fit: cover;
+        width: 250px;
+        height: 250px;
+    }
+
+    .divGrid {
+        display: grid;
+        grid-template-areas:
+            'image00 image10 image20 image30 image40'
+            'image01 image11 image21 image31 image41'
+            'image02 image12 image22 image32 image42'
+            'image03 image13 image23 image33 image43'
+            'image04 image14 image24 image34 image44';
+    }
+
+    .image00 {grid-area: image00; overflow: hidden; height: 50px; width: 50px;} .image00 img {margin-top: -0%; margin-left: -0%;}
+    .image01 {grid-area: image01; overflow: hidden; height: 50px; width: 50px;} .image01 img {margin-top: -100%; margin-left: -0%;}
+    .image02 {grid-area: image02; overflow: hidden; height: 50px; width: 50px;} .image02 img {margin-top: -200%; margin-left: -0%;}
+    .image03 {grid-area: image03; overflow: hidden; height: 50px; width: 50px;} .image03 img {margin-top: -300%; margin-left: -0%;}
+    .image04 {grid-area: image04; overflow: hidden; height: 50px; width: 50px;} .image04 img {margin-top: -400%; margin-left: -0%;}
+
+    .image10 {grid-area: image10; overflow: hidden; height: 50px; width: 50px;} .image10 img {margin-top: -0%; margin-left: -100%;}
+    .image11 {grid-area: image11; overflow: hidden; height: 50px; width: 50px;} .image11 img {margin-top: -100%; margin-left: -100%;}
+    .image12 {grid-area: image12; overflow: hidden; height: 50px; width: 50px;} .image12 img {margin-top: -200%; margin-left: -100%;}
+    .image13 {grid-area: image13; overflow: hidden; height: 50px; width: 50px;} .image13 img {margin-top: -300%; margin-left: -100%;}
+    .image14 {grid-area: image14; overflow: hidden; height: 50px; width: 50px;} .image14 img {margin-top: -400%; margin-left: -100%;}
+
+    .image20 {grid-area: image20; overflow: hidden; height: 50px; width: 50px;} .image20 img {margin-top: -0%; margin-left: -200%;}
+    .image21 {grid-area: image21; overflow: hidden; height: 50px; width: 50px;} .image21 img {margin-top: -100%; margin-left: -200%;}
+    .image22 {grid-area: image22; overflow: hidden; height: 50px; width: 50px;} .image22 img {margin-top: -200%; margin-left: -200%;}
+    .image23 {grid-area: image23; overflow: hidden; height: 50px; width: 50px;} .image23 img {margin-top: -300%; margin-left: -200%;}
+    .image24 {grid-area: image24; overflow: hidden; height: 50px; width: 50px;} .image24 img {margin-top: -400%; margin-left: -200%;}
+
+    .image30 {grid-area: image30; overflow: hidden; height: 50px; width: 50px;} .image30 img {margin-top: -0%; margin-left: -300%;}
+    .image31 {grid-area: image31; overflow: hidden; height: 50px; width: 50px;} .image31 img {margin-top: -100%; margin-left: -300%;}
+    .image32 {grid-area: image32; overflow: hidden; height: 50px; width: 50px;} .image32 img {margin-top: -200%; margin-left: -300%;}
+    .image33 {grid-area: image33; overflow: hidden; height: 50px; width: 50px;} .image33 img {margin-top: -300%; margin-left: -300%;}
+    .image34 {grid-area: image34; overflow: hidden; height: 50px; width: 50px;} .image34 img {margin-top: -400%; margin-left: -300%;}
+
+    .image40 {grid-area: image40; overflow: hidden; height: 50px; width: 50px;} .image40 img {margin-top: -0%; margin-left: -400%;}
+    .image41 {grid-area: image41; overflow: hidden; height: 50px; width: 50px;} .image41 img {margin-top: -100%; margin-left: -400%;}
+    .image42 {grid-area: image42; overflow: hidden; height: 50px; width: 50px;} .image42 img {margin-top: -200%; margin-left: -400%;}
+    .image43 {grid-area: image43; overflow: hidden; height: 50px; width: 50px;} .image43 img {margin-top: -300%; margin-left: -400%;}
+    .image44 {grid-area: image44; overflow: hidden; height: 50px; width: 50px;} .image44 img {margin-top: -400%; margin-left: -400%;}
+
+</style>
+
+<p>@ViewData["fighter1"] VS. @ViewData["fighter2"]</p>
+
+<h1>FIGHT!</h1>
+
+<div class="divRow">
+    <div style="max-width: 33%">
+        <div class="divGrid">
+            <div class="image00"><img src="@ViewData["fighter1Image"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image01"><img src="@ViewData["fighter1Image"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image02"><img src="@ViewData["fighter1Image"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image03"><img src="@ViewData["fighter1Image"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image04"><img src="@ViewData["fighter1Image"]" alt="fighter1" class="imgSquare" /></div>
+
+            <div class="image10"><img src="@ViewData["fighter1Image"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image11"><img src="@ViewData["fighter1Image"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image12"><img src="@ViewData["fighter1Image"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image13"><img src="@ViewData["fighter1Image"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image14"><img src="@ViewData["fighter1Image"]" alt="fighter1" class="imgSquare" /></div>
+            
+            <div class="image20"><img src="@ViewData["fighter1Image"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image21"><img src="@ViewData["fighter1Image"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image22"><img src="@ViewData["fighter1Image"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image23"><img src="@ViewData["fighter1Image"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image24"><img src="@ViewData["fighter1Image"]" alt="fighter1" class="imgSquare" /></div>
+
+            <div class="image30"><img src="@ViewData["fighter1Image"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image31"><img src="@ViewData["fighter1Image"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image32"><img src="@ViewData["fighter1Image"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image33"><img src="@ViewData["fighter1Image"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image34"><img src="@ViewData["fighter1Image"]" alt="fighter1" class="imgSquare" /></div>
+
+            <div class="image40"><img src="@ViewData["fighter1Image"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image41"><img src="@ViewData["fighter1Image"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image42"><img src="@ViewData["fighter1Image"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image43"><img src="@ViewData["fighter1Image"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image44"><img src="@ViewData["fighter1Image"]" alt="fighter1" class="imgSquare" /></div>
+        </div>
+    </div>
+
+        
+    <img src="~/explosion.gif" alt="explosion" style="width: 33%" />
+    
+    <div style="max-width: 33%">
+        <div class="divGrid">
+            <div class="image00"><img src="@ViewData["fighter2Image"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image01"><img src="@ViewData["fighter2Image"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image02"><img src="@ViewData["fighter2Image"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image03"><img src="@ViewData["fighter2Image"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image04"><img src="@ViewData["fighter2Image"]" alt="fighter2" class="imgSquare" /></div>
+
+            <div class="image10"><img src="@ViewData["fighter2Image"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image11"><img src="@ViewData["fighter2Image"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image12"><img src="@ViewData["fighter2Image"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image13"><img src="@ViewData["fighter2Image"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image14"><img src="@ViewData["fighter2Image"]" alt="fighter2" class="imgSquare" /></div>
+
+            <div class="image20"><img src="@ViewData["fighter2Image"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image21"><img src="@ViewData["fighter2Image"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image22"><img src="@ViewData["fighter2Image"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image23"><img src="@ViewData["fighter2Image"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image24"><img src="@ViewData["fighter2Image"]" alt="fighter2" class="imgSquare" /></div>
+
+            <div class="image30"><img src="@ViewData["fighter2Image"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image31"><img src="@ViewData["fighter2Image"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image32"><img src="@ViewData["fighter2Image"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image33"><img src="@ViewData["fighter2Image"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image34"><img src="@ViewData["fighter2Image"]" alt="fighter2" class="imgSquare" /></div>
+
+            <div class="image40"><img src="@ViewData["fighter2Image"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image41"><img src="@ViewData["fighter2Image"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image42"><img src="@ViewData["fighter2Image"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image43"><img src="@ViewData["fighter2Image"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image44"><img src="@ViewData["fighter2Image"]" alt="fighter2" class="imgSquare" /></div>
+        </div>
+    </div>
+</div>
+
+<p>-Explosion gif from: https://explode.moth.monster/</p>
 
 <h1>Index</h1>
 
