@@ -15,5 +15,6 @@ namespace WikiWarriorsWebsite.Data
         }
 
         public DbSet<WikiWarriorsWebsite.Models.Fighter> Fighter { get; set; } = default!;
+        public DbSet<WikiWarriorsWebsite.Models.FightHistory> FightHistory { get; set; } = default!;
     }
 }

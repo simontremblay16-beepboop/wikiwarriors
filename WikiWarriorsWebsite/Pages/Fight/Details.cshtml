@@ -1,0 +1,49 @@
+﻿@page
+@model WikiWarriorsWebsite.Pages.Fight.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>FightHistory</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FightHistory.Fighter1)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FightHistory.Fighter1.FighterId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FightHistory.Fighter2)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FightHistory.Fighter2.FighterId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FightHistory.Winner)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FightHistory.Winner.FighterId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FightHistory.FightDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FightHistory.FightDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FightHistory.DailyFight)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FightHistory.DailyFight)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.FightHistory.FightHistoryId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

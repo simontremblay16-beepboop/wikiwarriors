@@ -6,3 +6,4 @@ The Homepage will also have access to a module for accessing the Wikipedia API s
 And finally it should select the 10 most recent non-daily fights in order to show recent global fights.
 
 (See SystemDiagram.png for more info)
+![alt text](SystemDiagram.png)
