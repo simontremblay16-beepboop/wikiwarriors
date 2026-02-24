@@ -29,8 +29,11 @@
 
     <div class="divFightOfTheDay"> ***Fight of the day goes here***</div>
   
+
+            @if(Model.FightHistory is not null)
+            {
         <table class="globalFightsTable">
-            <thead>
+                <thead>
                 <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.FightHistory[0].FightDate)
@@ -69,13 +72,19 @@
                             @Html.DisplayFor(modelItem => item.DailyFight)
                         </td>
                         <td>
-                            @* Redirect to pages goes below  *@
-                            <a asp-page = "" asp-route-id="@item.Fighter1Id">Fighter #1 Article</a> |
-                            <a asp-page = "" asp-route-id="@item.Fighter2Id">Fighter #2 Article</a> |
+                            @* Redirect to Wikipedia both fighters article goes below  *@
+                            <a asp-page = "@item.Fighter1.PageUrl">Fighter #1 Article</a> |
+                            <a asp-page = "@item.Fighter2.PageUrl">Fighter #2 Article</a> |
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
-        
+        }
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

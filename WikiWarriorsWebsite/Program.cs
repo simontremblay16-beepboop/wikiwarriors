@@ -8,6 +8,13 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<WikiWarriorsWebsiteContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("WikiWarriorsWebsiteContext") ?? throw new InvalidOperationException("Connection string 'WikiWarriorsWebsiteContext' not found.")));
 
+builder.Services.AddQuickGridEntityFrameworkAdapter();
+
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -16,7 +23,10 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+    app.UseMigrationsEndPoint();
 }
+
+app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
 
 app.UseHttpsRedirection();
 
@@ -27,5 +37,7 @@ app.UseAuthorization();
 app.MapStaticAssets();
 app.MapRazorPages()
    .WithStaticAssets();
+
+
 
 app.Run();

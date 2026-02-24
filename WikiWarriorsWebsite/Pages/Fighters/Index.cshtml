@@ -1,0 +1,66 @@
+﻿@page
+@model WikiWarriorsWebsite.Pages.Fighters.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Fighter[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fighter[0].ImageUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fighter[0].PageUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fighter[0].WordCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fighter[0].ReferenceCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fighter[0].LinkCount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Fighter) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PageUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WordCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReferenceCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LinkCount)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.FighterId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.FighterId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.FighterId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

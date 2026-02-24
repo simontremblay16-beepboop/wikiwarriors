@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using WikiWarriorsWebsite.Data;
 using WikiWarriorsWebsite.Models;
 
-namespace WikiWarriorsWebsite.Pages
+namespace WikiWarriorsWebsite.Pages.Fighters
 {
     public class IndexModel : PageModel
     {
@@ -19,18 +19,11 @@ namespace WikiWarriorsWebsite.Pages
             _context = context;
         }
 
-        // This is the list of all fights that have happened, ordered by most recent first.
-        public IList<FightHistory> FightHistory { get; set; } = default!;
+        public IList<Fighter> Fighter { get;set; } = default!;
 
-        //public async Task<IActionResult> OnGetAsync(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    FightHistory = await _context.FightHistory.ToListAsync();
-        //    return Page();
-        //}
+        public async Task OnGetAsync()
+        {
+            Fighter = await _context.Fighter.ToListAsync();
+        }
     }
 }
