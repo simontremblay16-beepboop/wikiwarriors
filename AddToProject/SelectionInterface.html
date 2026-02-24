@@ -13,8 +13,16 @@
             <input id="search" placeholder="Search Wikipedia for Fighter">
             <button id="searchButton">Search</button>
             <h5>Fight Preview</h5>
-            <div id="previewDiv"></div>
-            <button id="beginFight">Begin Fight</button>
+            <div id="previewDiv">
+                        <!--Reuse CSS from "fight page"? -->
+                <div id="fighter1Container"><img id="imgID" src=""></div> 
+                <div id="fighter2Container"><img id="imgID2" src=""></div>
+            </div>
+            <form id="fighterForm" method="post">
+                <input type="hidden" id="fighterTitleInput" name="Title" />
+                <button type="button" id="saveFighter1">Save Fighter</button>
+            </form>
+                <button id="beginFight">Begin Fight</button>
         </div>
 
         <div id="rightDiv">

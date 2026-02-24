@@ -4,11 +4,11 @@
     height: 100vh;
 }
 #leftDiv {
-    flex: 1;
+    flex: 40%;
     background-color: red;
 }
 #rightDiv {
-    flex: 2;
+    flex: 60%;
     background-color: blue;
 }
 
@@ -37,4 +37,8 @@
 }
 #beginFight{
     margin: 33%;
+}
+
+.infoContainer * {
+    pointer-events: none;
 }

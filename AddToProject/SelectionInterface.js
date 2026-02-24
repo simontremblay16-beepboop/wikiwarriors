@@ -8,10 +8,8 @@ document.addEventListener("DOMContentLoaded", ()=> {
     $("search").addEventListener("input", wikiSearch) // Search
     $("searchButton").addEventListener("click", wikiSearchButton)
     $("displaySearch").addEventListener("click", selectFighter) // Add fighter
-    $("displaySearch").addEventListener("click", deselectFighter) //Deselect
-    $("displaySearch").addEventListener("click", saveFighter) //Save fighter 
-    $("displaySearch").addEventListener("click", startFight) // start fight 
-    $("displaySearch").addEventListener("click", returnHome) // return to homepage
+    $("saveFighter1").addEventListener("click", saveFighter) //Save fighter 
+    $("beginFight").addEventListener("click", startFight) // start fight 
 });
     // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
     //https://developer.mozilla.org/en-US/docs/Glossary/Debounce
@@ -54,7 +52,7 @@ async function wikiSearch() {
     // https://www.w3schools.com/jsref/met_win_settimeout.asp
     setTimeout(() => {
         noRequests = false; 
-    }, 2000);
+    }, 1000);
 
     displaySearch(wikiSearchResults);
 }
@@ -106,25 +104,61 @@ function displaySearch (wikiSearchResults){
     $("displaySearch").innerHTML = displayCard;
 }
 
+let fighterSaved = false;
+let wikiFighter1;
+let wikiFighter2;
+let pageTitle; //! I may need to change this later. // It was getting messed up when it was in the other function
+function selectFighter (event){
+// https://www.w3schools.com/jsref/event_target.asp
+// https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
 
-function selectFighter (){
-    //https://www.w3schools.com/jsref/met_node_clonenode.asp#:~:text=The%20cloneNode%28%29%20method%20creates%20a%20copy%20of%20a,Default.%20Clone%20only%20the%20node%20and%20its%20attributes.
+    let closestBtn = event.target.closest(".infoContainer");
+    let wikiThumbnail = closestBtn.querySelector(".image");
+    pageTitle = closestBtn.querySelector(".textTitle");
+
+    if (fighterSaved == false){
+
+        wikiFighter1 = $("imgID");
+        wikiFighter1.src = wikiThumbnail.src;
+    }
+    else if(fighterSaved == true){
+
+        wikiFighter2 = $("imgID2");
+        wikiFighter2.src = wikiThumbnail.src;
+    }
+
+// mask for images + CSS formatting to finish 
+    
 }
 
-function saveFighter (){
+// https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#:~:text=With%20the%20%EE%80%80Fetch%EE%80%81%20API,%20you%20make%20a%20request
 
-}
+//https://learn.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-10.0
 
-function deselectFighter (){
+//https://learn.microsoft.com/en-us/aspnet/web-pages/overview/ui-layouts-and-themes/4-working-with-forms
+async function saveFighter (){
+    const form = $("fighterForm");
 
+    //https://www.w3schools.com/jsref/prop_node_textcontent.asp
+    $("fighterTitleInput").value = pageTitle.textContent;
+
+    // https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData
+    const formData = new FormData(form);
+
+    // "" = this page
+    const response = await fetch("", {
+        method: "POST",
+        body: formData
+    });
+
+    const result = await response.json();
+    //
+
+    fighterSaved = true;
 }
 
 function startFight (){
-
+    // to save fighter 2 
+    saveFighter();
+    // I believe we agreed to do this with the querystring parameters
 }
-
-function returnHome (){
-
-}
-
-
