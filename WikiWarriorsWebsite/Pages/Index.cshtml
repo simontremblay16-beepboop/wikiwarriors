@@ -4,7 +4,40 @@
     ViewData["Title"] = "Home page";
 }
 
+<script>
+    function hidePopup() {
+        document.getElementById("divPopup").style.display = "none";
+    }
+</script>
+
 <style>
+
+    .imgSquare {
+        object-fit: cover;
+        width: 250px;
+        height: 250px;
+    }
+
+    /* Popup style */
+    .popup {
+        display: @ViewData["popupDisplay"];
+        position: fixed;
+        left: 10%;
+        right: 10%;
+        top: 10%;
+        bottom: 10%;
+        width: 80%;
+        max-width: 500px;
+        border: 2px solid red;
+        background-color: lightgray;
+        z-index: 9;
+    }
+
+    .btnClose {
+        float: right;
+    }
+    
+    /* Homepage content style */
     .divRow {
         display: flex;
         flex-direction: row;
@@ -54,4 +87,14 @@
 
     <div class="divFightOfTheDay"> ***Fight of the day goes here***</div>
     <div class="divGlobalFights"> ***Global fights here***</div>
+</div>
+
+<div class="popup" id="divPopup">
+    <button type="button" class="btnClose" onclick="hidePopup()">X</button>
+    <h1 class="text-center">:::WINNER:::</h1>
+    <h2 class="text-center">GAGNANT!</h2>
+    <div class="divRow">
+        <img src="@ViewData["winnerImageUrl"]" alt="winner" class="imgSquare" />
+    </div>
+    <p class="text-center">@ViewData["winnerName"] Won against @ViewData["loserName"]</p>
 </div>

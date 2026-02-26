@@ -99,7 +99,27 @@ namespace WikiWarriorsWebsite.Pages.Fight
             _context.FightHistory.Add(NewFightRecord);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("/Index");
+            // We must also calculate who the loser is so that we can
+            // indicate them on the Victory popup
+            int? winnerId = NewFightRecord.WinnerId;
+            int? loserId;
+            if (NewFightRecord.WinnerId == NewFightRecord.Fighter1Id)
+            {
+                loserId = NewFightRecord.Fighter2Id;
+            }
+            else
+            {
+                loserId = NewFightRecord.Fighter1Id;
+            }
+
+            // When we redirect to the index page, we add url variables
+            // for the winner and loser so that the index can bring up
+            // the "Victory" popup.
+            return RedirectToPage("/Index", new
+            {
+                winner = winnerId.ToString(),
+                loser = loserId.ToString()
+            });
         }
     }
 }

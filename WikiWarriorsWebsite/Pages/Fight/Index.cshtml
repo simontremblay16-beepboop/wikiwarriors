@@ -2,7 +2,7 @@
 @model WikiWarriorsWebsite.Pages.Fight.IndexModel
 
 @{
-    //ViewData["Title"] = "Index";
+    ViewData["Title"] = "Index";
 }
 <script>
 
@@ -53,10 +53,13 @@
                 }
             }
         }
-
     }
+
 </script>
 <style>
+    
+    /* Fight scene style*/
+
     .divRow {
         display: flex;
         flex-direction: row;
@@ -111,25 +114,6 @@
     .image44 {grid-area: image44; overflow: hidden; height: 50px; width: 50px;} .image44 img {margin-top: -400%; margin-left: -400%;}
 
 </style>
-
-<div>
-    Debug info:
-    <p>fighter1Id = @ViewData["fighter1Id"]</p>
-    <p>fighter1Name = @ViewData["fighter1Name"]</p>
-    <p>fighter1ImageUrl = @ViewData["fighter1ImageUrl"]</p> 
-    <p>fighter1PageUrl = @ViewData["fighter1PageUrl"]</p>
-    <p>fighter1WordCount = @ViewData["fighter1WordCount"]</p>
-    <p>fighter1ReferenceCount = @ViewData["fighter1ReferenceCount"]</p>
-    <p>fighter1LinkCount = @ViewData["fighter1LinkCount"]</p>
-    <br />
-    <p>fighter2Id = @ViewData["fighter2Id"]</p>
-    <p>fighter2Name = @ViewData["fighter2Name"]</p>
-    <p>fighter2ImageUrl = @ViewData["fighter2ImageUrl"]</p>
-    <p>fighter2PageUrl = @ViewData["fighter2PageUrl"]</p>
-    <p>fighter2WordCount = @ViewData["fighter2WordCount"]</p>
-    <p>fighter2ReferenceCount = @ViewData["fighter2ReferenceCount"]</p>
-    <p>fighter2LinkCount = @ViewData["fighter2LinkCount"]</p>
-</div>
 
 <h2>@ViewData["fighter1Name"] VS. @ViewData["fighter2Name"]</h2>
 
@@ -209,6 +193,25 @@
 </div>
 
 <p>-Explosion gif from: https://explode.moth.monster/</p>
+
+<div>
+    Debug info:
+    <p>fighter1Id = @ViewData["fighter1Id"]</p>
+    <p>fighter1Name = @ViewData["fighter1Name"]</p>
+    <p>fighter1ImageUrl = @ViewData["fighter1ImageUrl"]</p>
+    <p>fighter1PageUrl = @ViewData["fighter1PageUrl"]</p>
+    <p>fighter1WordCount = @ViewData["fighter1WordCount"]</p>
+    <p>fighter1ReferenceCount = @ViewData["fighter1ReferenceCount"]</p>
+    <p>fighter1LinkCount = @ViewData["fighter1LinkCount"]</p>
+    <br />
+    <p>fighter2Id = @ViewData["fighter2Id"]</p>
+    <p>fighter2Name = @ViewData["fighter2Name"]</p>
+    <p>fighter2ImageUrl = @ViewData["fighter2ImageUrl"]</p>
+    <p>fighter2PageUrl = @ViewData["fighter2PageUrl"]</p>
+    <p>fighter2WordCount = @ViewData["fighter2WordCount"]</p>
+    <p>fighter2ReferenceCount = @ViewData["fighter2ReferenceCount"]</p>
+    <p>fighter2LinkCount = @ViewData["fighter2LinkCount"]</p>
+</div>
 
 Debug code, only for use until the fight equation function is complete:
 <form method="post">
