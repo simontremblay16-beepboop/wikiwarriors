@@ -93,7 +93,54 @@
     <hr />
     <p>Welcome to THE WIKI WARRIORS. A website all about sending wikipedia pages to "Fight" (Have a friendly competition) to the "Death" (Fainting, we don't condone violence)</p>
 
-    <div class="divFightOfTheDay"> ***Fight of the day goes here***</div>
+    <div class="divFightOfTheDay">
+        <h2>Fight of the day:</h2>
+
+        <h3>Daily Fight #@ViewData["dailyFightNum"]: @ViewData["dailyFightFighter1Name"] VS. @ViewData["dailyFightFighter2Name"] - Winner: @ViewData["dailyFightWinnerName"] (@ViewData["dailyFightDate"])</h3>
+        <div class="divRow">
+            <img src="@ViewData["dailyFightFighter1ImageUrl"]" class="decorationImage" alt="Fighter 1" />
+            <img src="~/swordLeft.png" class="decorationImage" alt="Sword" />
+            <img src="~/swordRight.png" class="decorationImage" alt="Sword" />
+            <img src="@ViewData["dailyFightFighter2ImageUrl"]" class="decorationImage" alt="Fighter 2" />
+        </div>
+
+        <details>
+            <summary>Historic Daily Fights</summary>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Winner
+                        </th>
+                        <th>
+                            Loser
+                        </th>
+                        <th>
+                            Date
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                   
+                    @for (int i = 0; i < Model.DailyFightsWinners.Count; i ++)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.DailyFightsWinners[i].Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.DailyFightsLosers[i].Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.DailyFightsDates[i])
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </details>
+    </div>
+
     <div class="divGlobalFights"> ***Global fights here***</div>
 </div>
 
