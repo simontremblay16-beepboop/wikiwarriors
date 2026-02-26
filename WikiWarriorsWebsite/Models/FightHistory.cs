@@ -7,7 +7,7 @@ namespace WikiWarriorsWebsite.Models
     {
         public int FightHistoryId { get; set; }
         public int Fighter1Id { get; set; }
-        public Fighter Fighter1 { get; set; }
+        public Fighter? Fighter1 { get; set; }
 
         // Note: Fighter2Id, Fighter2, WinnerId, and Winner have to be nullable types.
         // It's a workaround so that SQL is able to delete entries properly.
