@@ -4,6 +4,73 @@
     ViewData["Title"] = "Home page";
 }
 
+<script>
+    function hidePopup() {
+        document.getElementById("divPopup").style.display = "none";
+    }
+</script>
+
+<style>
+
+    .imgSquare {
+        object-fit: cover;
+        width: 250px;
+        height: 250px;
+    }
+
+    /* Popup style */
+    .popup {
+        display: @ViewData["popupDisplay"];
+        position: fixed;
+        left: 10%;
+        right: 10%;
+        top: 5%;
+        bottom: 5%;
+        width: 80%;
+        max-width: 600px;
+        border: 2px solid red;
+        background-color: lightgray;
+        z-index: 9;
+    }
+
+    .btnClose {
+        float: right;
+    }
+    
+    /* Homepage content style */
+    .divRow {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    
+    .divColumn {
+        height: stretch;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .divFlexableRow {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .decorationImage {
+        max-width: 20%
+    }
+    /* Two ATs before a media query, it's a workaround because ASP.NET misinterpets a single AT */
+    @@media screen and (max-width: 960px) {
+        .divFlexableRow {
+            flex-direction: column;
+        }
+    }
+</style>
+
 <div class="text-center">
 
     <div class="divFlexableRow">
@@ -26,6 +93,72 @@
     <hr />
     <p>Welcome to THE WIKI WARRIORS. A website all about sending wikipedia pages to "Fight" (Have a friendly competition) to the "Death" (Fainting, we don't condone violence)</p>
 
-    <div class="divFightOfTheDay"> ***Fight of the day goes here***</div>
+    <div class="divFightOfTheDay">
+        <h2>Fight of the day:</h2>
+
+        <h3>Daily Fight #@ViewData["dailyFightNum"]: @ViewData["dailyFightFighter1Name"] VS. @ViewData["dailyFightFighter2Name"] - Winner: @ViewData["dailyFightWinnerName"] (@ViewData["dailyFightDate"])</h3>
+        <div class="divRow">
+            <img src="@ViewData["dailyFightFighter1ImageUrl"]" class="decorationImage" alt="Fighter 1" />
+            <img src="~/swordLeft.png" class="decorationImage" alt="Sword" />
+            <img src="~/swordRight.png" class="decorationImage" alt="Sword" />
+            <img src="@ViewData["dailyFightFighter2ImageUrl"]" class="decorationImage" alt="Fighter 2" />
+        </div>
+
+        <details>
+            <summary>Historic Daily Fights</summary>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Winner
+                        </th>
+                        <th>
+                            Loser
+                        </th>
+                        <th>
+                            Date
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                   
+                    @for (int i = 0; i < Model.DailyFightsWinners.Count; i ++)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.DailyFightsWinners[i].Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.DailyFightsLosers[i].Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.DailyFightsDates[i])
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </details>
+    </div>
+
     <div class="divGlobalFights"> ***Global fights here***</div>
+</div>
+
+<div class="popup" id="divPopup">
+    <button type="button" class="btnClose" onclick="hidePopup()">X</button>
+    <h1 class="text-center">:::WINNER:::</h1>
+    <h2 class="text-center">GAGNANT!</h2>
+    <div class="divRow">
+        <div class="divColumn">
+            <img src="~/flame.png" class="decorationImage" alt="Cool Flames" />
+            <img src="~/flame.png" class="decorationImage" alt="Cool Flames" />
+        </div>
+        <img src="@ViewData["winnerImageUrl"]" alt="winner" class="imgSquare" />
+        <div class="divColumn">
+            <img src="~/flame.png" class="decorationImage" alt="Cool Flames" />
+            <img src="~/flame.png" class="decorationImage" alt="Cool Flames" />
+        </div>
+    </div>
+    <h3 class="text-center">@ViewData["winnerName"]</h3>
+    <p class="text-center"> Won against @ViewData["loserName"]</p>
 </div>
