@@ -92,7 +92,7 @@ function displaySearch (wikiSearchResults){
     console.log(resultsArray);
 
     //https://www.w3schools.com/jsref/jsref_filter.asp
-    let resultsDisplay = resultsArray.filter(search => search.thumbnail?.source)
+    let resultsDisplay = resultsArray.filter(search => search.thumbnail?.source)    
     // https://www.w3schools.com/jsref/jsref_forEach.asp
     // https://www.w3schools.com/jsref/jsref_map.asp
 
@@ -181,8 +181,6 @@ async function saveFighter (){
 
     fighterSaved = true;
 }
-
-
 
 
 
