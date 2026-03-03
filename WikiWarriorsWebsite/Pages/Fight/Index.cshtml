@@ -54,11 +54,41 @@
             }
         }
     }
-
+    function hidePopup() {
+        document.getElementById("divPopup").style.display = "none";
+    }
 </script>
+
 <style>
-    
+
+    /* Popup style */
+    .popup {
+        display: @ViewData["popupDisplay"];
+        position: fixed;
+        left: 10%;
+        right: 10%;
+        top: 5%;
+        bottom: 5%;
+        width: 80%;
+        border: 2px solid red;
+        background-color: lightgray;
+        z-index: 9;
+    }
+
+    .btnClose {
+        float: right;
+    }
+
+
     /* Fight scene style*/
+
+    .divColumn {
+        height: stretch;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+    }
 
     .divRow {
         display: flex;
@@ -72,7 +102,7 @@
         width: 250px;
         height: 250px;
     }
-
+    
     .divGrid {
         display: grid;
         grid-template-areas:
@@ -194,6 +224,7 @@
 
 <p>-Explosion gif from: https://explode.moth.monster/</p>
 
+<!--
 <div>
     Debug info:
     <p>fighter1Id = @ViewData["fighter1Id"]</p>
@@ -212,7 +243,32 @@
     <p>fighter2ReferenceCount = @ViewData["fighter2ReferenceCount"]</p>
     <p>fighter2LinkCount = @ViewData["fighter2LinkCount"]</p>
 </div>
+-->
 
+<div class="popup" id="divPopup">
+        <button type="button" class="btnClose" onclick="hidePopup()">X</button>
+        <h1 class="text-center">:::WINNER:::</h1>
+        <h2 class="text-center">GAGNANT!</h2>
+        <div class="divRow">
+            <div class="divColumn">
+                <img src="~/flame.png" style="width: 40%;" alt="Cool Flames" />
+            <img src="~/flame.png" style="width: 40%;" alt="Cool Flames" />
+            </div>
+            <img src="@ViewData["winnerImageUrl"]" alt="winner" class="imgSquare" />
+            <div class="divColumn">
+            <img src="~/flame.png" style="width: 40%;" alt="Cool Flames" />
+            <img src="~/flame.png" style="width: 40%;" alt="Cool Flames" />
+            </div>
+        </div>
+        <h3 class="text-center">@ViewData["winnerName"]</h3>
+        <p class="text-center"> Won against @ViewData["loserName"]</p>
+    <div class="divRow">
+        <a href="/Index">Home</a>
+        <a href="/Selection">Create New Fight</a>
+    </div>
+</div>
+
+<!--
 Debug code, only for use until the fight equation function is complete:
 <form method="post">
     
@@ -246,7 +302,7 @@ Debug code, only for use until the fight equation function is complete:
     <div class="form-group">
         <input type="submit" value="Create" class="btn btn-primary" />
     </div>
-</form>
+</form>-->
 
 @section Scripts {
     @{
