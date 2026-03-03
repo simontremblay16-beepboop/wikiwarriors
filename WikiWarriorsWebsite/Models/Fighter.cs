@@ -1,4 +1,5 @@
-﻿using System.Security;
+﻿using System;
+using System.Security;
 
 namespace WikiWarriorsWebsite.Models
 {
@@ -13,3 +14,4 @@ namespace WikiWarriorsWebsite.Models
         public int LinkCount { get; set; }
     }
 }
+
