@@ -112,7 +112,7 @@ namespace WikiWarriorsWebsite.Pages
         }
 
         // This is the list of all fights that have happened, ordered by most recent first.
-        public IList<FightHistory> FightHistory { get; set; } = default!;
+        /*public IList<FightHistory> FightHistory { get; set; } = default!;
 
         public async Task OnGetAsync(int? id)
         {
@@ -122,6 +122,6 @@ namespace WikiWarriorsWebsite.Pages
                 .Include(f => f.Winner)
                 .ToListAsync();
        
-    }
+        }*/
     }
 }

@@ -105,7 +105,7 @@
             <img src="@ViewData["dailyFightFighter2ImageUrl"]" class="decorationImage" alt="Fighter 2" />
         </div>
 
-        <details>
+        <!--<details>
             <summary>Historic Daily Fights</summary>
             <table class="table">
                 <thead>
@@ -139,7 +139,7 @@
                     }
                 </tbody>
             </table>
-        </details>
+        </details>-->
     </div>
 
     <div class="divGlobalFights"> ***Global fights here***</div>
@@ -167,8 +167,8 @@
 
             @if(Model.FightHistory is not null)
             {
-        <table class="globalFightsTable">
-                <thead>
+    <table class="globalFightsTable table">
+            <thead>
                 <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.FightHistory[0].FightDate)
