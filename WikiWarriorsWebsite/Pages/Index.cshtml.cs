@@ -22,15 +22,14 @@ namespace WikiWarriorsWebsite.Pages
         // This is the list of all fights that have happened, ordered by most recent first.
         public IList<FightHistory> FightHistory { get; set; } = default!;
 
-        //public async Task<IActionResult> OnGetAsync(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    FightHistory = await _context.FightHistory.ToListAsync();
-        //    return Page();
-        //}
+        public async Task OnGetAsync(int? id)
+        {
+            FightHistory = await _context.FightHistory
+                .Include(f => f.Fighter1)
+                .Include(f => f.Fighter2)
+                .Include(f => f.Winner)
+                .ToListAsync();
+       
+    }
     }
 }

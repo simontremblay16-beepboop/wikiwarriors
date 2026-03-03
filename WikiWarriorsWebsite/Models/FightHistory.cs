@@ -24,7 +24,7 @@ namespace WikiWarriorsWebsite.Models
         public Fighter? Winner { get; set; }
 
         //Should format the date like "2024/06/01 @ 16:45:24"
-        [DisplayFormat(DataFormatString = "{yyyy/MM/dd @ HH:mm:ss}")]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd @ HH:mm:ss}")]
         public DateTime FightDate { get; set; }
 
         [Display(Name = "Was this a Daily Feature Match?")]

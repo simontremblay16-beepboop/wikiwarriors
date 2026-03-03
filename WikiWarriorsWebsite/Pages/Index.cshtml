@@ -50,6 +50,12 @@
                     <th>
                         @Html.DisplayNameFor(model => model.FightHistory[0].DailyFight)
                     </th>
+                    <th>
+                        Fighter #1 Article
+                    </th>
+                    <th>
+                        Fighter #2 Article
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -66,15 +72,17 @@
                             @Html.DisplayFor(modelItem => item.Fighter2.Name)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Winner)
+                            @Html.DisplayFor(modelItem => item.Winner.Name)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.DailyFight)
                         </td>
                         <td>
-                            @* Redirect to Wikipedia both fighters article goes below  *@
-                            <a asp-page = "@item.Fighter1.PageUrl">Fighter #1 Article</a> |
-                            <a asp-page = "@item.Fighter2.PageUrl">Fighter #2 Article</a> |
+                            @* Redirect to Wikipedia both fighters article *@
+                            <a = "@item.Fighter1.PageUrl">Fighter #1 Article</a>
+                        </td>
+                        <td>
+                            <a = "@item.Fighter2.PageUrl">Fighter #2 Article</a>
                         </td>
                     </tr>
                 }

@@ -1,7 +1,9 @@
 ﻿
 //Helpful functions!
-//returns the element by class in 
-function $(a) { return document.getElementsByClassName(a); }
+//returns the element by id
+function $(a) { return document.getElementById(a); }
+//returns the element by class 
+function $$(a) { return document.getElementsByClassName(a); }
 
 // Very helpful article for understanding debounce, rest arguments & spread syntax :D
 // https://levelup.gitconnected.com/debounce-from-scratch-8616c8209b54
@@ -33,7 +35,20 @@ function initSearch() {
     });
 }
 
-const initialCheck = () => {
+async function initialCheck (query) {
+    const resultList = document.$('resultList');
+
+    if (!query || query.length < 2) {
+        grid.innerHTML = '<div class="col-12 text-center text-muted"><p>Search results will appear here...</p></div>';
+        return;
+    }
+    $.ajax({
+        url: 'tcp:wikiwarriors-server.database.windows.net',
+        data: {
+        },
+
+    });
+    const url = 'https://en.wikipedia.org/w/api.php?action=query&format=json&titles=' + query
 }
 //run the search
 
