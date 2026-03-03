@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="SelectionInterface.js"></script>
+    <link rel="stylesheet" href="SelectionInterface.css">
+</head>
+<body>
+    <div id="container">
+
+        <div id="leftDiv">
+            <input id="search" placeholder="Search Wikipedia for Fighter">
+            <button id="searchButton">Search</button>
+            <h5>Fight Preview</h5>
+            <div id="previewDiv">
+                        <!--? Reuse code from "fight page"? -->
+                <div id="fighter1Container"><img id="imgID" src=""></div> 
+                <div id="fighter2Container"><img id="imgID2" src=""></div>
+            </div>
+            
+            <form id="fighterForm" method="post">
+                <input type="hidden" id="fighterTitleInput" name="Title" />
+                <button type="button" id="saveFighter1">Save Fighter</button>
+            </form>
+                <button id="beginFight">Begin Fight</button>
+        </div>
+
+
+        <div id="rightDiv">
+            <div id="displaySearch"></div> 
+        </div>
+
+    </div>
+    
+</body>
+</html>
+
+
+
+
