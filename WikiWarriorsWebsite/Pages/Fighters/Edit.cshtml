@@ -1,0 +1,60 @@
+﻿@page
+@model WikiWarriorsWebsite.Pages.Fighters.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Fighter</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Fighter.FighterId" />
+            <div class="form-group">
+                <label asp-for="Fighter.Name" class="control-label"></label>
+                <input asp-for="Fighter.Name" class="form-control" />
+                <span asp-validation-for="Fighter.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fighter.ImageUrl" class="control-label"></label>
+                <input asp-for="Fighter.ImageUrl" class="form-control" />
+                <span asp-validation-for="Fighter.ImageUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fighter.PageUrl" class="control-label"></label>
+                <input asp-for="Fighter.PageUrl" class="form-control" />
+                <span asp-validation-for="Fighter.PageUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fighter.WordCount" class="control-label"></label>
+                <input asp-for="Fighter.WordCount" class="form-control" />
+                <span asp-validation-for="Fighter.WordCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fighter.ReferenceCount" class="control-label"></label>
+                <input asp-for="Fighter.ReferenceCount" class="form-control" />
+                <span asp-validation-for="Fighter.ReferenceCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fighter.LinkCount" class="control-label"></label>
+                <input asp-for="Fighter.LinkCount" class="form-control" />
+                <span asp-validation-for="Fighter.LinkCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
