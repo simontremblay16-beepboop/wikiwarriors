@@ -5,7 +5,8 @@
 }
 #leftDiv {
     flex: 40%;
-    background-color: red;
+    height: 100%;
+    background-color: rgb(106, 255, 0);
 }
 #rightDiv {
     flex: 60%;
@@ -35,10 +36,11 @@
     height: 50%;
     margin: auto;
 }
-#beginFight{
-    margin: 33%;
-}
 
-.infoContainer * {
-    pointer-events: none;
+#fighterForm{
+width: 65%;
+margin: auto; 
+}
+#beginFight{
+margin: auto;
 }
