@@ -4,57 +4,252 @@
 @{
     ViewData["Title"] = "Index";
 }
+<script>
 
-<h1>Index</h1>
+    const fightersFrames = [
+                          [[0, 0, 1, 0, 0],
+                           [1, 1, 1, 1, 1],
+                           [0, 0, 1, 0, 0],
+                           [0, 1, 0, 1, 0],
+                           [0, 1, 0, 1, 0]],
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FightHistory[0].Fighter1)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FightHistory[0].Fighter2)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FightHistory[0].Winner)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FightHistory[0].FightDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FightHistory[0].DailyFight)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.FightHistory) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fighter1.FighterId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fighter2.FighterId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Winner.FighterId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FightDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DailyFight)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.FightHistoryId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.FightHistoryId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.FightHistoryId">Delete</a>
-            </td>
-        </tr>
+                          [[0, 0, 1, 0, 0],
+                           [0, 1, 1, 1, 0],
+                           [1, 0, 1, 0, 1],
+                           [0, 1, 0, 1, 0],
+                           [0, 1, 0, 1, 0]]
+                           ]
+    
+    // This code runs the animations for the fighters, triggering every 0.25 second
+    var animationFrameCounter = 0
+
+    var animationTimer = window.setInterval(function(){
+        animateFighter(1, fightersFrames[animationFrameCounter % 2]);
+        animateFighter(2, fightersFrames[(animationFrameCounter + 1) % 2]);
+        animationFrameCounter ++;
+    }, 250);
+
+    // Content loaded listenter
+    document.addEventListener("DOMContentLoaded", documentReady);
+
+    // document ready event handler
+    // called automatically when pages done loading
+    function documentReady() {
+        // Animating fight
+        animateFighter(1, fightersFrames[0]);
+        animateFighter(2, fightersFrames[1]);
+        
+    }
+
+    function animateFighter (fighterNum, fighterFrame) {
+        console.log(fighterFrame)
+        for (let x = 0; x < 5; x ++) {
+            for (let y = 0; y < 5; y ++) {
+                var element = document.getElementsByClassName('image' + x + y)[fighterNum - 1];
+                if (!fighterFrame[y][x]) {
+                    element.style.display = 'none';
+                } else {
+                    element.style.display = 'block';
+                }
+            }
+        }
+    }
+
+</script>
+<style>
+    
+    /* Fight scene style*/
+
+    .divRow {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .imgSquare {
+        object-fit: cover;
+        width: 250px;
+        height: 250px;
+    }
+
+    .divGrid {
+        display: grid;
+        grid-template-areas:
+            'image00 image10 image20 image30 image40'
+            'image01 image11 image21 image31 image41'
+            'image02 image12 image22 image32 image42'
+            'image03 image13 image23 image33 image43'
+            'image04 image14 image24 image34 image44';
+    }
+
+    .image00 {grid-area: image00; overflow: hidden; height: 50px; width: 50px;} .image00 img {margin-top: -0%; margin-left: -0%;}
+    .image01 {grid-area: image01; overflow: hidden; height: 50px; width: 50px;} .image01 img {margin-top: -100%; margin-left: -0%;}
+    .image02 {grid-area: image02; overflow: hidden; height: 50px; width: 50px;} .image02 img {margin-top: -200%; margin-left: -0%;}
+    .image03 {grid-area: image03; overflow: hidden; height: 50px; width: 50px;} .image03 img {margin-top: -300%; margin-left: -0%;}
+    .image04 {grid-area: image04; overflow: hidden; height: 50px; width: 50px;} .image04 img {margin-top: -400%; margin-left: -0%;}
+
+    .image10 {grid-area: image10; overflow: hidden; height: 50px; width: 50px;} .image10 img {margin-top: -0%; margin-left: -100%;}
+    .image11 {grid-area: image11; overflow: hidden; height: 50px; width: 50px;} .image11 img {margin-top: -100%; margin-left: -100%;}
+    .image12 {grid-area: image12; overflow: hidden; height: 50px; width: 50px;} .image12 img {margin-top: -200%; margin-left: -100%;}
+    .image13 {grid-area: image13; overflow: hidden; height: 50px; width: 50px;} .image13 img {margin-top: -300%; margin-left: -100%;}
+    .image14 {grid-area: image14; overflow: hidden; height: 50px; width: 50px;} .image14 img {margin-top: -400%; margin-left: -100%;}
+
+    .image20 {grid-area: image20; overflow: hidden; height: 50px; width: 50px;} .image20 img {margin-top: -0%; margin-left: -200%;}
+    .image21 {grid-area: image21; overflow: hidden; height: 50px; width: 50px;} .image21 img {margin-top: -100%; margin-left: -200%;}
+    .image22 {grid-area: image22; overflow: hidden; height: 50px; width: 50px;} .image22 img {margin-top: -200%; margin-left: -200%;}
+    .image23 {grid-area: image23; overflow: hidden; height: 50px; width: 50px;} .image23 img {margin-top: -300%; margin-left: -200%;}
+    .image24 {grid-area: image24; overflow: hidden; height: 50px; width: 50px;} .image24 img {margin-top: -400%; margin-left: -200%;}
+
+    .image30 {grid-area: image30; overflow: hidden; height: 50px; width: 50px;} .image30 img {margin-top: -0%; margin-left: -300%;}
+    .image31 {grid-area: image31; overflow: hidden; height: 50px; width: 50px;} .image31 img {margin-top: -100%; margin-left: -300%;}
+    .image32 {grid-area: image32; overflow: hidden; height: 50px; width: 50px;} .image32 img {margin-top: -200%; margin-left: -300%;}
+    .image33 {grid-area: image33; overflow: hidden; height: 50px; width: 50px;} .image33 img {margin-top: -300%; margin-left: -300%;}
+    .image34 {grid-area: image34; overflow: hidden; height: 50px; width: 50px;} .image34 img {margin-top: -400%; margin-left: -300%;}
+
+    .image40 {grid-area: image40; overflow: hidden; height: 50px; width: 50px;} .image40 img {margin-top: -0%; margin-left: -400%;}
+    .image41 {grid-area: image41; overflow: hidden; height: 50px; width: 50px;} .image41 img {margin-top: -100%; margin-left: -400%;}
+    .image42 {grid-area: image42; overflow: hidden; height: 50px; width: 50px;} .image42 img {margin-top: -200%; margin-left: -400%;}
+    .image43 {grid-area: image43; overflow: hidden; height: 50px; width: 50px;} .image43 img {margin-top: -300%; margin-left: -400%;}
+    .image44 {grid-area: image44; overflow: hidden; height: 50px; width: 50px;} .image44 img {margin-top: -400%; margin-left: -400%;}
+
+</style>
+
+<h2>@ViewData["fighter1Name"] VS. @ViewData["fighter2Name"]</h2>
+
+<h1>FIGHT!</h1>
+
+<div class="divRow">
+    <div style="max-width: 33%">
+        <div class="divGrid">
+            <div class="image00"><img src="@ViewData["fighter1ImageUrl"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image01"><img src="@ViewData["fighter1ImageUrl"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image02"><img src="@ViewData["fighter1ImageUrl"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image03"><img src="@ViewData["fighter1ImageUrl"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image04"><img src="@ViewData["fighter1ImageUrl"]" alt="fighter1" class="imgSquare" /></div>
+
+            <div class="image10"><img src="@ViewData["fighter1ImageUrl"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image11"><img src="@ViewData["fighter1ImageUrl"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image12"><img src="@ViewData["fighter1ImageUrl"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image13"><img src="@ViewData["fighter1ImageUrl"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image14"><img src="@ViewData["fighter1ImageUrl"]" alt="fighter1" class="imgSquare" /></div>
+            
+            <div class="image20"><img src="@ViewData["fighter1ImageUrl"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image21"><img src="@ViewData["fighter1ImageUrl"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image22"><img src="@ViewData["fighter1ImageUrl"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image23"><img src="@ViewData["fighter1ImageUrl"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image24"><img src="@ViewData["fighter1ImageUrl"]" alt="fighter1" class="imgSquare" /></div>
+
+            <div class="image30"><img src="@ViewData["fighter1ImageUrl"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image31"><img src="@ViewData["fighter1ImageUrl"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image32"><img src="@ViewData["fighter1ImageUrl"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image33"><img src="@ViewData["fighter1ImageUrl"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image34"><img src="@ViewData["fighter1ImageUrl"]" alt="fighter1" class="imgSquare" /></div>
+
+            <div class="image40"><img src="@ViewData["fighter1ImageUrl"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image41"><img src="@ViewData["fighter1ImageUrl"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image42"><img src="@ViewData["fighter1ImageUrl"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image43"><img src="@ViewData["fighter1ImageUrl"]" alt="fighter1" class="imgSquare" /></div>
+            <div class="image44"><img src="@ViewData["fighter1ImageUrl"]" alt="fighter1" class="imgSquare" /></div>
+        </div>
+    </div>
+
+        
+    <img src="~/explosion.gif" alt="explosion" style="width: 33%" />
+    
+    <div style="max-width: 33%">
+        <div class="divGrid">
+            <div class="image00"><img src="@ViewData["fighter2ImageUrl"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image01"><img src="@ViewData["fighter2ImageUrl"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image02"><img src="@ViewData["fighter2ImageUrl"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image03"><img src="@ViewData["fighter2ImageUrl"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image04"><img src="@ViewData["fighter2ImageUrl"]" alt="fighter2" class="imgSquare" /></div>
+
+            <div class="image10"><img src="@ViewData["fighter2ImageUrl"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image11"><img src="@ViewData["fighter2ImageUrl"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image12"><img src="@ViewData["fighter2ImageUrl"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image13"><img src="@ViewData["fighter2ImageUrl"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image14"><img src="@ViewData["fighter2ImageUrl"]" alt="fighter2" class="imgSquare" /></div>
+
+            <div class="image20"><img src="@ViewData["fighter2ImageUrl"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image21"><img src="@ViewData["fighter2ImageUrl"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image22"><img src="@ViewData["fighter2ImageUrl"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image23"><img src="@ViewData["fighter2ImageUrl"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image24"><img src="@ViewData["fighter2ImageUrl"]" alt="fighter2" class="imgSquare" /></div>
+
+            <div class="image30"><img src="@ViewData["fighter2ImageUrl"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image31"><img src="@ViewData["fighter2ImageUrl"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image32"><img src="@ViewData["fighter2ImageUrl"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image33"><img src="@ViewData["fighter2ImageUrl"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image34"><img src="@ViewData["fighter2ImageUrl"]" alt="fighter2" class="imgSquare" /></div>
+
+            <div class="image40"><img src="@ViewData["fighter2ImageUrl"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image41"><img src="@ViewData["fighter2ImageUrl"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image42"><img src="@ViewData["fighter2ImageUrl"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image43"><img src="@ViewData["fighter2ImageUrl"]" alt="fighter2" class="imgSquare" /></div>
+            <div class="image44"><img src="@ViewData["fighter2ImageUrl"]" alt="fighter2" class="imgSquare" /></div>
+        </div>
+    </div>
+</div>
+
+<p>-Explosion gif from: https://explode.moth.monster/</p>
+
+<div>
+    Debug info:
+    <p>fighter1Id = @ViewData["fighter1Id"]</p>
+    <p>fighter1Name = @ViewData["fighter1Name"]</p>
+    <p>fighter1ImageUrl = @ViewData["fighter1ImageUrl"]</p>
+    <p>fighter1PageUrl = @ViewData["fighter1PageUrl"]</p>
+    <p>fighter1WordCount = @ViewData["fighter1WordCount"]</p>
+    <p>fighter1ReferenceCount = @ViewData["fighter1ReferenceCount"]</p>
+    <p>fighter1LinkCount = @ViewData["fighter1LinkCount"]</p>
+    <br />
+    <p>fighter2Id = @ViewData["fighter2Id"]</p>
+    <p>fighter2Name = @ViewData["fighter2Name"]</p>
+    <p>fighter2ImageUrl = @ViewData["fighter2ImageUrl"]</p>
+    <p>fighter2PageUrl = @ViewData["fighter2PageUrl"]</p>
+    <p>fighter2WordCount = @ViewData["fighter2WordCount"]</p>
+    <p>fighter2ReferenceCount = @ViewData["fighter2ReferenceCount"]</p>
+    <p>fighter2LinkCount = @ViewData["fighter2LinkCount"]</p>
+</div>
+
+Debug code, only for use until the fight equation function is complete:
+<form method="post">
+    
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    
+   
+    <div class="form-group">
+        <label asp-for="NewFightRecord.Fighter1Id" class="control-label"></label>
+        <select asp-for="NewFightRecord.Fighter1Id" class="form-control" asp-items="Model.AllFighters"></select>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="NewFightRecord.Fighter2Id" class="control-label"></label>
+        <select asp-for="NewFightRecord.Fighter2Id" class="form-control" asp-items="Model.AllFighters"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="NewFightRecord.WinnerId" class="control-label"></label>
+        <select asp-for="NewFightRecord.WinnerId" class="form-control" asp-items="Model.AllFighters"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="NewFightRecord.FightDate" class="control-label"></label>
+        <input asp-for="NewFightRecord.FightDate" class="form-control" />
+        <span asp-validation-for="NewFightRecord.FightDate" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group form-check">
+        <label class="form-check-label">
+            <input class="form-check-input" asp-for="NewFightRecord.DailyFight" /> @Html.DisplayNameFor(model => model.NewFightRecord.DailyFight)
+        </label>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
-    </tbody>
-</table>
