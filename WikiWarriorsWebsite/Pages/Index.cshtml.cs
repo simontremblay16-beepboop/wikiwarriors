@@ -1,6 +1,11 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using WikiWarriorsWebsite.Data;
 using WikiWarriorsWebsite.Models;
 
 namespace WikiWarriorsWebsite.Pages
@@ -105,5 +110,18 @@ namespace WikiWarriorsWebsite.Pages
             ViewData["dailyFightFighter1ImageUrl"] = _context.Fighter.FirstOrDefault(m => m.FighterId == currentFighter1Id).ImageUrl;
             ViewData["dailyFightFighter2ImageUrl"] = _context.Fighter.FirstOrDefault(m => m.FighterId == currentFighter2Id).ImageUrl;
         }
+
+        // This is the list of all fights that have happened, ordered by most recent first.
+        public IList<FightHistory> FightHistory { get; set; } = default!;
+
+        public async Task OnGetAsync(int? id)
+        {
+            FightHistory = await _context.FightHistory
+                .Include(f => f.Fighter1)
+                .Include(f => f.Fighter2)
+                .Include(f => f.Winner)
+                .ToListAsync();
+       
+    }
     }
 }
