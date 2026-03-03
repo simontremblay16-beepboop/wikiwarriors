@@ -6,9 +6,9 @@ namespace WikiWarriorsWebsite.Models
     public class FightHistory
     {
         public int FightHistoryId { get; set; }
-        public int? Fighter1Id { get; set; }
 
         [Display(Name = "Fighter #1")]
+        public int? Fighter1Id { get; set; }
         public Fighter? Fighter1 { get; set; }
 
         // Note: Fighter2Id, Fighter2, WinnerId, and Winner have to be nullable types.
