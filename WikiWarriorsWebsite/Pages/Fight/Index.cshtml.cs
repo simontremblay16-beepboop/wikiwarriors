@@ -24,6 +24,12 @@ namespace WikiWarriorsWebsite.Pages.Fight
         [BindProperty(SupportsGet = true)]
         public string Fighter2 { get; set; }
 
+        // Access URL variables so that we can recieve the winner an loser for the victory popup
+        [BindProperty(SupportsGet = true)]
+        public string? Winner { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string? Loser { get; set; }
         public IndexModel(WikiWarriorsWebsite.Data.WikiWarriorsWebsiteContext context)
         {
             _context = context;
@@ -39,6 +45,29 @@ namespace WikiWarriorsWebsite.Pages.Fight
 
         public async Task<IActionResult> OnGetAsync()
         {
+            // This code is only used if the page is called with
+            // Url variables indicating that a "Victory" popup
+            // window is required.
+            if (Winner != null && Loser != null)
+            {
+                int winnerId = int.Parse(Winner);
+                int loserId = int.Parse(Loser);
+
+                // Get database entries for the winner and loser fighters
+                var winnerRecord = await _context.Fighter.FirstOrDefaultAsync(m => m.FighterId == winnerId);
+                var loserRecord = await _context.Fighter.FirstOrDefaultAsync(m => m.FighterId == loserId);
+
+                // Update view data so that the popup knows what to display
+                ViewData["winnerName"] = winnerRecord.Name;
+                ViewData["loserName"] = loserRecord.Name;
+                ViewData["winnerImageUrl"] = winnerRecord.ImageUrl;
+                ViewData["popupDisplay"] = "block";
+            }
+            else
+            {
+                ViewData["popupDisplay"] = "none";
+            }
+
             AllFighters = new SelectList(_context.Fighter, "FighterId", "FighterId");
             //ViewData["Fighter1Id"] = new SelectList(_context.Fighter, "FighterId", "FighterId");
             //ViewData["Fighter2Id"] = new SelectList(_context.Fighter, "FighterId", "FighterId");
