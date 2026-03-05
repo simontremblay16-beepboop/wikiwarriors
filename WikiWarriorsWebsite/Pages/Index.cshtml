@@ -9,6 +9,44 @@
     function hidePopup() {
         document.getElementById("divPopup").style.display = "none";
     }
+
+    // Content loaded listenter
+    document.addEventListener("DOMContentLoaded", documentReady);
+    
+    // document ready event handler
+    // called automatically when pages done loading
+    function documentReady() {
+        // Get the current date and compare to the last Daily fight date to
+        // figure out if we need to create a NEW daily fight
+        const fullDateTime = new Date();
+        // Format the current date to match the format from the database (i.e. leading zeroes, Year Month Day)
+        year = fullDateTime.getFullYear().toString();
+        if (year.length < 2) {
+            year = "0" + year;
+        }
+        month = fullDateTime.getMonth().toString();
+        if (month.length < 2) {
+            month = "0" + month;
+        }
+        dayOfMonth = fullDateTime.getDate().toString();
+        if (dayOfMonth.length < 2) {
+            dayOfMonth = "0" + dayOfMonth;
+        }
+        const currentDate = year + "-" + month + "-" + dayOfMonth;
+        // This will extract only the date part from the dailyfightDate string, ignoring the time.
+        const lastDate = "@ViewData["dailyFightDate"]".split(" ")[0];
+
+        // Debug info display
+        document.getElementById("currentDate").innerHTML = currentDate;
+        document.getElementById("lastDate").innerHTML = lastDate;
+
+        // Check if current date does not match last daily fight date
+        if (currentDate != lastDate) {
+            // If not, then we will redirect with a URL variable to indicate
+            // that we DO need to create a new daily fight
+            window.location.replace("/Index?createDaily=true");
+        }
+    }
 </script>
 
 <style>
@@ -71,6 +109,9 @@
         }
     }
 </style>
+
+<p>Current Date: <p id="currentDate"></p></p>
+<p>Last Daily Fight: <p id="lastDate"></p></p>
 
 <div class="text-center">
 
