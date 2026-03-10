@@ -24,6 +24,13 @@ namespace WikiWarriorsWebsite.Pages
 
         [BindProperty(SupportsGet = true)]
         public string? Loser { get; set; }
+        // URL variable for if we need to create a new daily fight
+        [BindProperty(SupportsGet = true)]
+        public string? CreateDaily { get; set; }
+
+        // Fight record for making the daily fight
+        //[BindProperty]
+        //public FightHistory NewFightRecord { get; set; } = default!;
 
         // Fight history list object
         public IList<FightHistory> FightHistory { get; set; } = default!;
@@ -55,6 +62,58 @@ namespace WikiWarriorsWebsite.Pages
             else
             {
                 ViewData["popupDisplay"] = "none";
+            }
+
+            // This code will run if the CreateDaily url variable is set, indicating that its a new day and we must make a new daily fight
+            if (CreateDaily != null)
+            {
+                FightHistory NewFightRecord = new FightHistory();
+                // Get the fighter Ids for todays fight
+                string firstWikiURL = "https://en.wikipedia.org/wiki/Westminster_Cathedral"; // Get from API
+                string secondWikiURL = "https://en.wikipedia.org/wiki/Wikipedia"; // Get from API
+
+                // *** Do something to call dataloader, passing in to URLs so that the items are added to the database ***
+
+                // Collect info from database
+                int dailyFighter1Id = _context.Fighter.FirstOrDefault(m => m.PageUrl == firstWikiURL).FighterId;
+                int dailyFighter2Id = _context.Fighter.FirstOrDefault(m => m.PageUrl == secondWikiURL).FighterId;
+
+                int dailyFighter1WordCount = _context.Fighter.FirstOrDefault(m => m.FighterId == dailyFighter1Id).WordCount;
+                int dailyFighter1ReferenceCount = _context.Fighter.FirstOrDefault(m => m.FighterId == dailyFighter1Id).ReferenceCount;
+                int dailyFighter1LinkCount = _context.Fighter.FirstOrDefault(m => m.FighterId == dailyFighter1Id).LinkCount;
+
+                int dailyFighter2WordCount = _context.Fighter.FirstOrDefault(m => m.FighterId == dailyFighter2Id).WordCount;
+                int dailyFighter2ReferenceCount = _context.Fighter.FirstOrDefault(m => m.FighterId == dailyFighter2Id).ReferenceCount;
+                int dailyFighter2LinkCount = _context.Fighter.FirstOrDefault(m => m.FighterId == dailyFighter2Id).LinkCount;
+
+                // Calculate the winner
+                // Temporary fight victory equasion
+                int winnerId;
+                int fighter1Score = dailyFighter1WordCount + dailyFighter1ReferenceCount + dailyFighter1LinkCount;
+                int fighter2Score = dailyFighter2WordCount + dailyFighter2ReferenceCount + dailyFighter2LinkCount;
+                if (fighter1Score > fighter2Score)
+                {
+                    winnerId = dailyFighter1Id;
+                }
+                else
+                {
+                    winnerId = dailyFighter2Id;
+                }
+
+                // Update database with the daily fight
+                NewFightRecord.Fighter1Id = dailyFighter1Id;
+                NewFightRecord.Fighter2Id = dailyFighter2Id;
+                NewFightRecord.WinnerId = winnerId;
+                NewFightRecord.FightDate = DateTime.Now;
+                NewFightRecord.DailyFight = true;
+                NewFightRecord.Fighter1 = _context.Fighter.FirstOrDefault(m => m.FighterId == NewFightRecord.Fighter1Id);
+                NewFightRecord.Fighter2 = _context.Fighter.FirstOrDefault(m => m.FighterId == NewFightRecord.Fighter2Id);
+                NewFightRecord.Winner = _context.Fighter.FirstOrDefault(m => m.FighterId == NewFightRecord.WinnerId);
+                if (ModelState.IsValid)
+                {
+                    _context.FightHistory.Add(NewFightRecord);
+                    _context.SaveChanges();
+                }
             }
 
             // Load in FightHistory Table
