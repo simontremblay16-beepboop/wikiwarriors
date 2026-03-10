@@ -170,17 +170,6 @@ namespace WikiWarriorsWebsite.Pages
             ViewData["dailyFightFighter2ImageUrl"] = _context.Fighter.FirstOrDefault(m => m.FighterId == currentFighter2Id).ImageUrl;
         }
 
-        // This is the list of all fights that have happened, ordered by most recent first.
-        /*public IList<FightHistory> FightHistory { get; set; } = default!;
 
-        public async Task OnGetAsync(int? id)
-        {
-            FightHistory = await _context.FightHistory
-                .Include(f => f.Fighter1)
-                .Include(f => f.Fighter2)
-                .Include(f => f.Winner)
-                .ToListAsync();
-       
-        }*/
     }
 }
