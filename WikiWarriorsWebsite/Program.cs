@@ -1,12 +1,30 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Net.Http.Headers;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using WikiWarriorsWebsite.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<WikiWarriorsWebsiteContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("WikiWarriorsWebsiteContext") ?? throw new InvalidOperationException("Connection string 'WikiWarriorsWebsiteContext' not found.")));
+
+// Added by Simon :)
+// Register an HttpClient so i can talk to mr wikipedia :)
+
+// Program.cs
+
+
+builder.Services.AddHttpClient<SearchService>(client =>
+{
+    client.DefaultRequestHeaders.UserAgent.ParseAdd("WikiWarriorsWebsite/1.0 (strembl6@confederationcollege.ca)");
+    client.DefaultRequestHeaders.Accept.Add(
+        new MediaTypeWithQualityHeaderValue("application/json"));
+});
+
+// Remove this line:
+// builder.Services.AddScoped<SearchService>();
 
 builder.Services.AddQuickGridEntityFrameworkAdapter();
 

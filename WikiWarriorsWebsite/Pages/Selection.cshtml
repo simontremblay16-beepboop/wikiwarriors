@@ -3,40 +3,26 @@
 @{
     ViewData["Title"] = "Selection";
 }
-        
-<div id="container">
 
-    <div id="leftDiv">
-        <input id="search" placeholder="Search Wikipedia for Fighter">
-        <button id="searchButton">Search</button>
-        <h5>Fight Preview</h5>
-        <div id="previewDiv">
-            <!--? Reuse code from "fight page"? -->
-            <div id="fighter1Container"><img id="imgID" src=""></div>
-            <div id="fighter2Container"><img id="imgID2" src=""></div>
-        </div>
+<form method="post">
+    <input asp-for="Name" />
+    <button type="submit">Search</button>
+</form>
 
-        <form id="fighterForm" method="post">
-            <input type="hidden" id="fighterTitleInput" name="Title" />
-            <button type="button" id="saveFighter1">Save Fighter</button>
-        </form>
-        <button id="beginFight">Begin Fight</button>
-    </div>
+@if (Model.Results?.Count > 0)
+{
+    <h3>Results</h3>
 
-
-    <div id="rightDiv">
-        <div id="displaySearch"></div>
-    </div>
-
-</div>
-
-
-
-
-
-
-
-
-@section Scripts {
-   
+    <ul>
+        @foreach (var result in Model.Results)
+        {
+            <li>@result</li>
+        }
+    </ul>
 }
+
+
+
+
+
+

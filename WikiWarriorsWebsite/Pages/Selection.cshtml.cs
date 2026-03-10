@@ -1,44 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using WikiWarriorsWebsite.Controllers;
 using WikiWarriorsWebsite.Data;
 using WikiWarriorsWebsite.Models;
+
 
 namespace WikiWarriorsWebsite.Pages
 {
     public class SelectionModel : PageModel
     {
-        private readonly WikiWarriorsWebsite.Data.WikiWarriorsWebsiteContext _context;
+       
+        private readonly SearchService _searcher;
 
-        public SelectionModel(WikiWarriorsWebsite.Data.WikiWarriorsWebsiteContext context)
-        {
-            _context = context;
-        }
-
-        public IActionResult OnGet()
-        {
-            return Page();
-        }
-
+        public SelectionModel(SearchService searcher) { _searcher = searcher;}
         [BindProperty]
-        public Fighter Fighter { get; set; } = default!;
+        public string Name { get; set; }
 
-        // For more information, see https://aka.ms/RazorPagesCRUD.
+        public List<string> Results { get; set; }
+
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
+
+            Results = await _searcher.Search(Name);
+
+
+            if (ModelState.IsValid) {
+                Console.WriteLine("WORKS");
             }
+            
+            Console.WriteLine("done");
+           
+            Console.WriteLine("...");
 
-            _context.Fighter.Add(Fighter);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+            return Page();
         }
     }
 }
