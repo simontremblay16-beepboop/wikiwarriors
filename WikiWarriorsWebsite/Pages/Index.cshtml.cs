@@ -1,10 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
 using WikiWarriorsWebsite.Data;
 using WikiWarriorsWebsite.Models;
 
@@ -65,6 +66,8 @@ namespace WikiWarriorsWebsite.Pages
             }
 
             // This code will run if the CreateDaily url variable is set, indicating that its a new day and we must make a new daily fight
+
+            
             if (CreateDaily != null)
             {
                 FightHistory NewFightRecord = new FightHistory();
@@ -107,7 +110,7 @@ namespace WikiWarriorsWebsite.Pages
                     _context.SaveChanges();
                 }
             }
-
+            
             // Load in FightHistory Table
             FightHistory = _context.FightHistory.ToList();
 
@@ -157,9 +160,25 @@ namespace WikiWarriorsWebsite.Pages
             ViewData["dailyFightFighter1Name"] = _context.Fighter.FirstOrDefault(m => m.FighterId == currentFighter1Id).Name;
             ViewData["dailyFightFighter2Name"] = _context.Fighter.FirstOrDefault(m => m.FighterId == currentFighter2Id).Name;
             ViewData["dailyFightWinnerName"] = DailyFightsWinners[mostRecentIndex].Name;
-            ViewData["dailyFightDate"] = mostRecentDate;
+            string year = mostRecentDate.Year.ToString();
+            string month = mostRecentDate.Month.ToString();
+            string day = mostRecentDate.Day.ToString();
+            if (year.Length < 2) {
+                year = "0" + year;
+            }
+            if (month.Length < 2)
+            {
+                month = "0" + month;
+            }
+            if (day.Length < 2)
+            {
+                day = "0" + day;
+            }
+            string parsedDate = year + "-" + month + "-" + day;
+            ViewData["dailyFightDate"] = parsedDate;
             ViewData["dailyFightFighter1ImageUrl"] = _context.Fighter.FirstOrDefault(m => m.FighterId == currentFighter1Id).ImageUrl;
             ViewData["dailyFightFighter2ImageUrl"] = _context.Fighter.FirstOrDefault(m => m.FighterId == currentFighter2Id).ImageUrl;
+        
         }
 
 
