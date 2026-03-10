@@ -20,6 +20,8 @@
                            [0, 1, 0, 1, 0]]
                            ]
     
+    const FIGHT_DURATION = 5000 // Duration of fight in milliseconds
+
     // This code runs the animations for the fighters, triggering every 0.25 second
     var animationFrameCounter = 0
 
@@ -38,9 +40,33 @@
         // Animating fight
         animateFighter(1, fightersFrames[0]);
         animateFighter(2, fightersFrames[1]);
-        
+        // Set timer for end of the fight
+        // (Only if we don't already have the URL variables for the victory popup)
+        const URLparameters = new URLSearchParams(window.location.search);
+        if (!URLparameters.get("winner")) {
+            // Timer for popup
+            setTimeout(fightEnd, FIGHT_DURATION);
+            // Counter for countdown
+            currentTime = new Date().getTime();
+            countDownEnd = currentTime + FIGHT_DURATION;
+            setInterval(countDown, 1);
+        }
+        // If we already have the popup, we will hide the GIF
+        else {
+            document.getElementById("imgExplosion").style.display = 'none';
+        }
     }
 
+    // The fightEnd function will just redirect to the fight page with URL variables to indecate who won
+    // this will result in the popup for the winner appearing once it reloads
+    function fightEnd() {
+        const URLparameters = new URLSearchParams(window.location.search);
+        URLparameters.set('winner', '3');
+        URLparameters.set('loser', '2');
+        window.location.search = URLparameters;
+    }
+
+    // Draw a single fighter
     function animateFighter (fighterNum, fighterFrame) {
         console.log(fighterFrame)
         for (let x = 0; x < 5; x ++) {
@@ -54,8 +80,23 @@
             }
         }
     }
+
+    // X button for popup
     function hidePopup() {
         document.getElementById("divPopup").style.display = "none";
+    }
+
+    // Countdown timer variable
+    var countDownEnd = 0;
+
+    // Fight Countdown function
+    function countDown() {
+        currentTime = new Date().getTime();
+        timeRemaining = countDownEnd - currentTime;
+        if (timeRemaining < 0) {
+            timeRemaining = 0.000;
+        }
+        document.getElementById("timer").innerText = (timeRemaining / 1000);
     }
 </script>
 
@@ -184,8 +225,11 @@
         </div>
     </div>
 
-        
-    <img src="~/explosion.gif" alt="explosion" style="width: 33%" />
+    <div class="divColumn">
+        <h3>Fight time remaining:</h3>
+        <h3 id="timer">0.000</h3>
+        <img id="imgExplosion" src="~/explosion.gif" alt="explosion" style="width: 100%" />
+    </div>
     
     <div style="max-width: 33%">
         <div class="divGrid">
@@ -224,7 +268,6 @@
 
 <p>-Explosion gif from: https://explode.moth.monster/</p>
 
-<!--
 <div>
     Debug info:
     <p>fighter1Id = @ViewData["fighter1Id"]</p>
@@ -242,8 +285,9 @@
     <p>fighter2WordCount = @ViewData["fighter2WordCount"]</p>
     <p>fighter2ReferenceCount = @ViewData["fighter2ReferenceCount"]</p>
     <p>fighter2LinkCount = @ViewData["fighter2LinkCount"]</p>
+    <br />
+     <p>winnerId = @ViewData["winnerId"]</p>
 </div>
--->
 
 <div class="popup" id="divPopup">
         <button type="button" class="btnClose" onclick="hidePopup()">X</button>

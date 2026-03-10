@@ -75,34 +75,26 @@ namespace WikiWarriorsWebsite.Pages
                 // *** Do something to call dataloader, passing in to URLs so that the items are added to the database ***
 
                 // Collect info from database
-                int dailyFighter1Id = _context.Fighter.FirstOrDefault(m => m.PageUrl == firstWikiURL).FighterId;
-                int dailyFighter2Id = _context.Fighter.FirstOrDefault(m => m.PageUrl == secondWikiURL).FighterId;
-
-                int dailyFighter1WordCount = _context.Fighter.FirstOrDefault(m => m.FighterId == dailyFighter1Id).WordCount;
-                int dailyFighter1ReferenceCount = _context.Fighter.FirstOrDefault(m => m.FighterId == dailyFighter1Id).ReferenceCount;
-                int dailyFighter1LinkCount = _context.Fighter.FirstOrDefault(m => m.FighterId == dailyFighter1Id).LinkCount;
-
-                int dailyFighter2WordCount = _context.Fighter.FirstOrDefault(m => m.FighterId == dailyFighter2Id).WordCount;
-                int dailyFighter2ReferenceCount = _context.Fighter.FirstOrDefault(m => m.FighterId == dailyFighter2Id).ReferenceCount;
-                int dailyFighter2LinkCount = _context.Fighter.FirstOrDefault(m => m.FighterId == dailyFighter2Id).LinkCount;
+                Fighter Fighter1 = _context.Fighter.FirstOrDefault(m => m.PageUrl == firstWikiURL);
+                Fighter Fighter2 = _context.Fighter.FirstOrDefault(m => m.PageUrl == firstWikiURL);
 
                 // Calculate the winner
                 // Temporary fight victory equasion
                 int winnerId;
-                int fighter1Score = dailyFighter1WordCount + dailyFighter1ReferenceCount + dailyFighter1LinkCount;
-                int fighter2Score = dailyFighter2WordCount + dailyFighter2ReferenceCount + dailyFighter2LinkCount;
+                int fighter1Score = Fighter1.WordCount + Fighter1.ReferenceCount + Fighter1.LinkCount;
+                int fighter2Score = Fighter2.WordCount + Fighter2.ReferenceCount + Fighter2.LinkCount;
                 if (fighter1Score > fighter2Score)
                 {
-                    winnerId = dailyFighter1Id;
+                    winnerId = Fighter1.FighterId;
                 }
                 else
                 {
-                    winnerId = dailyFighter2Id;
+                    winnerId = Fighter2.FighterId;
                 }
 
                 // Update database with the daily fight
-                NewFightRecord.Fighter1Id = dailyFighter1Id;
-                NewFightRecord.Fighter2Id = dailyFighter2Id;
+                NewFightRecord.Fighter1Id = Fighter1.FighterId;
+                NewFightRecord.Fighter2Id = Fighter2.FighterId;
                 NewFightRecord.WinnerId = winnerId;
                 NewFightRecord.FightDate = DateTime.Now;
                 NewFightRecord.DailyFight = true;
