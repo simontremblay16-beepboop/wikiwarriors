@@ -1,10 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
 using WikiWarriorsWebsite.Data;
 using WikiWarriorsWebsite.Models;
 
@@ -24,6 +25,13 @@ namespace WikiWarriorsWebsite.Pages
 
         [BindProperty(SupportsGet = true)]
         public string? Loser { get; set; }
+        // URL variable for if we need to create a new daily fight
+        [BindProperty(SupportsGet = true)]
+        public string? CreateDaily { get; set; }
+
+        // Fight record for making the daily fight
+        //[BindProperty]
+        //public FightHistory NewFightRecord { get; set; } = default!;
 
         // Fight history list object
         public IList<FightHistory> FightHistory { get; set; } = default!;
@@ -57,31 +65,87 @@ namespace WikiWarriorsWebsite.Pages
                 ViewData["popupDisplay"] = "none";
             }
 
+            // This code will run if the CreateDaily url variable is set, indicating that its a new day and we must make a new daily fight
+
+            
+            if (CreateDaily != null)
+            {
+                FightHistory NewFightRecord = new FightHistory();
+                // Get the fighter Ids for todays fight
+                string firstWikiURL = "https://en.wikipedia.org/wiki/Westminster_Cathedral"; // Get from API
+                string secondWikiURL = "https://en.wikipedia.org/wiki/Wikipedia"; // Get from API
+
+                // *** Do something to call dataloader, passing in to URLs so that the items are added to the database ***
+
+                // Collect info from database
+                Fighter Fighter1 = _context.Fighter.FirstOrDefault(m => m.PageUrl == firstWikiURL);
+                Fighter Fighter2 = _context.Fighter.FirstOrDefault(m => m.PageUrl == secondWikiURL);
+
+                // Calculate the winner
+                // Temporary fight victory equasion
+                int winnerId;
+                int fighter1Score = Fighter1.WordCount + Fighter1.ReferenceCount + Fighter1.LinkCount;
+                int fighter2Score = Fighter2.WordCount + Fighter2.ReferenceCount + Fighter2.LinkCount;
+                if (fighter1Score > fighter2Score)
+                {
+                    winnerId = Fighter1.FighterId;
+                }
+                else
+                {
+                    winnerId = Fighter2.FighterId;
+                }
+
+                // Update database with the daily fight
+                NewFightRecord.Fighter1Id = Fighter1.FighterId;
+                NewFightRecord.Fighter2Id = Fighter2.FighterId;
+                NewFightRecord.WinnerId = winnerId;
+                NewFightRecord.FightDate = DateTime.Now;
+                NewFightRecord.DailyFight = true;
+                NewFightRecord.Fighter1 = _context.Fighter.FirstOrDefault(m => m.FighterId == NewFightRecord.Fighter1Id);
+                NewFightRecord.Fighter2 = _context.Fighter.FirstOrDefault(m => m.FighterId == NewFightRecord.Fighter2Id);
+                NewFightRecord.Winner = _context.Fighter.FirstOrDefault(m => m.FighterId == NewFightRecord.WinnerId);
+                if (ModelState.IsValid)
+                {
+                    _context.FightHistory.Add(NewFightRecord);
+                    _context.SaveChanges();
+                }
+            }
+
             // Load in FightHistory Table
-            FightHistory = _context.FightHistory.ToList();
+            //FightHistory = _context.FightHistory.ToList();
+
+            FightHistory = _context.FightHistory
+                .Include(f => f.Fighter1)
+                .Include(f => f.Fighter2)
+                .Include(f => f.Winner).ToList();
 
             // Select only daily fights
-            for (int i = 0; i < FightHistory.Count; i++)
+            int index = FightHistory.Count - 1;
+            while (index >= 0)
             {
-                if (FightHistory[i].DailyFight)
+                if (FightHistory[index].DailyFight)
                 {
 
-                    var CurrentWinner = _context.Fighter.FirstOrDefault(m => m.FighterId == FightHistory[i].WinnerId);
+                    var CurrentWinner = _context.Fighter.FirstOrDefault(m => m.FighterId == FightHistory[index].WinnerId);
 
                     // This code for calculating the loser isn't pretty, but its the only way to avoid the compiler
                     // complaining that CurrentLoser isn't initialised.
-                    var CurrentLoser = _context.Fighter.FirstOrDefault(m => m.FighterId == FightHistory[i].Fighter1Id);
-                    if (FightHistory[i].WinnerId == FightHistory[i].Fighter1Id)
+                    Fighter CurrentLoser;
+                    if (FightHistory[index].WinnerId == FightHistory[index].Fighter1Id)
                     {
-                        CurrentLoser = _context.Fighter.FirstOrDefault(m => m.FighterId == FightHistory[i].Fighter2Id);
+                        CurrentLoser = _context.Fighter.FirstOrDefault(m => m.FighterId == FightHistory[index].Fighter2Id);
+                    }
+                    else {
+                        CurrentLoser = _context.Fighter.FirstOrDefault(m => m.FighterId == FightHistory[index].Fighter1Id);
                     }
 
                     DailyFightsWinners.Add(CurrentWinner);
                     DailyFightsLosers.Add(CurrentLoser);
-                    DailyFightsDates.Add(FightHistory[i].FightDate);
-                    DailyFightsIds.Add(i);
-
+                    DailyFightsDates.Add(FightHistory[index].FightDate);
+                    DailyFightsIds.Add(index);
+                    index = -1;
                 }
+                index --;
             }
 
             // Set dailyFightNum to be total daily fights, since we are always show the most
@@ -106,22 +170,27 @@ namespace WikiWarriorsWebsite.Pages
             ViewData["dailyFightFighter1Name"] = _context.Fighter.FirstOrDefault(m => m.FighterId == currentFighter1Id).Name;
             ViewData["dailyFightFighter2Name"] = _context.Fighter.FirstOrDefault(m => m.FighterId == currentFighter2Id).Name;
             ViewData["dailyFightWinnerName"] = DailyFightsWinners[mostRecentIndex].Name;
-            ViewData["dailyFightDate"] = mostRecentDate;
+            string year = mostRecentDate.Year.ToString();
+            string month = mostRecentDate.Month.ToString();
+            string day = mostRecentDate.Day.ToString();
+            if (year.Length < 2) {
+                year = "0" + year;
+            }
+            if (month.Length < 2)
+            {
+                month = "0" + month;
+            }
+            if (day.Length < 2)
+            {
+                day = "0" + day;
+            }
+            string parsedDate = year + "-" + month + "-" + day;
+            ViewData["dailyFightDate"] = parsedDate;
             ViewData["dailyFightFighter1ImageUrl"] = _context.Fighter.FirstOrDefault(m => m.FighterId == currentFighter1Id).ImageUrl;
             ViewData["dailyFightFighter2ImageUrl"] = _context.Fighter.FirstOrDefault(m => m.FighterId == currentFighter2Id).ImageUrl;
+        
         }
 
-        // This is the list of all fights that have happened, ordered by most recent first.
-        /*public IList<FightHistory> FightHistory { get; set; } = default!;
 
-        public async Task OnGetAsync(int? id)
-        {
-            FightHistory = await _context.FightHistory
-                .Include(f => f.Fighter1)
-                .Include(f => f.Fighter2)
-                .Include(f => f.Winner)
-                .ToListAsync();
-       
-        }*/
     }
 }

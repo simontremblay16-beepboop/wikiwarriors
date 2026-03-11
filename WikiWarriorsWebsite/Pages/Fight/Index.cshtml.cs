@@ -24,6 +24,12 @@ namespace WikiWarriorsWebsite.Pages.Fight
         [BindProperty(SupportsGet = true)]
         public string Fighter2 { get; set; }
 
+        // Access URL variables so that we can recieve the winner an loser for the victory popup
+        [BindProperty(SupportsGet = true)]
+        public string? Winner { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string? Loser { get; set; }
         public IndexModel(WikiWarriorsWebsite.Data.WikiWarriorsWebsiteContext context)
         {
             _context = context;
@@ -39,6 +45,29 @@ namespace WikiWarriorsWebsite.Pages.Fight
 
         public async Task<IActionResult> OnGetAsync()
         {
+            // This code is only used if the page is called with
+            // Url variables indicating that a "Victory" popup
+            // window is required.
+            if (Winner != null && Loser != null)
+            {
+                int winnerId = int.Parse(Winner);
+                int loserId = int.Parse(Loser);
+
+                // Get database entries for the winner and loser fighters
+                var winnerRecord = await _context.Fighter.FirstOrDefaultAsync(m => m.FighterId == winnerId);
+                var loserRecord = await _context.Fighter.FirstOrDefaultAsync(m => m.FighterId == loserId);
+
+                // Update view data so that the popup knows what to display
+                ViewData["winnerName"] = winnerRecord.Name;
+                ViewData["loserName"] = loserRecord.Name;
+                ViewData["winnerImageUrl"] = winnerRecord.ImageUrl;
+                ViewData["popupDisplay"] = "block";
+            }
+            else
+            {
+                ViewData["popupDisplay"] = "none";
+            }
+
             AllFighters = new SelectList(_context.Fighter, "FighterId", "FighterId");
             //ViewData["Fighter1Id"] = new SelectList(_context.Fighter, "FighterId", "FighterId");
             //ViewData["Fighter2Id"] = new SelectList(_context.Fighter, "FighterId", "FighterId");
@@ -51,8 +80,8 @@ namespace WikiWarriorsWebsite.Pages.Fight
             ViewData["fighter2Id"] = fighter2Id;
 
             // Get database entries for the fighter
-            var fighter1Record = await _context.Fighter.FirstOrDefaultAsync(m => m.FighterId == fighter1Id);
-            var fighter2Record = await _context.Fighter.FirstOrDefaultAsync(m => m.FighterId == fighter2Id);
+            Fighter fighter1Record = await _context.Fighter.FirstOrDefaultAsync(m => m.FighterId == fighter1Id);
+            Fighter fighter2Record = await _context.Fighter.FirstOrDefaultAsync(m => m.FighterId == fighter2Id);
 
             if (fighter1Record is not null && fighter2Record is not null)
             {
@@ -72,6 +101,27 @@ namespace WikiWarriorsWebsite.Pages.Fight
                 ViewData["fighter2ReferenceCount"] = fighter2Record.ReferenceCount;
                 ViewData["fighter2LinkCount"] = fighter2Record.LinkCount;
 
+                // Collect info from database
+                Fighter Fighter1 = fighter1Record;
+                Fighter Fighter2 = fighter2Record;
+
+                // Calculate the winner
+                // Temporary fight victory equasion
+                int winnerId;
+                int fighter1Score = Fighter1.WordCount + Fighter1.ReferenceCount + Fighter1.LinkCount;
+                int fighter2Score = Fighter2.WordCount + Fighter2.ReferenceCount + Fighter2.LinkCount;
+                if (fighter1Score > fighter2Score)
+                {
+                    winnerId = Fighter1.FighterId;
+                }
+                else
+                {
+                    winnerId = Fighter2.FighterId;
+                }
+
+                // Add winner to ViewData so that javascript can access it
+                ViewData["winnerId"] = winnerId;
+
                 return Page();
             }
 
@@ -83,6 +133,8 @@ namespace WikiWarriorsWebsite.Pages.Fight
                 .Include(f => f.Fighter2)
                 .Include(f => f.Winner).ToListAsync();*/
         }
+
+        /* The following code no longer used, we decided to move database updates to the selection page
 
         // Once the fight has concluded, make a POST request to add the fight record to the database
         public async Task<IActionResult> OnPostAsync()
@@ -121,5 +173,7 @@ namespace WikiWarriorsWebsite.Pages.Fight
                 loser = loserId.ToString()
             });
         }
+
+        */
     }
 }
