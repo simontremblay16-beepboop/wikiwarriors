@@ -108,19 +108,24 @@ namespace WikiWarriorsWebsite.Pages.Fight
                 // Calculate the winner
                 // Temporary fight victory equasion
                 int winnerId;
+                int loserId;
                 int fighter1Score = Fighter1.WordCount + Fighter1.ReferenceCount + Fighter1.LinkCount;
                 int fighter2Score = Fighter2.WordCount + Fighter2.ReferenceCount + Fighter2.LinkCount;
                 if (fighter1Score > fighter2Score)
                 {
                     winnerId = Fighter1.FighterId;
+                    loserId = Fighter2.FighterId;
                 }
                 else
                 {
                     winnerId = Fighter2.FighterId;
+                    loserId = Fighter1.FighterId;
                 }
 
-                // Add winner to ViewData so that javascript can access it
+                // Add winner and loser to ViewData so that javascript can access it
                 ViewData["winnerId"] = winnerId;
+                ViewData["loserId"] = loserId;
+
 
                 return Page();
             }
