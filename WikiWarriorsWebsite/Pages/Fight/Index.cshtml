@@ -61,8 +61,8 @@
     // this will result in the popup for the winner appearing once it reloads
     function fightEnd() {
         const URLparameters = new URLSearchParams(window.location.search);
-        URLparameters.set('winner', '3');
-        URLparameters.set('loser', '2');
+        URLparameters.set('winner', '@ViewData["winnerId"]');
+        URLparameters.set('loser', '@ViewData["loserId"]');
         window.location.search = URLparameters;
     }
 
@@ -106,11 +106,11 @@
     .popup {
         display: @ViewData["popupDisplay"];
         position: fixed;
-        left: 10%;
-        right: 10%;
-        top: 5%;
-        bottom: 5%;
-        width: 80%;
+        left: 20%;
+        right: 20%;
+        top: 16%;
+        width: 60%;
+        height: 80%;
         border: 2px solid red;
         background-color: lightgray;
         z-index: 9;
@@ -120,6 +120,15 @@
         float: right;
     }
 
+    .imgWinner {
+        object-fit: cover;
+        width: 200px;
+        height: 200px;
+    }
+
+    divLink {
+        padding: 57px;
+    }
 
     /* Fight scene style*/
 
@@ -298,7 +307,7 @@
                 <img src="~/flame.png" style="width: 40%;" alt="Cool Flames" />
             <img src="~/flame.png" style="width: 40%;" alt="Cool Flames" />
             </div>
-            <img src="@ViewData["winnerImageUrl"]" alt="winner" class="imgSquare" />
+            <img src="@ViewData["winnerImageUrl"]" alt="winner" class="imgWinner" />
             <div class="divColumn">
             <img src="~/flame.png" style="width: 40%;" alt="Cool Flames" />
             <img src="~/flame.png" style="width: 40%;" alt="Cool Flames" />
@@ -306,47 +315,11 @@
         </div>
         <h3 class="text-center">@ViewData["winnerName"]</h3>
         <p class="text-center"> Won against @ViewData["loserName"]</p>
-    <div class="divRow">
+    <div class="divRow divLink">
         <a href="/Index">Home</a>
         <a href="/Selection">Create New Fight</a>
     </div>
 </div>
-
-<!--
-Debug code, only for use until the fight equation function is complete:
-<form method="post">
-    
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    
-   
-    <div class="form-group">
-        <label asp-for="NewFightRecord.Fighter1Id" class="control-label"></label>
-        <select asp-for="NewFightRecord.Fighter1Id" class="form-control" asp-items="Model.AllFighters"></select>
-    </div>
-    
-    <div class="form-group">
-        <label asp-for="NewFightRecord.Fighter2Id" class="control-label"></label>
-        <select asp-for="NewFightRecord.Fighter2Id" class="form-control" asp-items="Model.AllFighters"></select>
-    </div>
-    <div class="form-group">
-        <label asp-for="NewFightRecord.WinnerId" class="control-label"></label>
-        <select asp-for="NewFightRecord.WinnerId" class="form-control" asp-items="Model.AllFighters"></select>
-    </div>
-    <div class="form-group">
-        <label asp-for="NewFightRecord.FightDate" class="control-label"></label>
-        <input asp-for="NewFightRecord.FightDate" class="form-control" />
-        <span asp-validation-for="NewFightRecord.FightDate" class="text-danger"></span>
-    </div>
-    
-    <div class="form-group form-check">
-        <label class="form-check-label">
-            <input class="form-check-input" asp-for="NewFightRecord.DailyFight" /> @Html.DisplayNameFor(model => model.NewFightRecord.DailyFight)
-        </label>
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Create" class="btn btn-primary" />
-    </div>
-</form>-->
 
 @section Scripts {
     @{
