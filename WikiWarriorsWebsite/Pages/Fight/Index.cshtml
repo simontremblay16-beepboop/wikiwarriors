@@ -61,8 +61,8 @@
     // this will result in the popup for the winner appearing once it reloads
     function fightEnd() {
         const URLparameters = new URLSearchParams(window.location.search);
-        URLparameters.set('winner', '3');
-        URLparameters.set('loser', '2');
+        URLparameters.set('winner', '@ViewData["winnerId"]');
+        URLparameters.set('loser', '@ViewData["loserId"]');
         window.location.search = URLparameters;
     }
 
