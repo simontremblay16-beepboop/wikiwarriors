@@ -3,58 +3,45 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-        @ViewData["Title"] - WikiWarriorsWebsite
-    </title>
+    <title>@ViewData["Title"] - WikiWarriorsWebsite</title>
+
     <script type="importmap"></script>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WikiWarriorsWebsite.styles.css" asp-append-version="true" />
 </head>
-
-<body style="background-color:#222729; color:floralwhite;">
+<body>
 
     <nav class="navbar">
-
-        <div class="divFlexableRow">
-
-            <div class="divRow">
-
+        <div class="navInner">
+            <div class="brandBlock">
                 <img src="~/swordLeft.png"
-                     class="decorationImage"
-                     alt="Sword"
-                     style="max-width:20%" />
+                     class="navDecorationImage"
+                     alt="Sword" />
 
-                <h1>
-                    <a class="TitleHeader" href="/">
-                        Wiki Warriors
-                    </a>
+                <h1 class="siteTitle">
+                    <a class="TitleHeader" href="/">Wiki Warriors</a>
                 </h1>
 
                 <img src="~/swordRight.png"
-                     class="decorationImage"
-                     alt="Sword"
-                     style="max-width:20%" />
+                     class="navDecorationImage"
+                     alt="Sword" />
             </div>
 
-            <div class="divRow">
+            <div class="dropdown">
+                <button class="navMenuButton dropdown-toggle"
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Menu
+                </button>
 
-                <img src="~/flame.png"
-                     class="decorationImage"
-                     alt="Cool Flames"
-                     style="max-width:20%" />
-
-                <h2>
-                    <a style="text-decoration:none; color:maroon;"
-                       href="/Selection">
-                        FIGHT
-                    </a>
-                </h2>
-
-                <img src="~/flame.png"
-                     class="decorationImage"
-                     alt="Cool Flames"
-                     style="max-width:20%" />
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/">Home</a></li>
+                    <li><a class="dropdown-item" href="/Selection">Fight</a></li>
+                    <li><a class="dropdown-item" href="/Privacy">Privacy</a></li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -66,13 +53,9 @@
     </div>
 
     <footer class="footer">
-
         <div class="container">
-
-            &copy; 2026 - WikiWarriorsWebsite -
-            <a asp-area="" asp-page="/Privacy">
-                Privacy
-            </a>
+            &copy; 2026 - The League of Extraordinary Coders -
+            <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>
 

@@ -1,31 +1,150 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
 body {
-  margin-bottom: 60px;
+    background-color: #1b212a;
+    color: floralwhite;
+    font-family: "Inter", "Segoe UI", Arial, sans-serif;
+    margin: 0;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+main {
+    padding-top: 2rem;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #7d939e;
+    border-bottom: 1px solid black;
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.5);
+    overflow: visible;
+    padding: 12px 20px;
+}
+
+.navInner {
+    width: min(1100px, 100%);
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.brandBlock {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    text-align: center;
+}
+
+.siteTitle {
+    margin: 0;
+    font-family: "Cinzel", Georgia, serif;
+    font-size: clamp(1.4rem, 3vw, 3rem);
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.35);
+    line-height: 1;
+}
+
+.TitleHeader {
+    text-decoration: none;
+    color: black;
+}
+
+    .TitleHeader:hover {
+        color: #222121;
+    }
+
+.navDecorationImage {
+    width: clamp(56px, 8vw, 150px);
+    height: auto;
+    display: block;
+}
+
+.navMenuButton {
+    font-family: "Cinzel", Georgia, serif;
+    font-size: clamp(1rem, 1.4vw, 1.3rem);
+    background-color: #303b5b;
+    color: white;
+    border: 1px solid rgba(0, 0, 0, 0.35);
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+    .navMenuButton:hover,
+    .navMenuButton:focus {
+        background-color: #303945;
+        color: white;
+    }
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    min-width: 110px;
+    text-align: center;
+    background-color: #2a313d;
+    border: 1px solid #7d939e;
+    border-radius: 10px;
+    padding: 0.4rem 0;
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.35);
+}
+
+.dropdown-item {
+    color: floralwhite;
+    font-family: "Inter";
+    padding: 10px 16px;
+}
+
+    .dropdown-item:hover,
+    .dropdown-item:focus {
+        background-color: #3b4654;
+        color: white;
+    }
+
+.divRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 1rem;
+}
+
+.divColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footer {
+    position: relative;
+    width: 100%;
+    color: floralwhite;
+    margin-top: 3rem;
+    padding: 1rem 0 2rem;
+}
+
+    .footer a {
+        color: #9fc7ff;
+    }
+
+        .footer a:hover {
+            color: white;
+        }
+
+@media (max-width: 768px) {
+    .navInner {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .brandBlock {
+        gap: 0.75rem;
+    }
+
+    .navDecorationImage {
+        width: clamp(42px, 12vw, 90px);
+    }
 }
