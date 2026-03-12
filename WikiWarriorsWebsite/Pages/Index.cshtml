@@ -90,8 +90,8 @@
 </style>
 
 DEBUG INFO:
-<p>Current Date: <p id="currentDate"></p></p>
-<p>Last Daily Fight: <p id="lastDate"></p></p>
+<p>Current Date: <span id="currentDate"></span></p>
+<p>Last Daily Fight: <span id="lastDate"></span></p>
 
 <div class="text-center">
 
@@ -178,32 +178,60 @@ DEBUG INFO:
 @if (Model.FightHistory != null && Model.FightHistory.Count > 0)
 {
     <div class="globalFightsTable">
-        <table>
+        <table class="fightTable">
+            <colgroup>
+                <col class="colDate" />
+                <col class="colFighter" />
+                <col class="colFighter" />
+                <col class="colWinner" />
+                <col class="colDaily" />
+            </colgroup>
 
             <thead>
                 <tr>
-                    <th>@Html.DisplayNameFor(m => m.FightHistory[0].FightDate)</th>
-                    <th>@Html.DisplayNameFor(m => m.FightHistory[0].Fighter1.Name)</th>
-                    <th>@Html.DisplayNameFor(m => m.FightHistory[0].Fighter2.Name)</th>
-                    <th>@Html.DisplayNameFor(m => m.FightHistory[0].Winner)</th>
-                    <th>@Html.DisplayNameFor(m => m.FightHistory[0].DailyFight)</th>
+                    <th>Fight Date</th>
+                    <th>Fighter 1</th>
+                    <th>Fighter 2</th>
+                    <th>Winner</th>
+                    <th>Daily Match?</th>
                 </tr>
             </thead>
 
             <tbody>
                 @foreach (var item in Model.FightHistory.OrderByDescending(f => f.FightDate).Take(5))
                 {
-                <tr>
-                    <td>@Html.DisplayFor(m => item.FightDate)</td>
+                    <tr>
+                        <td>
+                            <span class="tableText">@item.FightDate.ToString("yyyy-MM-dd")</span>
+                        </td>
 
-                    <td><a href="@item.Fighter1.PageUrl">@Html.DisplayFor(m => item.Fighter1.Name)</a></td>
+                        <td>
+                            <a class="tableLink" href="@item.Fighter1.PageUrl">
+                                @item.Fighter1.Name
+                            </a>
+                        </td>
 
-                    <td><a href="@item.Fighter2.PageUrl">@Html.DisplayFor(m => item.Fighter2.Name)</a></td>
+                        <td>
+                            <a class="tableLink" href="@item.Fighter2.PageUrl">
+                                @item.Fighter2.Name
+                            </a>
+                        </td>
 
-                    <td>@Html.DisplayFor(m => item.Winner.Name)</td>
+                        <td>
+                            <span class="tableText">@item.Winner.Name</span>
+                        </td>
 
-                    <td>@Html.DisplayFor(m => item.DailyFight)</td>
-                </tr>
+                        <td>
+                            @if (item.DailyFight)
+                            {
+                                <input type="checkbox" checked disabled />
+                            }
+                            else
+                            {
+                                <input type="checkbox" disabled />
+                            }
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
