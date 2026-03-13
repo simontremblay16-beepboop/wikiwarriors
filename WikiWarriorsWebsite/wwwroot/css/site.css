@@ -111,6 +111,16 @@ main {
     gap: 1rem;
 }
 
+.divRowSpan {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 1rem;
+    font-family: "Cinzel", Georgia, serif;
+    color: white;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.8);
+}
+
 .divColumn {
     display: flex;
     flex-direction: column;
