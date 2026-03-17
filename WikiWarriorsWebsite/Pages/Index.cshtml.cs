@@ -60,16 +60,23 @@ namespace WikiWarriorsWebsite.Pages
             // This code will run if the CreateDaily url variable is set, indicating that its a new day and we must make a new daily fight
             if (CreateDaily != null)
             {
+
                 FightHistory NewFightRecord = new FightHistory();
                 // Get the fighter Ids for todays fight
-                string firstWikiURL = "https://en.wikipedia.org/wiki/Westminster_Cathedral"; // Get from API
-                string secondWikiURL = "https://en.wikipedia.org/wiki/Wikipedia"; // Get from API
+                // Uncomment once dataloader is added
+                //string firstWikiURL = "https://en.wikipedia.org/wiki/Westminster_Cathedral"; // Get from API
+                //string secondWikiURL = "https://en.wikipedia.org/wiki/Wikipedia"; // Get from API
 
                 // *** Do something to call dataloader, passing in to URLs so that the items are added to the database ***
 
                 // Collect info from database
-                Fighter Fighter1 = _context.Fighter.FirstOrDefault(m => m.PageUrl == firstWikiURL);
-                Fighter Fighter2 = _context.Fighter.FirstOrDefault(m => m.PageUrl == secondWikiURL);
+                // Uncomment once dataloader is added
+                //Fighter Fighter1 = _context.Fighter.FirstOrDefault(m => m.PageUrl == firstWikiURL);
+                //Fighter Fighter2 = _context.Fighter.FirstOrDefault(m => m.PageUrl == secondWikiURL);
+
+                // Comment out once dataloader added
+                Fighter Fighter1 = _context.Fighter.FirstOrDefault(m => m.FighterId == 1);
+                Fighter Fighter2 = _context.Fighter.FirstOrDefault(m => m.FighterId == 2);
 
                 // Calculate the winner
                 // Temporary fight victory equasion
@@ -99,6 +106,7 @@ namespace WikiWarriorsWebsite.Pages
                     _context.FightHistory.Add(NewFightRecord);
                     _context.SaveChanges();
                 }
+
             }
 
             // Load in FightHistory Table
@@ -147,10 +155,11 @@ namespace WikiWarriorsWebsite.Pages
             /*
             // Set dailyFightNum to be total daily fights, since we are always show the most
             // Recent daily fight
+            
             ViewData["dailyFightNum"] = DailyFightsDates.Count;
 
-            // Now find the index of the most recent fight
-            int mostRecentIndex = 0;
+                // Now find the index of the most recent fight
+                int mostRecentIndex = 0;
             DateTime mostRecentDate = DailyFightsDates[0];
             for (int i = 0; i < DailyFightsDates.Count; i++)
             {
