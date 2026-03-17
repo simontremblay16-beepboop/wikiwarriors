@@ -111,13 +111,20 @@
         top: 16%;
         width: 60%;
         height: 80%;
-        border: 2px solid red;
-        background-color: lightgray;
+        max-height: 430px;
+        max-width: 600px;
+        border: 1px solid black;
+        background-color: #303b5b;
+        border-radius: 8px;
         z-index: 9;
     }
 
     .btnClose {
+        margin: 5px;
         float: right;
+        border: 1px solid black;
+        background-color: #7d939e;
+        border-radius: 12px;
     }
 
     .imgWinner {
@@ -126,8 +133,8 @@
         height: 200px;
     }
 
-    divLink {
-        padding: 57px;
+    .divLink a {
+        text-decoration: none;
     }
 
     /* Fight scene style*/
@@ -299,9 +306,9 @@
 </div>
 
 <div class="popup" id="divPopup">
-        <button type="button" class="btnClose" onclick="hidePopup()">X</button>
-        <h1 class="text-center">:::WINNER:::</h1>
-        <h2 class="text-center">GAGNANT!</h2>
+    <button type="button" class="btnClose" onclick="hidePopup()">X</button>
+    <h1 class="text-center siteTitle">:::WINNER:::</h1>
+    <h2 class="text-center siteTitle">GAGNANT!</h2>
         <div class="divRow">
             <div class="divColumn">
                 <img src="~/flame.png" style="width: 40%;" alt="Cool Flames" />
@@ -313,8 +320,8 @@
             <img src="~/flame.png" style="width: 40%;" alt="Cool Flames" />
             </div>
         </div>
-        <h3 class="text-center">@ViewData["winnerName"]</h3>
-        <p class="text-center"> Won against @ViewData["loserName"]</p>
+    <h3 class="text-center">@ViewData["winnerName"]</h3>
+    <p class="text-center"> Won against @ViewData["loserName"]</p>
     <div class="divRow divLink">
         <a href="/Index">Home</a>
         <a href="/Selection">Create New Fight</a>
