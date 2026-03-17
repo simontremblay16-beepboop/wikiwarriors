@@ -61,16 +61,22 @@ namespace WikiWarriorsWebsite.Pages
             if (CreateDaily != null)
             {
 
-                    FightHistory NewFightRecord = new FightHistory();
+                FightHistory NewFightRecord = new FightHistory();
                 // Get the fighter Ids for todays fight
-                string firstWikiURL = "https://en.wikipedia.org/wiki/Westminster_Cathedral"; // Get from API
-                string secondWikiURL = "https://en.wikipedia.org/wiki/Wikipedia"; // Get from API
+                // Uncomment once dataloader is added
+                //string firstWikiURL = "https://en.wikipedia.org/wiki/Westminster_Cathedral"; // Get from API
+                //string secondWikiURL = "https://en.wikipedia.org/wiki/Wikipedia"; // Get from API
 
                 // *** Do something to call dataloader, passing in to URLs so that the items are added to the database ***
 
                 // Collect info from database
-                Fighter Fighter1 = _context.Fighter.FirstOrDefault(m => m.PageUrl == firstWikiURL);
-                Fighter Fighter2 = _context.Fighter.FirstOrDefault(m => m.PageUrl == secondWikiURL);
+                // Uncomment once dataloader is added
+                //Fighter Fighter1 = _context.Fighter.FirstOrDefault(m => m.PageUrl == firstWikiURL);
+                //Fighter Fighter2 = _context.Fighter.FirstOrDefault(m => m.PageUrl == secondWikiURL);
+
+                // Comment out once dataloader added
+                Fighter Fighter1 = _context.Fighter.FirstOrDefault(m => m.FighterId == 1);
+                Fighter Fighter2 = _context.Fighter.FirstOrDefault(m => m.FighterId == 2);
 
                 // Calculate the winner
                 // Temporary fight victory equasion
@@ -95,10 +101,13 @@ namespace WikiWarriorsWebsite.Pages
                 NewFightRecord.Fighter1 = _context.Fighter.FirstOrDefault(m => m.FighterId == NewFightRecord.Fighter1Id);
                 NewFightRecord.Fighter2 = _context.Fighter.FirstOrDefault(m => m.FighterId == NewFightRecord.Fighter2Id);
                 NewFightRecord.Winner = _context.Fighter.FirstOrDefault(m => m.FighterId == NewFightRecord.WinnerId);
-
+                if (ModelState.IsValid)
+                {
+                    _context.FightHistory.Add(NewFightRecord);
+                    _context.SaveChanges();
                 }
 
-            
+            }
 
             // Load in FightHistory Table
             FightHistory = _context.FightHistory
