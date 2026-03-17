@@ -73,7 +73,7 @@ public class SearchService
     private async Task<List<ResultStruct>> SearchWikipedia(string name)
     {
         string wikiUrl =
-            $"https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch={name}&gsrlimit=5&format=json&titles={name}&prop=info|pageimages|description&inprop=url&piprop=original";
+            $"https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch={name}&gsrlimit=8&format=json&titles={name}&prop=info|pageimages|description&inprop=url&piprop=original";
 
               
       

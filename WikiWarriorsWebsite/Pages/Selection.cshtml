@@ -5,47 +5,35 @@
 }
 
 <form method="post">
-    <input asp-for="Name" />
-    <button type="submit">Search</button>
+    <div class="searchBar">
+        <input asp-for="Name" />
+        <button type="submit">Search</button>
+        <button type="submit">Choose Fighter</button>
+    </div>
+
+    @if (Model.Results?.Count > 0)
+    {
+        <h3>Results</h3>
+
+        <div class="playerCards">
+            @foreach (var result in Model.Results)
+            {
+                <label class="playerCard">
+                    <input class="cardRadio"
+                           name="PageId"
+                           type="radio"
+                           value="@result.PageId" />
+
+                    <img src="@result.ImageUrl.Source" alt="@result.Title" />
+
+                    <div class="cardTitle">@result.Title</div>
+                    <p class="cardDescription">@result.Description</p>
+                </label>
+            }
+        </div>
+
+    }
 </form>
-
-@if (Model.Results?.Count > 0)
-{
-    <h3>Results</h3>
-
-    <table>
-        <thead>
-            <tr>
-                <td>Preview</td>
-            </tr>
-            <tr>
-				<td>Title</td>
-            </tr>
-            <tr>
-                <td>Description</td>
-            </tr>
-            
-        </thead>
-        <tbody>
-        @foreach (var result in Model.Results)
-        {
-            <input type="hidden" value="@result.PageId"/>
-            <tr>
-                <td><img src="@result.ImageUrl.Source"/></td>
-            </tr>
-            <tr>
-                <td>@result.Title</td>
-            </tr>
-                <tr>
-                    <td>@result.Description</td>
-                </tr>
-        }
-        </tbody>
-    </table>
-}
-
-
-
 
 
 
