@@ -128,19 +128,23 @@ main {
 
     .footer a {
         color: #9fc7ff;
+        text-decoration: none;
     }
 
         .footer a:hover {
             color: white;
+            text-decoration-line: underline;
         }
 
 .divLink a {
     color: #9fc7ff;
+    text-decoration: none;
 }
 
-.divLink a:hover {
-    color: white;
-}
+    .divLink a:hover {
+        color: white;
+        text-decoration-line: underline;
+    }
 
 @media (max-width: 768px) {
     .navInner {

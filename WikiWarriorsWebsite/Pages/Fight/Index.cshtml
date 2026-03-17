@@ -40,6 +40,12 @@
         // Animating fight
         animateFighter(1, fightersFrames[0]);
         animateFighter(2, fightersFrames[1]);
+    }
+
+    function beginFight() {
+        // Show fight timer
+        document.getElementById("divTimer").style.display = 'block';
+        document.getElementById("btnFight").style.display = 'none';
         // Set timer for end of the fight
         // (Only if we don't already have the URL variables for the victory popup)
         const URLparameters = new URLSearchParams(window.location.search);
@@ -54,6 +60,9 @@
         // If we already have the popup, we will hide the GIF
         else {
             document.getElementById("imgExplosion").style.display = 'none';
+            //// Play the "Winner Gagnant sound"
+            //var snd = new Audio("winnerSound.mp3");
+            //snd.play();
         }
     }
 
@@ -68,7 +77,7 @@
 
     // Draw a single fighter
     function animateFighter (fighterNum, fighterFrame) {
-        console.log(fighterFrame)
+        //console.log(fighterFrame)
         for (let x = 0; x < 5; x ++) {
             for (let y = 0; y < 5; y ++) {
                 var element = document.getElementsByClassName('image' + x + y)[fighterNum - 1];
@@ -113,20 +122,51 @@
         height: 80%;
         max-height: 430px;
         max-width: 600px;
-        border: 1px solid black;
+        border: 4px solid #23243B;
         background-color: #303b5b;
         border-radius: 8px;
         z-index: 9;
+        box-shadow: 0 8px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .victoryTitle {
+        position: absolute;
+        left: 50%;
+        right: 50%;
     }
 
     .btnClose {
-        margin: 5px;
+        
         float: right;
+        
+    }
+
+    #divTimer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    button {
+        margin: 5px;
         border: 1px solid black;
         background-color: #7d939e;
         border-radius: 12px;
     }
 
+    .btnAlign {
+        margin: 5px;
+        float: left;
+        border: 1px solid black;
+        background-color: #7d939e;
+        border-radius: 12px;
+        visibility: hidden;
+    }
+
+    .btn:hover {
+        background-color: #9aacb5;
+    }
+    
     .imgWinner {
         object-fit: cover;
         width: 200px;
@@ -135,9 +175,30 @@
 
     .divLink a {
         text-decoration: none;
+        color: black;/*#9fc7ff;*/
+        margin: 5px;
+        float: right;
+        border: 1px solid black;
+        background-color: #7d939e;
+        border-radius: 12px;
+        padding-left: 4px;
+        padding-right: 4px;
+        padding-bottom: 2px;
+    }
+
+    .divLink a:hover {
+        /*color: white;*/
+        /*text-decoration-line: underline;*/
+        background-color: #9aacb5;
+        text-decoration: none;
+        color: black;
     }
 
     /* Fight scene style*/
+
+    #divTimer {
+        display: none;
+    }
 
     .divColumn {
         height: stretch;
@@ -242,9 +303,11 @@
     </div>
 
     <div class="divColumn">
-        <h3>Fight time remaining:</h3>
-        <h3 id="timer">0.000</h3>
-        <img id="imgExplosion" src="~/explosion.gif" alt="explosion" style="width: 100%" />
+        <button type="button" onclick="beginFight()" id="btnFight">FIGHT</button>
+        <div id="divTimer">
+            <h3 id="timer">0.000</h3>
+            <img id="imgExplosion" src="~/explosion.gif" alt="explosion" style="width: 100%" />
+        </div>
     </div>
     
     <div style="max-width: 33%">
@@ -306,26 +369,27 @@
 </div>
 
 <div class="popup" id="divPopup">
-    <button type="button" class="btnClose" onclick="hidePopup()">X</button>
+    <button type="button" class="btnClose" onclick="hidePopup()">✖</button>
+    <button type="button" class="btnAlign">✖</button>
     <h1 class="text-center siteTitle">:::WINNER:::</h1>
     <h2 class="text-center siteTitle">GAGNANT!</h2>
-        <div class="divRow">
-            <div class="divColumn">
-                <img src="~/flame.png" style="width: 40%;" alt="Cool Flames" />
-            <img src="~/flame.png" style="width: 40%;" alt="Cool Flames" />
-            </div>
-            <img src="@ViewData["winnerImageUrl"]" alt="winner" class="imgWinner" />
-            <div class="divColumn">
-            <img src="~/flame.png" style="width: 40%;" alt="Cool Flames" />
-            <img src="~/flame.png" style="width: 40%;" alt="Cool Flames" />
-            </div>
+    <div class="divRow">
+        <div class="divColumn">
+            <img src="~/flame.gif" style="width: 40%;" alt="Cool Flames" />
         </div>
+        <img src="@ViewData["winnerImageUrl"]" alt="winner" class="imgWinner" />
+        <div class="divColumn">
+            <img src="~/flame.gif" style="width: 40%;" alt="Cool Flames" />
+        </div>
+    </div>
     <h3 class="text-center">@ViewData["winnerName"]</h3>
     <p class="text-center"> Won against @ViewData["loserName"]</p>
     <div class="divRow divLink">
         <a href="/Index">Home</a>
         <a href="/Selection">Create New Fight</a>
+        <button type="button" class="btnClose" onclick="hidePopup()">Close</button>
     </div>
+    <p>Flame GIF courtesy meganlockhart on Tenor</p>
 </div>
 
 @section Scripts {
