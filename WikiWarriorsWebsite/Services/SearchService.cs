@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Headers;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using WikiWarriorsWebsite.Models;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -11,13 +12,21 @@ public class SearchService
         // hey I just delcared you,
     private readonly IConfiguration _config;
     private readonly HttpClient _httpClient;
+    private readonly WikiWarriorsWebsite.Data.WikiWarriorsWebsiteContext _context;
 
-        //and this constructor is crazy,
-    public SearchService(IConfiguration config, HttpClient httpClient)
+
+    //and this constructor is crazy,
+    public SearchService(IConfiguration config, HttpClient httpClient, WikiWarriorsWebsite.Data.WikiWarriorsWebsiteContext context)
     {
         //but here's my config and httpclient,
         _config = config;
         _httpClient = httpClient;
+        _context = context;
+    }
+
+    public async Task<bool> DoesDatabaseHaveItAsync(int id) 
+    {
+       return _context.Fighter.Any(x =>x.FighterId == id);
     }
 
     public async Task<int> SaveSelectedArticleInfoAsync(int PageId)
@@ -27,41 +36,31 @@ public class SearchService
         //check fighter DB if result exists.
 
         //if yes load that and return 1
-        if (result == 1000) //fake code
+        if (await DoesDatabaseHaveItAsync(PageId)) //fake code
         {
             result = 1;
-            //code goes here
             return result;
         }
         //else create fighter below and return 2
         else {
             //word count??
             //test pageId: 18978754
-            string wikiUrl = $"https://en.wikipedia.org/w/api.php?action=query&pageids={PageId}&format=json&prop=extlinks|extracts|links|pageimages&ellimit=max&pllimit=max&explaintext&piprop=original";
+            string wikiUrl = $"https://en.wikipedia.org/w/api.php?action=query&pageids={PageId}&format=json&prop=extlinks|info|extracts|links|pageimages&ellimit=max&inprop=url&pllimit=max&explaintext&piprop=original";
 
             string json = await _httpClient.GetStringAsync(wikiUrl);
             SResultRoot? resultsObj = JsonConvert.DeserializeObject<SResultRoot>(json);
-
-            foreach (var prop in resultsObj.query.pages.Values) {
-
-            }
-
+            
+            Fighter newFighter = new Fighter();
+            newFighter.FighterId = resultsObj.query.Info._id;
+            newFighter.Name = resultsObj.query.Info._Name;
+            newFighter.LinkCount = resultsObj.query.Info._Links;
+            newFighter.ReferenceCount = resultsObj.query.Info._References;
+            newFighter.WordCount = resultsObj.query.Info._Wordcount;
+            newFighter.PageUrl = resultsObj.query.Info._ArticleUrl;
+            newFighter.ImageUrl = resultsObj.query.Info._ImageUrl;
             return 2;
         }
 
-        //I need to search the selected page and get its:
-        //Thumbnail URL
-        //Word count
-        //Links
-        //References
-
-        //t
-
-        // use "fullurl" in the response to get only the article URL
-        //Thumbnail URL (https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&piprop=thumbnail},
-        //Links (https://en.wikipedia.org/w/api.php?action=query&),
-        //References (https://en.wikipedia.org/w/api.php?action=query& ),
-        //and Word Count (https://en.wikipedia.org/w/api.php?action=query& extracts with prop:explaintext)
 
     }
     public async Task<List<ResultStruct>> Search(string name)
