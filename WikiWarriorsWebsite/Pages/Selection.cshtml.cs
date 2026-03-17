@@ -5,8 +5,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using WikiWarriorsWebsite.Controllers;
+using Microsoft.AspNetCore.Mvc.Rendering;   
 using WikiWarriorsWebsite.Data;
 using WikiWarriorsWebsite.Models;
 
@@ -20,23 +19,16 @@ namespace WikiWarriorsWebsite.Pages
 
         public SelectionModel(SearchService searcher) { _searcher = searcher;}
         [BindProperty]
-        public string Name { get; set; }
+        public string? Name { get; set; }
+        [BindProperty]
+        public int? PageId { get; set; }
 
-        public List<string> Results { get; set; }
+        public List<ResultStruct>? Results { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
-
-            Results = await _searcher.Search(Name);
-
-
-            if (ModelState.IsValid) {
-                Console.WriteLine("WORKS");
-            }
             
-            Console.WriteLine("done");
-           
-            Console.WriteLine("...");
+            Results = await _searcher.Search(Name);
 
             return Page();
         }

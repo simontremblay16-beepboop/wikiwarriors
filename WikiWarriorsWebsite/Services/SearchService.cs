@@ -1,6 +1,8 @@
-﻿using Microsoft.Data.SqlClient;
-using System.Net.Http.Headers;
-using System.Text.Json;
+﻿using System.Net.Http.Headers;
+using Microsoft.Data.SqlClient;
+using Newtonsoft.Json;
+using WikiWarriorsWebsite.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public class SearchService
 {
@@ -18,62 +20,86 @@ public class SearchService
         _httpClient = httpClient;
     }
 
-    
-    public async Task<List<string>> Search(string name)
+    public async Task<int> SaveSelectedArticleInfoAsync(int PageId)
     {
-        // Currently prefer Wikipedia search. In future we can search local DB first.
+        int result = 0;
+
+        //check fighter DB if result exists.
+
+        //if yes load that and return 1
+        if (result == 1000) //fake code
+        {
+            result = 1;
+            //code goes here
+            return result;
+        }
+        //else create fighter below and return 2
+        else {
+            //word count??
+            //test pageId: 18978754
+            string wikiUrl = $"https://en.wikipedia.org/w/api.php?action=query&pageids={PageId}&format=json&prop=extlinks|extracts|links|pageimages&ellimit=max&pllimit=max&explaintext&piprop=original";
+
+            string json = await _httpClient.GetStringAsync(wikiUrl);
+            SResultRoot? resultsObj = JsonConvert.DeserializeObject<SResultRoot>(json);
+
+            foreach (var prop in resultsObj.query.pages.Values) {
+
+            }
+
+            return 2;
+        }
+
+        //I need to search the selected page and get its:
+        //Thumbnail URL
+        //Word count
+        //Links
+        //References
+
+        //t
+
+        // use "fullurl" in the response to get only the article URL
+        //Thumbnail URL (https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&piprop=thumbnail},
+        //Links (https://en.wikipedia.org/w/api.php?action=query&),
+        //References (https://en.wikipedia.org/w/api.php?action=query& ),
+        //and Word Count (https://en.wikipedia.org/w/api.php?action=query& extracts with prop:explaintext)
+
+    }
+    public async Task<List<ResultStruct>> Search(string name)
+    {
         var results = await SearchWikipedia(name);
         return results;
     }
-    //search fighters database
-    //private async Task<List<string>> SearchDatabase(string name)
-    //{
-    //    var results = new List<string>();
 
-    //    using SqlConnection conn =
-    //        new SqlConnection(_config.GetConnectionString("WikiWarriorsWebsiteContext"));
-
-    //    await conn.OpenAsync();
-
-    //    string query = @"
-    //        SELECT Name
-    //        FROM dbo.Fighter
-    //        WHERE Name LIKE @search
-    //        OR SOUNDEX(Name) = SOUNDEX(@name)";
-
-    //    using SqlCommand cmd = new SqlCommand(query, conn);
-    //    cmd.Parameters.AddWithValue("@search", "%" + name + "%");
-    //    cmd.Parameters.AddWithValue("@name", name);
-
-    //    using SqlDataReader reader = await cmd.ExecuteReaderAsync();
-
-    //    while (await reader.ReadAsync())
-    //    {
-    //        results.Add(reader.GetString(0));
-    //    }
-
-    //    return results;
-    //}
-
-    private async Task<List<string>> SearchWikipedia(string name)
+    private async Task<List<ResultStruct>> SearchWikipedia(string name)
     {
         string wikiUrl =
-            $"https://en.wikipedia.org/w/api.php?action=opensearch&search={name}&limit=10&namespace=0&format=json";
+            $"https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch={name}&gsrlimit=5&format=json&titles={name}&prop=info|pageimages|description&inprop=url&piprop=original";
 
-        //api requests a JSON document containing results from wikipedia query
-        JsonDocument response =  await _httpClient.GetFromJsonAsync<JsonDocument>(wikiUrl);
+              
+      
+        //get json from api query
+        string json = await _httpClient.GetStringAsync(wikiUrl);
+        // read raw JSON and deserialize 
+        ResultRoot? resultsObj = JsonConvert.DeserializeObject<ResultRoot>(json);
 
-        //the document, cut into bite sized pieces
-        var data = JsonSerializer.Deserialize<JsonElement>(response);
-        //create an empty array
-        var results = new List<string>();
-
-        //for each result from the query add each piece into 
-        foreach (var item in data[1].EnumerateArray())
+        var resultsList = new List<ResultStruct>();
+        // check if the results are valid
+        if (resultsObj?.query?.pages != null)
         {
-            results.Add(item.GetString());
+            foreach (var page in resultsObj.query.pages.Values)
+            {
+                resultsList.Add(new ResultStruct
+                {
+                    PageId = page.PageId,
+                    Title = page.Title,
+                    Description = page.Description,
+                    ArticleUrl = page.ArticleUrl,
+                    ImageUrl = page.ImageUrl
+                });
+            }
         }
-        //now return the resulting array of results :)
-        return results;
+
+        return resultsList;
     }
+
 }
