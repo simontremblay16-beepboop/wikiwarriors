@@ -36,7 +36,7 @@ namespace WikiWarriorsWebsite.Migrations
                     b.Property<DateTime>("FightDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Fighter1Id")
+                    b.Property<int?>("Fighter1Id")
                         .HasColumnType("int");
 
                     b.Property<int?>("Fighter2Id")
@@ -94,9 +94,7 @@ namespace WikiWarriorsWebsite.Migrations
                 {
                     b.HasOne("WikiWarriorsWebsite.Models.Fighter", "Fighter1")
                         .WithMany()
-                        .HasForeignKey("Fighter1Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Fighter1Id");
 
                     b.HasOne("WikiWarriorsWebsite.Models.Fighter", "Fighter2")
                         .WithMany()
