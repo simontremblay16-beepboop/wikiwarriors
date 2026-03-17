@@ -1,0 +1,60 @@
+﻿.btnClose {
+    float: right;
+}
+
+.globalFightsTable {
+    width: 100%;
+    margin: 10px 5px 5px 10px;
+    padding: 50px 10px;
+}
+
+.fightTable {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+    .fightTable col.colDate {
+        width: 12%;
+    }
+
+    .fightTable col.colFighter {
+        width: 24%;
+    }
+
+    .fightTable col.colWinner {
+        width: 20%;
+    }
+
+    .fightTable col.colDaily {
+        width: 14%;
+    }
+
+    .fightTable th,
+    .fightTable td {
+        padding: 5px;
+        text-align: left;
+        vertical-align: middle;
+        border-bottom: 1px solid grey;
+    }
+
+    .fightTable th {
+        border-bottom: 2px solid grey;
+        line-height: 1.2;
+        text-align: left;
+        background-color: #7d939eb4;
+    }
+
+.tableText,
+.tableLink {
+    display: block;
+    width: 100%;
+    overflow-wrap: normal;
+    word-break: break-word;
+    text-decoration: none;
+    text-align: left;
+}
+
+.fightTable tr:hover {
+    background-color: #00000041;
+}
