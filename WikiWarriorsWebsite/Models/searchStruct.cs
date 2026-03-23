@@ -1,4 +1,5 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Newtonsoft.Json;
 
@@ -68,6 +69,7 @@ namespace WikiWarriorsWebsite.Models
         public string _ArticleUrl;
 
         [JsonProperty("pageid")]
+        [Required]
         public int PageId { get; set; }
 
         [JsonProperty("title")]

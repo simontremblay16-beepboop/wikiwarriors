@@ -31,15 +31,15 @@ public class SearchService
 
     public async Task<int> SaveSelectedArticleInfoAsync(int PageId)
     {
-        int result = 0;
+        int resultCode = 0;
 
         //check fighter DB if result exists.
 
         //if yes load that and return 1
-        if (await DoesDatabaseHaveItAsync(PageId)) //fake code
+        if (await DoesDatabaseHaveItAsync(PageId)) 
         {
-            result = 1;
-            return result;
+            
+            return 1;
         }
         //else create fighter below and return 2
         else {
