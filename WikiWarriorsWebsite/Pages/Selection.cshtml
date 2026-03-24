@@ -3,12 +3,23 @@
 @{
     ViewData["Title"] = "Selection";
 }
+<script>
+    function Selection(SelectionID) {
+        document.getElementById("img1").src = SelectionID;
+        document.getElementById("img2").src = SelectionID;
+
+        console.log(SelectionID);
+    }
+</script>
 
 <form method="post">
     <div class="searchBar">
         <input asp-for="Name" />
         <button type="submit">Search</button>
-        <button type="submit">Choose Fighter</button>
+    </div>
+
+    <div class="fighterSelection">
+        <img id="img1" src="" alt="Fighter 1" />
     </div>
 
     @if (Model.Results?.Count > 0)
@@ -22,7 +33,7 @@
                     <input class="cardRadio"
                            name="PageId"
                            type="radio"
-                           value="@result.PageId" />
+                           value="@result.PageId" onclick="Selection('@result.ImageUrl.Source')"/>
 
                     <img src="@result.ImageUrl.Source" alt="@result.Title" />
 
