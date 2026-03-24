@@ -4,45 +4,40 @@
     ViewData["Title"] = "Selection";
 }
 
-<form method="post">
-    <input asp-for="Name" />
-    <button type="submit">Search</button>
+
+
+<form method="post" >
+    <div class="searchBar">
+        <input type="hidden" id="FOneID" asp-for="FOneID" />
+        <input type="hidden" id="FTwoID" asp-for="FTwoID" />
+
+        <input asp-for="Name" />
+        <button type="submit" onsubmit="saveSessioninfo()" asp-page-handler="Search">Search</button>
+        <button type="submit" onsubmit="saveSessioninfo()" asp-page-handler="Fight">Choose Fighter</button>
+    </div>
 </form>
+    @if (Model.Results?.Count > 0)
+    {
+        <h3>Results</h3>
 
-@if (Model.Results?.Count > 0)
-{
-    <h3>Results</h3>
+        <div class="playerCards">
+            @foreach (var result in Model.Results)
+            {
+                <label class="playerCard">
+                    <input class="cardRadio"
+                           name="PageId"
+                           type="radio"
+                           value="@result.PageId" />
 
-    <table>
-        <thead>
-            <tr>
-                <td>Preview</td>
-            </tr>
-            <tr>
-				<td>Title</td>
-            </tr>
-            <tr>
-                <td>Description</td>
-            </tr>
-            
-        </thead>
-        <tbody>
-        @foreach (var result in Model.Results)
-        {
-            <input type="hidden" value="@result.PageId"/>
-            <tr>
-                <td><img src="@result.ImageUrl.Source"/></td>
-            </tr>
-            <tr>
-                <td>@result.Title</td>
-            </tr>
-                <tr>
-                    <td>@result.Description</td>
-                </tr>
-        }
-        </tbody>
-    </table>
-    
-}
+                    <img src="@result.ImageUrl.Source" alt="@result.Title" />
+
+                    <div class="cardTitle">@result.Title</div>
+                    <p class="cardDescription">@result.Description</p>
+                </label>
+            }
+        </div>
+
+    }
+
 
 

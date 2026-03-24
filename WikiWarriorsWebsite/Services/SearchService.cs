@@ -31,7 +31,7 @@ public class SearchService
 
     public async Task<int> SaveSelectedArticleInfoAsync(int PageId)
     {
-        int resultCode = 0;
+       
 
         //check fighter DB if result exists.
 

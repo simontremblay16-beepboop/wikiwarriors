@@ -2,49 +2,75 @@
 //Helpful functions!
 //returns the element by id
 function $(a) { return document.getElementById(a); }
-//returns the element by class 
-function $$(a) { return document.getElementsByClassName(a); }
+//returns the elements by class in an array
+function $$(a) { return Array.from(document.getElementsByClassName(a)); }
 
 // Very helpful article for understanding debounce, rest arguments & spread syntax :D
 // https://levelup.gitconnected.com/debounce-from-scratch-8616c8209b54
+
+function gifss(a) {
+    if (a == 1) {
+        return sessionStorage.getItem("firstID");
+    }
+    else if (a == 2){
+        return sessionStorage.getItem("secondID");
+    }
+    else {
+        return "lookup failed!";
+    }
+
+}
 
 const debounce = (callback, delay) => {
     let timer;
 
     return (...args) => {
         clearTimeout(timer);
-
         timer = setTimeout(() => callback(...args), delay);
     };
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-
+    //if no fighters have been selected make the buttons add the first figther ID
     if (!sessionStorage.firstID) {
-        $$("btnSelection").addEventListener("click", (e) => {
-
-            sessionStorage.setItem("firstID", e.);
-            
+        let buttonArr = $$("cardRadio");
+        buttonArr.forEach(thing => {
+            thing.addEventListener("click", (evt) => {
+                sessionStorage.setItem("firstID", evt.target.value);
+                console.log(evt.target.value);
+            });
 
         });
     }
-    else if (!sessionStorage.secondID)
-    {
-        $$("btnSelection").addEventListener("click", setIDTwo);
+    //if the first fighter has been selected, make the buttons add the second figther ID instead
+    else if (!sessionStorage.secondID) {
+        let buttonArr = $$("cardRadio");
+        buttonArr.forEach(thing => {
+            thing.addEventListener("click", (evt) => {
+                sessionStorage.setItem("secondID", evt.target.value);
+                console.log(evt.target.value);
+            });
+
+        });
     }
+    else {
 
-    let selectedID = getCookieValue("id");
-
-    if (id) {
-        let cookieString;
-        cookieString = `Your name: ${name} || Your Favourite Cookie: ${favC}`;
-        $("pOutput").innerHTML = cookieString;
+        console.log(gifss(1))
+        console.log(gifss(2))
     }
 });
 
-function getCookieValue(key) {
-    //pain 
-    let temp = document.cookie.split("; ");
-    temp = temp.find((pair) => pair.startsWith(`${key}`))?.split("=")[1];
-    return temp
-}
+//<form method="post" onsubmit="saveSessioninfo()">
+//    <input type="hidden" id="hiddenSessionData" name="SessionData" />
+//    <button type="submit">Submit</button>
+//</form>
+function saveSessioninfo() {
+    const dataOne = gifss(1);
+    const dataTwo = gifss(2);
+    $("FOneID").value = dataOne;
+    $("FTwoID").value = dataTwo;
+}   
+
+
+
+
