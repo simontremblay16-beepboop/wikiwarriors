@@ -27,7 +27,6 @@ namespace WikiWarriorsWebsite.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            
             Results = await _searcher.Search(Name);
 
             return Page();
