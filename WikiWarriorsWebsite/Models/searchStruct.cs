@@ -38,8 +38,12 @@ namespace WikiWarriorsWebsite.Models
     }
     public class SResultQuery : ResultQuery
     {
+    
+
         [JsonProperty("pages")]
-        public NewFighterInfo Info { get; set; }
+        //public NewFighterInfo Info { get; set; }
+
+        public Dictionary<string, NewFighterInfo> Info {  get; set; }
 
     }
     public struct ResultStruct
@@ -98,8 +102,9 @@ namespace WikiWarriorsWebsite.Models
             return numWords;
         }
 
-        public NewFighterInfo()
+        public void doMagic()
         {
+
             _id = PageId;
             _Name = Title;
 

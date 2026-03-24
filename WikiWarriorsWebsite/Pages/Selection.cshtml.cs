@@ -36,7 +36,7 @@ namespace WikiWarriorsWebsite.Pages
 
         public async Task<IActionResult> OnPostFight()
         {
- 
+
             await _searcher.SaveSelectedArticleInfoAsync(FOneID);
             await _searcher.SaveSelectedArticleInfoAsync(FTwoID);
 

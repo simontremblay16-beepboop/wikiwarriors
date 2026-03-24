@@ -31,13 +31,20 @@ const debounce = (callback, delay) => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
+
+   // console.log(gifss(1));
+   // console.log(gifss(2));
+
     //if no fighters have been selected make the buttons add the first figther ID
     if (!sessionStorage.firstID) {
         let buttonArr = $$("cardRadio");
         buttonArr.forEach(thing => {
             thing.addEventListener("click", (evt) => {
                 sessionStorage.setItem("firstID", evt.target.value);
+                $("FOneID").value = evt.target.value;
                 console.log(evt.target.value);
+                console.log(gifss(1));
+
             });
 
         });
@@ -48,7 +55,9 @@ document.addEventListener("DOMContentLoaded", () => {
         buttonArr.forEach(thing => {
             thing.addEventListener("click", (evt) => {
                 sessionStorage.setItem("secondID", evt.target.value);
+                $("FTwoID").value = evt.target.value;
                 console.log(evt.target.value);
+                console.log(gifss(2));
             });
 
         });
@@ -60,16 +69,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-//<form method="post" onsubmit="saveSessioninfo()">
-//    <input type="hidden" id="hiddenSessionData" name="SessionData" />
-//    <button type="submit">Submit</button>
-//</form>
 function saveSessioninfo() {
-    const dataOne = gifss(1);
-    const dataTwo = gifss(2);
-    $("FOneID").value = dataOne;
-    $("FTwoID").value = dataTwo;
+    $("FOneID").value = gifss(1);
+    $("FTwoID").value = gifss(2);
 }   
+
 
 
 

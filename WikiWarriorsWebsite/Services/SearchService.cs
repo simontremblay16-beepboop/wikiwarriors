@@ -48,16 +48,42 @@ public class SearchService
             string wikiUrl = $"https://en.wikipedia.org/w/api.php?action=query&pageids={PageId}&format=json&prop=extlinks|info|extracts|links|pageimages&ellimit=max&inprop=url&pllimit=max&explaintext&piprop=original";
 
             string json = await _httpClient.GetStringAsync(wikiUrl);
+
             SResultRoot? resultsObj = JsonConvert.DeserializeObject<SResultRoot>(json);
-            
             Fighter newFighter = new Fighter();
-            newFighter.FighterId = resultsObj.query.Info._id;
-            newFighter.Name = resultsObj.query.Info._Name;
-            newFighter.LinkCount = resultsObj.query.Info._Links;
-            newFighter.ReferenceCount = resultsObj.query.Info._References;
-            newFighter.WordCount = resultsObj.query.Info._Wordcount;
-            newFighter.PageUrl = resultsObj.query.Info._ArticleUrl;
-            newFighter.ImageUrl = resultsObj.query.Info._ImageUrl;
+
+            foreach (var item in resultsObj.query.Info) 
+            {
+                item.Value.doMagic();
+                newFighter.FighterId = item.Value._id;
+                newFighter.Name = item.Value._Name;
+                newFighter.LinkCount = item.Value._Links;
+                newFighter.ReferenceCount = item.Value._References;
+                newFighter.WordCount = item.Value._Wordcount;
+                newFighter.PageUrl = item.Value._ArticleUrl;
+                newFighter.ImageUrl = item.Value._ImageUrl;
+
+  
+                _context.Database.OpenConnection();
+
+                try
+                {
+                    _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Fighter ON");
+                    _context.Fighter.Add(newFighter);
+                    await _context.SaveChangesAsync();
+                    _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Fighter OFF");
+                }
+                catch (Exception ex)
+                {
+                    // Handle any exceptions
+                    Console.WriteLine(ex.Message);
+                }
+                finally
+                {
+                       
+                    _context.Database.CloseConnection();
+                }
+            }
             return 2;
         }
 
