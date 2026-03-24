@@ -74,7 +74,22 @@ function saveSessioninfo() {
     $("FTwoID").value = gifss(2);
 }   
 
+function getTFA() {
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = String(today.getMonth() + 1).padStart(2, '0');
+    let day = String(today.getDate()).padStart(2, '0');
+    let url = `https://api.wikimedia.org/feed/v1/wikipedia/en/featured/${year}/${month}/${day}`;
 
+    let response = await fetch(url,
+        {
+            headers: {
+                'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
+                'Api-User-Agent': 'WikiWarriorsWebsite/1.0 (strembl6@confederationcollege.ca)'
+            }
+        }
+    );
+}
 
 
 
