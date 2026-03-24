@@ -64,8 +64,31 @@ public class SearchService
                 newFighter.ReferenceCount = item.Value._References;
                 newFighter.WordCount = item.Value._Wordcount;
                 newFighter.PageUrl = item.Value._ArticleUrl;
-                newFighter.ImageUrl = item.Value._ImageUrl;
 
+                // Sometimes there is no image url
+                newFighter.ImageUrl = item.Value._ImageUrl;
+                if (newFighter.ImageUrl == null)
+                {
+                    // If no image is found, use backup image api
+                    try
+                    {
+                        string backupImageUrl = "https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=name&titles=" + newFighter.Name;
+                        string backupJson = await _httpClient.GetStringAsync(backupImageUrl);
+                        dynamic backupObj = JsonConvert.DeserializeObject(backupJson);
+                        newFighter.ImageUrl = (string)backupObj.pageimage;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+
+                    // If we STILL have no image url
+                    if (newFighter.ImageUrl == null)
+                    {
+                        newFighter.ImageUrl = "image not found";
+                    }
+
+                }
   
                 _context.Database.OpenConnection();
 
@@ -130,15 +153,34 @@ public class SearchService
         return resultsList;
     }
 
-    public async Task<string> GetFeaturedArticle()
+    public async Task<int> GetFeaturedArticle(string y, string m, string d)
     {
-        string result = "nothing";
+        int result = 0;
 
-        string wikiUrl = "https://en.wikipedia.org/w/api.php?action=query&pageids=18978754&format=json&prop=extlinks|extracts|links|pageimages&ellimit=max&pllimit=max&explaintext&piprop=original";
+        string wikiUrl = "https://api.wikimedia.org/feed/v1/wikipedia/en/featured/" + y + "/" + m + "/" + d;
 
         string json = await _httpClient.GetStringAsync(wikiUrl);
 
-        //result = json;
+        dynamic obj = JsonConvert.DeserializeObject(json);
+        //Console.WriteLine(obj.tfa.pageid);
+
+        result = int.Parse(((string)obj.tfa.pageid));
+
+        return result;
+    }
+
+    public async Task<int> GetInTheNews(string y, string m, string d)
+    {
+        int result = 0;
+
+        string wikiUrl = "https://api.wikimedia.org/feed/v1/wikipedia/en/featured/" + y + "/" + m + "/" + d;
+
+        string json = await _httpClient.GetStringAsync(wikiUrl);
+
+        dynamic obj = JsonConvert.DeserializeObject(json);
+        //Console.WriteLine(obj.tfa.pageid);
+
+        result = int.Parse(((string)obj.news[0].links[0].pageid));
 
         return result;
     }
