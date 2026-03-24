@@ -57,22 +57,27 @@
             countDownEnd = currentTime + FIGHT_DURATION;
             setInterval(countDown, 1);
         }
-        // If we already have the popup, we will hide the GIF
-        else {
-            document.getElementById("imgExplosion").style.display = 'none';
-            //// Play the "Winner Gagnant sound"
-            //var snd = new Audio("winnerSound.mp3");
-            //snd.play();
-        }
+        //// If we already have the popup, we will hide the GIF
+        // else {
+        //     document.getElementById("imgExplosion").style.display = 'none';
+        //     //// Play the "Winner Gagnant sound"
+        //     //var snd = new Audio("winnerSound.mp3");
+        //     //snd.play();
+        // }
     }
 
     // The fightEnd function will just redirect to the fight page with URL variables to indecate who won
     // this will result in the popup for the winner appearing once it reloads
     function fightEnd() {
-        const URLparameters = new URLSearchParams(window.location.search);
-        URLparameters.set('winner', '@ViewData["winnerId"]');
-        URLparameters.set('loser', '@ViewData["loserId"]');
-        window.location.search = URLparameters;
+        //const URLparameters = new URLSearchParams(window.location.search);
+        //URLparameters.set('winner', '@ViewData["winnerId"]');
+        //URLparameters.set('loser', '@ViewData["loserId"]');
+        //window.location.search = URLparameters;
+        document.getElementById("divPopup").style.display = "block";
+        document.getElementById("imgExplosion").style.display = 'none';
+        // Play the "Winner Gagnant sound"
+        var snd = new Audio("winnerSound.mp3");
+        snd.play();
     }
 
     // Draw a single fighter
@@ -113,7 +118,7 @@
 
     /* Popup style */
     .popup {
-        display: @ViewData["popupDisplay"];
+        display: none;
         position: fixed;
         left: 20%;
         right: 20%;
@@ -347,7 +352,7 @@
 
 <p>-Explosion gif from: https://explode.moth.monster/</p>
 
-<div>
+@* <div>
     Debug info:
     <p>fighter1Id = @ViewData["fighter1Id"]</p>
     <p>fighter1Name = @ViewData["fighter1Name"]</p>
@@ -366,7 +371,7 @@
     <p>fighter2LinkCount = @ViewData["fighter2LinkCount"]</p>
     <br />
      <p>winnerId = @ViewData["winnerId"]</p>
-</div>
+</div> *@
 
 <div class="popup" id="divPopup">
     <button type="button" class="btnClose" onclick="hidePopup()">✖</button>
@@ -377,7 +382,7 @@
         <div class="divColumn">
             <img src="~/flame.gif" style="width: 40%;" alt="Cool Flames" />
         </div>
-        <img src="@ViewData["winnerImageUrl"]" alt="winner" class="imgWinner" />
+        <img src="@ViewData["winnerImageUrl"]" alt="winner" class="imgWinner" id="imgWinnerElement" />
         <div class="divColumn">
             <img src="~/flame.gif" style="width: 40%;" alt="Cool Flames" />
         </div>
