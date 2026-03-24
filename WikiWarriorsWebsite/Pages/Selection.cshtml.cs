@@ -22,12 +22,24 @@ namespace WikiWarriorsWebsite.Pages
         public string? Name { get; set; }
         [BindProperty]
         public int? PageId { get; set; }
-
+        [BindProperty]
+        public int FOneID { get; set; }
+        [BindProperty]
+        public int FTwoID { get; set; }
         public List<ResultStruct>? Results { get; set; }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostSearch()
         {
             Results = await _searcher.Search(Name);
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostFight()
+        {
+
+            await _searcher.SaveSelectedArticleInfoAsync(FOneID);
+            await _searcher.SaveSelectedArticleInfoAsync(FTwoID);
 
             return Page();
         }
