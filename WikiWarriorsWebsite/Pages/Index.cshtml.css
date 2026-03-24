@@ -54,6 +54,9 @@
     text-decoration: none;
     text-align: left;
 }
+.tableLink:hover {
+    text-decoration: underline
+}
 
 .fightTable tr:hover {
     background-color: #00000041;
