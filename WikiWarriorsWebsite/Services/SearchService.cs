@@ -8,11 +8,11 @@ public class SearchService
 {
     //this is the service that will actually do the searching. I moved it to its own file so it can be used anywhere.
 
-        // hey I just delcared you,
+    // hey I just delcared you,
     private readonly IConfiguration _config;
     private readonly HttpClient _httpClient;
 
-        //and this constructor is crazy,
+    //and this constructor is crazy,
     public SearchService(IConfiguration config, HttpClient httpClient)
     {
         //but here's my config and httpclient,
@@ -34,7 +34,8 @@ public class SearchService
             return result;
         }
         //else create fighter below and return 2
-        else {
+        else
+        {
             //word count??
             //test pageId: 18978754
             string wikiUrl = $"https://en.wikipedia.org/w/api.php?action=query&pageids={PageId}&format=json&prop=extlinks|extracts|links|pageimages&ellimit=max&pllimit=max&explaintext&piprop=original";
@@ -42,7 +43,8 @@ public class SearchService
             string json = await _httpClient.GetStringAsync(wikiUrl);
             SResultRoot? resultsObj = JsonConvert.DeserializeObject<SResultRoot>(json);
 
-            foreach (var prop in resultsObj.query.pages.Values) {
+            foreach (var prop in resultsObj.query.pages.Values)
+            {
 
             }
 
@@ -75,8 +77,8 @@ public class SearchService
         string wikiUrl =
             $"https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch={name}&gsrlimit=5&format=json&titles={name}&prop=info|pageimages|description&inprop=url&piprop=original";
 
-              
-      
+
+
         //get json from api query
         string json = await _httpClient.GetStringAsync(wikiUrl);
         // read raw JSON and deserialize 
@@ -102,4 +104,16 @@ public class SearchService
         return resultsList;
     }
 
+    public async Task<string> GetFeaturedArticle()
+    {
+        string result = "nothing";
+
+        string wikiUrl = "https://en.wikipedia.org/w/api.php?action=query&pageids=18978754&format=json&prop=extlinks|extracts|links|pageimages&ellimit=max&pllimit=max&explaintext&piprop=original";
+
+        string json = await _httpClient.GetStringAsync(wikiUrl);
+
+        //result = json;
+
+        return result;
+    }
 }

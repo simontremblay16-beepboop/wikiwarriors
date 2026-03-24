@@ -1,3 +1,4 @@
+using Azure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -5,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using WikiWarriorsWebsite.Data;
 using WikiWarriorsWebsite.Models;
@@ -14,9 +16,13 @@ namespace WikiWarriorsWebsite.Pages
     public class IndexModel : PageModel
     {
         private readonly WikiWarriorsWebsite.Data.WikiWarriorsWebsiteContext _context;
-        public IndexModel(WikiWarriorsWebsite.Data.WikiWarriorsWebsiteContext context)
+
+        private readonly SearchService _searcher;
+
+        public IndexModel(WikiWarriorsWebsite.Data.WikiWarriorsWebsiteContext context, SearchService searcher)
         {
             _context = context;
+            _searcher = searcher;
         }
 
         // Access URL variables so that we can recieve the winner an loser for the victory popup
@@ -32,7 +38,7 @@ namespace WikiWarriorsWebsite.Pages
         // Fight history list object
         public IList<FightHistory> FightHistory { get; set; } = default!;
 
-        public void OnGet()
+        public async void OnGet()
         {
             // This code is only used if the page is called with
             // Url variables indicating that a "Victory" popup
@@ -61,6 +67,10 @@ namespace WikiWarriorsWebsite.Pages
             if (CreateDaily != null)
             {
 
+                // Get featured article with wiki API
+                //ViewData["featuredArticle"] = await _searcher.GetFeaturedArticle();
+
+                // Add daily fight
                 FightHistory NewFightRecord = new FightHistory();
                 // Get the fighter Ids for todays fight
                 // Uncomment once dataloader is added
@@ -194,7 +204,13 @@ namespace WikiWarriorsWebsite.Pages
             ViewData["dailyFightDate"] = parsedDate;
             ViewData["dailyFightFighter1ImageUrl"] = DailyFightsWinner.ImageUrl;
             ViewData["dailyFightFighter2ImageUrl"] = DailyFightsLoser.ImageUrl;
-        
+
+            // TODO: remove
+
+            ViewData["featuredArticle"] = await _searcher.GetFeaturedArticle();
+
+            ///////////////
+            
         }
 
 
