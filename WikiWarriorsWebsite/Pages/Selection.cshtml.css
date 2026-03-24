@@ -70,3 +70,11 @@
     background: white;
     border-radius: 6px;
 }
+
+.fighterSelection img{
+    display: inline;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+    max-width:300px;
+}

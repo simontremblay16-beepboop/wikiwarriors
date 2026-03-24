@@ -31,6 +31,7 @@ namespace WikiWarriorsWebsite.Pages
         public async Task<IActionResult> OnPostSearch()
         {
             Results = await _searcher.Search(Name);
+
             return Page();
         }
 
