@@ -39,9 +39,16 @@
     }
 </script>
 
-<form method="post">
+
+
+<form method="post" >
     <div class="searchBar">
+        <input type="hidden" id="FOneID" asp-for="FOneID"/>
+        <input type="hidden" id="FTwoID" asp-for="FTwoID" />
+
         <input asp-for="Name" />
+        <button type="submit" onsubmit="saveSessioninfo()" asp-page-handler="Search">Search</button>
+        <button type="submit" onsubmit="saveSessioninfo()" asp-page-handler="Fight">Choose Fighter</button>
         <button type="submit">Search</button>
     </div>
 
@@ -56,7 +63,7 @@
             
         </p>
     </div>
-
+</form>
     @if (Model.Results?.Count > 0)
     {
         <h3>Results</h3>
@@ -79,7 +86,6 @@
         </div>
 
     }
-</form>
 
 
 

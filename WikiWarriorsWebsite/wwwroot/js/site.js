@@ -2,67 +2,79 @@
 //Helpful functions!
 //returns the element by id
 function $(a) { return document.getElementById(a); }
-//returns the element by class 
-function $$(a) { return document.getElementsByClassName(a); }
+//returns the elements by class in an array
+function $$(a) { return Array.from(document.getElementsByClassName(a)); }
 
 // Very helpful article for understanding debounce, rest arguments & spread syntax :D
 // https://levelup.gitconnected.com/debounce-from-scratch-8616c8209b54
+
+function gifss(a) {
+    if (a == 1) {
+        return sessionStorage.getItem("firstID");
+    }
+    else if (a == 2){
+        return sessionStorage.getItem("secondID");
+    }
+    else {
+        return "lookup failed!";
+    }
+
+}
 
 const debounce = (callback, delay) => {
     let timer;
 
     return (...args) => {
         clearTimeout(timer);
-
         timer = setTimeout(() => callback(...args), delay);
     };
 };
-//initialliaze the search
 
-//this will add a typing event listener as soon as the page is loaded.
-//if no searching is requried on the page (like the homepage) the init function will always just return nothing.
-//function initSearch() {
-//    const wikiSearchInput = $('searchInput');
-//    //look for a valid input input, if there aren't any input sections just return. This allows the script to be included on pages without a search box without breaking.
-//    if (!wikiSearchInput)
-//    {
-//        return;
-//    }
+document.addEventListener("DOMContentLoaded", () => {
 
-//    //debounce function. Stops a user from adding too many input events at once
-//    wikiSearchInput.addEventListener('input', () => {
-//        debounce(initalCheck(wikiSearchInput.value)), 300);
-//    };
-//}
+   // console.log(gifss(1));
+   // console.log(gifss(2));
 
-async function initialCheck(query) {
-    const resultList = document.$('resultList');
+    //if no fighters have been selected make the buttons add the first figther ID
+    if (!sessionStorage.firstID) {
+        let buttonArr = $$("cardRadio");
+        buttonArr.forEach(thing => {
+            thing.addEventListener("click", (evt) => {
+                sessionStorage.setItem("firstID", evt.target.value);
+                $("FOneID").value = evt.target.value;
+                console.log(evt.target.value);
+                console.log(gifss(1));
 
-    if (!query || query.length < 2) {
-        resultList.innerHTML = '<div class="col-12 text-center text-muted"><p>Search results will appear here...</p></div>';
-        return;
+            });
+
+        });
     }
+    //if the first fighter has been selected, make the buttons add the second figther ID instead
+    else if (!sessionStorage.secondID) {
+        let buttonArr = $$("cardRadio");
+        buttonArr.forEach(thing => {
+            thing.addEventListener("click", (evt) => {
+                sessionStorage.setItem("secondID", evt.target.value);
+                $("FTwoID").value = evt.target.value;
+                console.log(evt.target.value);
+                console.log(gifss(2));
+            });
 
-};
-
-async function fighterExists(Name) {
-    const url = "https://localhost:7114/Selection"
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`Response status: ${response.status}`);
-        }
-
-        const result = await response.json();
-        console.log(result);
-    } catch (error) {
-        console.error(error.message);
+        });
     }
-}
-//const url = 'https://en.wikipedia.org/w/api.php?action=query&format=json&titles=' + query
+    else {
+
+        console.log(gifss(1))
+        console.log(gifss(2))
+    }
+});
+
+function saveSessioninfo() {
+    $("FOneID").value = gifss(1);
+    $("FTwoID").value = gifss(2);
+}   
 
 
 
-//run the search
 
-//save the results
+
