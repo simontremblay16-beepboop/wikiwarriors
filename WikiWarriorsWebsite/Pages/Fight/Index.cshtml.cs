@@ -126,6 +126,19 @@ namespace WikiWarriorsWebsite.Pages.Fight
                 ViewData["winnerId"] = winnerId;
                 ViewData["loserId"] = loserId;
 
+                //int winnerId = int.Parse(Winner);
+                //int loserId = int.Parse(Loser);
+
+                // Get database entries for the winner and loser fighters
+                var winnerRecord = await _context.Fighter.FirstOrDefaultAsync(m => m.FighterId == winnerId);
+                var loserRecord = await _context.Fighter.FirstOrDefaultAsync(m => m.FighterId == loserId);
+
+                // Update view data so that the popup knows what to display
+                ViewData["winnerName"] = winnerRecord.Name;
+                ViewData["loserName"] = loserRecord.Name;
+                ViewData["winnerImageUrl"] = winnerRecord.ImageUrl;
+                ViewData["popupDisplay"] = "block";
+
 
                 return Page();
             }

@@ -3,6 +3,41 @@
 @{
     ViewData["Title"] = "Selection";
 }
+<script>
+    // Content loaded listenter
+    document.addEventListener("DOMContentLoaded", documentReady);
+
+    function Selection(ImageUrl, PageId) {
+
+        if (!sessionStorage.getItem("ImageUrl1")) {
+
+            document.getElementById("img1").src = ImageUrl;
+            sessionStorage.setItem("ImageUrl1", ImageUrl);
+        }
+        else {
+
+            document.getElementById("img2").src = ImageUrl;
+            sessionStorage.setItem("ImageUrl2", ImageUrl);
+        }
+        console.log(SelectionID);
+    }
+
+    function documentReady() {
+        
+        if (sessionStorage.getItem("ImageUrl1")) {
+
+            ImageUrl = sessionStorage.getItem("ImageUrl1")
+            document.getElementById("img1").src = ImageUrl;
+        }
+        if (sessionStorage.getItem("ImageUrl2")) {
+
+            ImageUrl = sessionStorage.getItem("ImageUrl2")
+            document.getElementById("img2").src = ImageUrl;
+        }
+
+
+    }
+</script>
 
 
 
@@ -14,6 +49,19 @@
         <input asp-for="Name" />
         <button type="submit" onsubmit="saveSessioninfo()" asp-page-handler="Search">Search</button>
         <button type="submit" onsubmit="saveSessioninfo()" asp-page-handler="Fight">Choose Fighter</button>
+        <button type="submit">Search</button>
+    </div>
+
+    <div class="fighterSelection">
+        <img id="img1" src="" alt="Fighter 1" />
+        <img id="img2" src="" alt="Fighter 2" />
+    </div>
+    <br />
+    <button type="submit" name="makeFight">Make Fight!</button>
+    <div>
+        <p class="debug">
+            
+        </p>
     </div>
 </form>
     @if (Model.Results?.Count > 0)
@@ -27,7 +75,7 @@
                     <input class="cardRadio"
                            name="PageId"
                            type="radio"
-                           value="@result.PageId" />
+                           value="@result.PageId" onclick="Selection('@result.ImageUrl.Source', @result.PageId, @result.ArticleUrl, @result.Title)"/>
 
                     <img src="@result.ImageUrl.Source" alt="@result.Title" />
 
