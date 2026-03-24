@@ -85,8 +85,8 @@ namespace WikiWarriorsWebsite.Pages
                 //Fighter Fighter2 = _context.Fighter.FirstOrDefault(m => m.PageUrl == secondWikiURL);
 
                 // Comment out once dataloader added
-                Fighter Fighter1 = _context.Fighter.FirstOrDefault(m => m.FighterId == 1);
-                Fighter Fighter2 = _context.Fighter.FirstOrDefault(m => m.FighterId == 2);
+                Fighter Fighter1 = _context.Fighter.FirstOrDefault(m => m.FighterId == 6);
+                Fighter Fighter2 = _context.Fighter.FirstOrDefault(m => m.FighterId == 7);
 
                 // Calculate the winner
                 // Temporary fight victory equasion
