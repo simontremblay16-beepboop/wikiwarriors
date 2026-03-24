@@ -43,10 +43,10 @@ public class SearchService
             string json = await _httpClient.GetStringAsync(wikiUrl);
             SResultRoot? resultsObj = JsonConvert.DeserializeObject<SResultRoot>(json);
 
-            foreach (var prop in resultsObj.query.pages.Values)
-            {
+            //foreach (var prop in resultsObj.query.pages.Values)
+            //{
 
-            }
+            //}
 
             return 2;
         }

@@ -207,7 +207,7 @@ namespace WikiWarriorsWebsite.Pages
 
             // TODO: remove
 
-            ViewData["featuredArticle"] = await _searcher.GetFeaturedArticle();
+            ViewData["featuredArticle"] = await _searcher.SaveSelectedArticleInfoAsync(18978754);
 
             ///////////////
             
