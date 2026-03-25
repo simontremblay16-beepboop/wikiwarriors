@@ -9,14 +9,16 @@ public class SearchService
 {
     //this is the service that will actually do the searching. I moved it to its own file so it can be used anywhere.
 
-        // hey I just delcared you,
+    // hey I just delcared you,
     private readonly IConfiguration _config;
     private readonly HttpClient _httpClient;
     private readonly WikiWarriorsWebsite.Data.WikiWarriorsWebsiteContext _context;
 
 
+
     //and this constructor is crazy,
     public SearchService(IConfiguration config, HttpClient httpClient, WikiWarriorsWebsite.Data.WikiWarriorsWebsiteContext context)
+
     {
         //but here's my config and httpclient,
         _config = config;
@@ -42,7 +44,8 @@ public class SearchService
             return 1;
         }
         //else create fighter below and return 2
-        else {
+        else
+        {
             //word count??
             //test pageId: 18978754
             string wikiUrl = $"https://en.wikipedia.org/w/api.php?action=query&pageids={PageId}&format=json&prop=extlinks|info|extracts|links|pageimages&ellimit=max&inprop=url&pllimit=max&explaintext&piprop=original";
@@ -61,8 +64,31 @@ public class SearchService
                 newFighter.ReferenceCount = item.Value._References;
                 newFighter.WordCount = item.Value._Wordcount;
                 newFighter.PageUrl = item.Value._ArticleUrl;
-                newFighter.ImageUrl = item.Value._ImageUrl;
 
+                // Sometimes there is no image url
+                newFighter.ImageUrl = item.Value._ImageUrl;
+                if (newFighter.ImageUrl == null)
+                {
+                    // If no image is found, use backup image api
+                    try
+                    {
+                        string backupImageUrl = "https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=name&titles=" + newFighter.Name;
+                        string backupJson = await _httpClient.GetStringAsync(backupImageUrl);
+                        dynamic backupObj = JsonConvert.DeserializeObject(backupJson);
+                        newFighter.ImageUrl = (string)backupObj.pageimage;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+
+                    // If we STILL have no image url
+                    if (newFighter.ImageUrl == null)
+                    {
+                        newFighter.ImageUrl = "image not found";
+                    }
+
+                }
   
                 _context.Database.OpenConnection();
 
@@ -100,8 +126,8 @@ public class SearchService
         string wikiUrl =
             $"https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch={name}&gsrlimit=8&format=json&titles={name}&prop=info|pageimages|description&inprop=url&piprop=original";
 
-              
-      
+
+
         //get json from api query
         string json = await _httpClient.GetStringAsync(wikiUrl);
         // read raw JSON and deserialize 
@@ -127,4 +153,35 @@ public class SearchService
         return resultsList;
     }
 
+    public async Task<int> GetFeaturedArticle(string y, string m, string d)
+    {
+        int result = 0;
+
+        string wikiUrl = "https://api.wikimedia.org/feed/v1/wikipedia/en/featured/" + y + "/" + m + "/" + d;
+
+        string json = await _httpClient.GetStringAsync(wikiUrl);
+
+        dynamic obj = JsonConvert.DeserializeObject(json);
+        //Console.WriteLine(obj.tfa.pageid);
+
+        result = int.Parse(((string)obj.tfa.pageid));
+
+        return result;
+    }
+
+    public async Task<int> GetInTheNews(string y, string m, string d)
+    {
+        int result = 0;
+
+        string wikiUrl = "https://api.wikimedia.org/feed/v1/wikipedia/en/featured/" + y + "/" + m + "/" + d;
+
+        string json = await _httpClient.GetStringAsync(wikiUrl);
+
+        dynamic obj = JsonConvert.DeserializeObject(json);
+        //Console.WriteLine(obj.tfa.pageid);
+
+        result = int.Parse(((string)obj.news[0].links[0].pageid));
+
+        return result;
+    }
 }
