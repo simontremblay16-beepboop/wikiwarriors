@@ -120,7 +120,6 @@
     /* Popup style */
     .popup {
         display: none;
-        position: fixed;
         left: 20%;
         right: 20%;
         top: 16%;
@@ -133,6 +132,16 @@
         border-radius: 8px;
         z-index: 9;
         box-shadow: 0 8px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .popupBorder {
+        width: 100%;
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        left: 0px;
+        top: 16%;
     }
 
     .victoryTitle {
@@ -373,29 +382,30 @@
     <br />
      <p>winnerId = @ViewData["winnerId"]</p>
 </div> *@
-
-<div class="popup" id="divPopup">
-    <button type="button" class="btnClose" onclick="hidePopup()">✖</button>
-    <button type="button" class="btnAlign">✖</button>
-    <h1 class="text-center siteTitle">:::WINNER:::</h1>
-    <h2 class="text-center siteTitle">GAGNANT!</h2>
-    <div class="divRow">
-        <div class="divColumn">
-            <img src="~/flame.gif" style="width: 40%;" alt="Cool Flames" />
+<div class="popupBorder">
+    <div class="popup" id="divPopup">
+        <button type="button" class="btnClose" onclick="hidePopup()">✖</button>
+        <button type="button" class="btnAlign">✖</button>
+        <h1 class="text-center siteTitle">:::WINNER:::</h1>
+        <h2 class="text-center siteTitle">GAGNANT!</h2>
+        <div class="divRow">
+            <div class="divColumn">
+                <img src="~/flame.gif" style="width: 40%;" alt="Cool Flames" />
+            </div>
+            <img src="@ViewData["winnerImageUrl"]" alt="winner" class="imgWinner" id="imgWinnerElement" />
+            <div class="divColumn">
+                <img src="~/flame.gif" style="width: 40%;" alt="Cool Flames" />
+            </div>
         </div>
-        <img src="@ViewData["winnerImageUrl"]" alt="winner" class="imgWinner" id="imgWinnerElement" />
-        <div class="divColumn">
-            <img src="~/flame.gif" style="width: 40%;" alt="Cool Flames" />
+        <h3 class="text-center">@ViewData["winnerName"]</h3>
+        <p class="text-center"> Won against @ViewData["loserName"]</p>
+        <div class="divRow divLink">
+            <a href="/Index">Home</a>
+            <a href="/Selection">Create New Fight</a>
+            <button type="button" class="btnClose" onclick="hidePopup()">Close</button>
         </div>
+        <p>Flame GIF courtesy meganlockhart on Tenor</p>
     </div>
-    <h3 class="text-center">@ViewData["winnerName"]</h3>
-    <p class="text-center"> Won against @ViewData["loserName"]</p>
-    <div class="divRow divLink">
-        <a href="/Index">Home</a>
-        <a href="/Selection">Create New Fight</a>
-        <button type="button" class="btnClose" onclick="hidePopup()">Close</button>
-    </div>
-    <p>Flame GIF courtesy meganlockhart on Tenor</p>
 </div>
 
 @section Scripts {
