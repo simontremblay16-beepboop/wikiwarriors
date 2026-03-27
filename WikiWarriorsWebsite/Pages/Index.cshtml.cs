@@ -1,3 +1,4 @@
+using Azure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -5,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using WikiWarriorsWebsite.Data;
 using WikiWarriorsWebsite.Models;
@@ -14,9 +16,13 @@ namespace WikiWarriorsWebsite.Pages
     public class IndexModel : PageModel
     {
         private readonly WikiWarriorsWebsite.Data.WikiWarriorsWebsiteContext _context;
-        public IndexModel(WikiWarriorsWebsite.Data.WikiWarriorsWebsiteContext context)
+
+        private readonly SearchService _searcher;
+
+        public IndexModel(WikiWarriorsWebsite.Data.WikiWarriorsWebsiteContext context, SearchService searcher)
         {
             _context = context;
+            _searcher = searcher;
         }
 
         // Access URL variables so that we can recieve the winner an loser for the victory popup
@@ -32,8 +38,39 @@ namespace WikiWarriorsWebsite.Pages
         // Fight history list object
         public IList<FightHistory> FightHistory { get; set; } = default!;
 
-        public void OnGet()
+        public async Task<IActionResult> OnGet()
         {
+            int currentYear = DateTime.Now.Year;
+            int currentMonth = DateTime.Now.Month;
+            int currentDay = DateTime.Now.Day;
+
+            string currentYearStr = currentYear.ToString();
+            if (currentYearStr.Length < 2)
+            {
+                currentYearStr = "0" + currentYearStr;
+            }
+            string currentMonthStr = currentMonth.ToString();
+            if (currentMonthStr.Length < 2)
+            {
+                currentMonthStr = "0" + currentMonthStr;
+            }
+            string currentDayStr = currentDay.ToString();
+            if (currentDayStr.Length < 2)
+            {
+                currentDayStr = "0" + currentDayStr;
+            }
+
+
+            /*
+            int featuredArticle = await _searcher.GetFeaturedArticle(currentYearStr, currentMonthStr, currentDayStr);
+
+            ViewData["featuredArticle"] = featuredArticle;
+
+            int inTheNews = await _searcher.GetInTheNews(currentYearStr, currentMonthStr, currentDayStr);
+
+            ViewData["inTheNews"] = inTheNews;
+            */
+
             // This code is only used if the page is called with
             // Url variables indicating that a "Victory" popup
             // window is required.
@@ -60,29 +97,29 @@ namespace WikiWarriorsWebsite.Pages
             // This code will run if the CreateDaily url variable is set, indicating that its a new day and we must make a new daily fight
             if (CreateDaily != null)
             {
+                int featuredArticle = await _searcher.GetFeaturedArticle(currentYearStr, currentMonthStr, currentDayStr);
 
+                ViewData["featuredArticle"] = featuredArticle;
+
+                int inTheNews = await _searcher.GetInTheNews(currentYearStr, currentMonthStr, currentDayStr);
+
+                ViewData["inTheNews"] = inTheNews;
+
+                // Add daily fight
                 FightHistory NewFightRecord = new FightHistory();
-                // Get the fighter Ids for todays fight
-                // Uncomment once dataloader is added
-                //string firstWikiURL = "https://en.wikipedia.org/wiki/Westminster_Cathedral"; // Get from API
-                //string secondWikiURL = "https://en.wikipedia.org/wiki/Wikipedia"; // Get from API
+                
+                // Call dataloader, to create the fighters
+                await _searcher.SaveSelectedArticleInfoAsync(featuredArticle);
+                await _searcher.SaveSelectedArticleInfoAsync(inTheNews);
 
-                // *** Do something to call dataloader, passing in to URLs so that the items are added to the database ***
-
-                // Collect info from database
-                // Uncomment once dataloader is added
-                //Fighter Fighter1 = _context.Fighter.FirstOrDefault(m => m.PageUrl == firstWikiURL);
-                //Fighter Fighter2 = _context.Fighter.FirstOrDefault(m => m.PageUrl == secondWikiURL);
-
-                // Comment out once dataloader added
-                Fighter Fighter1 = _context.Fighter.FirstOrDefault(m => m.FighterId == 6);
-                Fighter Fighter2 = _context.Fighter.FirstOrDefault(m => m.FighterId == 7);
+                Fighter Fighter1 = _context.Fighter.FirstOrDefault(m => m.FighterId == featuredArticle);
+                Fighter Fighter2 = _context.Fighter.FirstOrDefault(m => m.FighterId == inTheNews);
 
                 // Calculate the winner
                 // Temporary fight victory equasion
                 int winnerId;
-                int fighter1Score = Fighter1.WordCount + Fighter1.ReferenceCount + Fighter1.LinkCount;
-                int fighter2Score = Fighter2.WordCount + Fighter2.ReferenceCount + Fighter2.LinkCount;
+                int fighter1Score = (Fighter1.LinkCount * Fighter1.ReferenceCount) + Fighter1.WordCount;
+                int fighter2Score = (Fighter2.LinkCount * Fighter2.ReferenceCount) + Fighter2.WordCount;
                 if (fighter1Score > fighter2Score)
                 {
                     winnerId = Fighter1.FighterId;
@@ -179,7 +216,7 @@ namespace WikiWarriorsWebsite.Pages
             string year = DailyFightsDate.Year.ToString();
             string month = DailyFightsDate.Month.ToString();
             string day = DailyFightsDate.Day.ToString();
-            if (year.Length < 2) {
+            if (year.Length < 4) {
                 year = "0" + year;
             }
             if (month.Length < 2)
@@ -194,7 +231,10 @@ namespace WikiWarriorsWebsite.Pages
             ViewData["dailyFightDate"] = parsedDate;
             ViewData["dailyFightFighter1ImageUrl"] = DailyFightsWinner.ImageUrl;
             ViewData["dailyFightFighter2ImageUrl"] = DailyFightsLoser.ImageUrl;
-        
+
+            
+            return Page();
+
         }
 
 

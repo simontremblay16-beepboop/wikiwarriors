@@ -51,6 +51,7 @@
     font-size: 1.1rem;
     font-weight: bold;
     color: white;
+    text-align: center;
 }
 
 .cardDescription {
@@ -71,10 +72,133 @@
     border-radius: 6px;
 }
 
-.fighterSelection img{
-    display: inline;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
-    max-width:300px;
+/* fighter selection area */
+.fighterSelection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    margin: 1.5rem 0;
+    flex-wrap: wrap;
+}
+
+.fighterCard {
+    flex: 0 1 280px;
+    max-width: 280px;
+    min-height: 390px;
+    justify-content: flex-start;
+}
+
+/* VS */
+.vs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background-color: #5E6769;
+    border: 1px solid #555;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    user-select: none;
+}
+
+.selectedSlot {
+    outline: 3px solid #4ea1ff;
+    transform: scale(1.02);
+}
+
+/* mobile modeee */
+@media (max-width: 900px) {
+    .fighterSelection {
+        flex-direction: column;
+    }
+
+    .vs {
+        width: 60px;
+        height: 60px;
+        font-size: 1.2rem;
+    }
+}
+
+/* Button styles*/
+
+.searchBar button,
+.actionButtons button {
+    background-color: #6E787A;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 10px;
+    padding: 0.7rem 1.1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.searchBar button:hover,
+.actionButtons button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 14px rgba(0, 0, 0, 0.3);
+    border-color: #888;
+}
+
+.searchBar button:active,
+.actionButtons button:active {
+    transform: translate(0);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.makeFightButton {
+    background-color: #7D939E;
+    font-size: 1.05rem;
+}
+
+.makeFightButton:hover {
+    background-color: #7aec9a;
+}
+
+.clearButton {
+    background-color: #5E6769;
+}
+
+.clearButton:hover {
+    background-color: #e48383;
+}
+
+.searchBar input {
+    background-color: white;
+    color: #222;
+    border: 1px solid #555;
+    border-radius: 10px;
+    padding: 0.7rem 0.9rem;
+    font-size: 1rem;
+    min-width: 240px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.actionButtons {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0 1.5rem;
+    flex-wrap: wrap;
+}
+
+#searchButton {
+    background-color: #6E787A;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 10px;
+    padding: 0.7rem 1.1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
 }

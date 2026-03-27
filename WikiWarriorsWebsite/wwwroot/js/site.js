@@ -1,95 +1,201 @@
-﻿
-//Helpful functions!
-//returns the element by id
-function $(a) { return document.getElementById(a); }
-//returns the elements by class in an array
-function $$(a) { return Array.from(document.getElementsByClassName(a)); }
-
-// Very helpful article for understanding debounce, rest arguments & spread syntax :D
-// https://levelup.gitconnected.com/debounce-from-scratch-8616c8209b54
-
-function gifss(a) {
-    if (a == 1) {
-        return sessionStorage.getItem("firstID");
-    }
-    else if (a == 2){
-        return sessionStorage.getItem("secondID");
-    }
-    else {
-        return "lookup failed!";
-    }
-
+﻿function $(id) {
+    return document.getElementById(id);
 }
 
-const debounce = (callback, delay) => {
-    let timer;
+// Content loaded listenter
+document.addEventListener("DOMContentLoaded", documentReady);
 
-    return (...args) => {
-        clearTimeout(timer);
-        timer = setTimeout(() => callback(...args), delay);
-    };
-};
+function Selection(imageUrl, pageId, title) {
 
-document.addEventListener("DOMContentLoaded", () => {
+    const activeSlot = sessionStorage.getItem("ActiveFighterSlot");
 
-   // console.log(gifss(1));
-   // console.log(gifss(2));
+    if (activeSlot == "1") {
+        sessionStorage.setItem("ImageUrl1", imageUrl);
+        sessionStorage.setItem("PageId1", pageId);
+        sessionStorage.setItem("Title1", title);
 
-    //if no fighters have been selected make the buttons add the first figther ID
-    if (!sessionStorage.firstID) {
-        let buttonArr = $$("cardRadio");
-        buttonArr.forEach(thing => {
-            thing.addEventListener("click", (evt) => {
-                sessionStorage.setItem("firstID", evt.target.value);
-                $("FOneID").value = evt.target.value;
-                console.log(evt.target.value);
-                console.log(gifss(1));
+        $("img1").src = imageUrl;
+        $("fighterTitle1").textContent = title;
+        $("fighter1Id").value = pageId;
 
-            });
-
-        });
+        sessionStorage.removeItem("ActiveFighterSlot");
+        $("fighterCard1").classList.remove("selectedSlot");
+        return;
     }
-    //if the first fighter has been selected, make the buttons add the second figther ID instead
-    else if (!sessionStorage.secondID) {
-        let buttonArr = $$("cardRadio");
-        buttonArr.forEach(thing => {
-            thing.addEventListener("click", (evt) => {
-                sessionStorage.setItem("secondID", evt.target.value);
-                $("FTwoID").value = evt.target.value;
-                console.log(evt.target.value);
-                console.log(gifss(2));
-            });
 
-        });
+    if (activeSlot == "2") {
+        sessionStorage.setItem("ImageUrl2", imageUrl);
+        sessionStorage.setItem("PageId2", pageId);
+        sessionStorage.setItem("Title2", title);
+
+        $("img2").src = imageUrl;
+        $("fighterTitle2").textContent = title;
+        $("fighter2Id").value = pageId;
+
+        sessionStorage.removeItem("ActiveFighterSlot");
+        document.getElementById("fighterCard2").classList.remove("selectedSlot");
+        return;
     }
-    else {
 
-        console.log(gifss(1))
-        console.log(gifss(2))
+    if (!sessionStorage.getItem("ImageUrl1")) {
+        sessionStorage.setItem("ImageUrl1", imageUrl);
+        sessionStorage.setItem("PageId1", pageId);
+        sessionStorage.setItem("Title1", title);
+
+        $("img1").src = imageUrl;
+        $("fighterTitle1").textContent = title;
+        $("fighter1Id").value = pageId;
     }
-});
+    else if (!sessionStorage.getItem("ImageUrl2")) {
+        sessionStorage.setItem("ImageUrl2", imageUrl);
+        sessionStorage.setItem("PageId2", pageId);
+        sessionStorage.setItem("Title2", title);
 
-function saveSessioninfo() {
-    $("FOneID").value = gifss(1);
-    $("FTwoID").value = gifss(2);
-}   
+        $("img2").src = imageUrl;
+        $("fighterTitle2").textContent = title;
+        $("fighter2Id").value = pageId;
+    }
+}
 
-function getTFA() {
-    let today = new Date();
-    let year = today.getFullYear();
-    let month = String(today.getMonth() + 1).padStart(2, '0');
-    let day = String(today.getDate()).padStart(2, '0');
-    let url = `https://api.wikimedia.org/feed/v1/wikipedia/en/featured/${year}/${month}/${day}`;
+function SelectFighterSlot(slotNumber) {
+    sessionStorage.setItem("ActiveFighterSlot", slotNumber);
 
-    let response = await fetch(url,
-        {
-            headers: {
-                'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
-                'Api-User-Agent': 'WikiWarriorsWebsite/1.0 (strembl6@confederationcollege.ca)'
-            }
-        }
-    );
+    $("fighterCard1").classList.remove("selectedSlot");
+    $("fighterCard2").classList.remove("selectedSlot");
+
+    if (slotNumber == 1) {
+        $("fighterCard1").classList.add("selectedSlot");
+    }
+    else if (slotNumber == 2) {
+        $("fighterCard2").classList.add("selectedSlot");
+    }
+}
+
+function documentReady() {
+
+    const imageUrl1 = sessionStorage.getItem("ImageUrl1");
+    const imageUrl2 = sessionStorage.getItem("ImageUrl2");
+    const title1 = sessionStorage.getItem("Title1");
+    const title2 = sessionStorage.getItem("Title2");
+    const pageId1 = sessionStorage.getItem("PageId1");
+    const pageId2 = sessionStorage.getItem("PageId2");
+
+    if (imageUrl1) {
+        $("img1").src = imageUrl1;
+    }
+    if (imageUrl2) {
+        $("img2").src = imageUrl2;
+    }
+
+    if (title1) {
+        $("fighterTitle1").textContent = title1;
+    }
+    if (title2) {
+        $("fighterTitle2").textContent = title2;
+    }
+
+    if (pageId1) {
+        $("fighter1Id").value = pageId1;
+    }
+    if (pageId2) {
+        $("fighter2Id").value = pageId2;
+    }
+}
+
+function ClearSessionStorage() {
+    sessionStorage.removeItem("ImageUrl1");
+    sessionStorage.removeItem("PageId1");
+    sessionStorage.removeItem("Title1");
+
+    sessionStorage.removeItem("ImageUrl2");
+    sessionStorage.removeItem("PageId2");
+    sessionStorage.removeItem("Title2");
+
+    $("img1").src = "";
+    $("img2").src = "";
+    
+    $("fighterTitle1").textContent = "Fighter 1";
+    $("fighterTitle2").textContent = "Fighter 2";
+    
+    $("fighter1Id").value = "";
+    $("fighter2Id").value = "";
 }
 
 
+// old functional code
 
+
+////Helpful functions!
+////returns the element by id
+//function $(a) { return document.getElementById(a); }
+////returns the elements by class in an array
+//function $$(a) { return Array.from(document.getElementsByClassName(a)); }
+
+//// Very helpful article for understanding debounce, rest arguments & spread syntax :D
+//// https://levelup.gitconnected.com/debounce-from-scratch-8616c8209b54
+
+//function gifss(a) {
+//    if (a == 1) {
+//        return sessionStorage.getItem("firstID");
+//    }
+//    else if (a == 2){
+//        return sessionStorage.getItem("secondID");
+//    }
+//    else {
+//        return "lookup failed!";
+//    }
+
+//}
+
+//const debounce = (callback, delay) => {
+//    let timer;
+
+//    return (...args) => {
+//        clearTimeout(timer);
+//        timer = setTimeout(() => callback(...args), delay);
+//    };
+//};
+
+//document.addEventListener("DOMContentLoaded", () => {
+
+//   // console.log(gifss(1));
+//   // console.log(gifss(2));
+
+//    //if no fighters have been selected make the buttons add the first figther ID
+//    if (!sessionStorage.firstID) {
+//        let buttonArr = $$("cardRadio");
+//        buttonArr.forEach(thing => {
+//            thing.addEventListener("click", (evt) => {
+//                sessionStorage.setItem("firstID", evt.target.value);
+//                $("FOneID").value = evt.target.value;
+//                console.log(evt.target.value);
+//                console.log(gifss(1));
+
+//            });
+
+//        });
+//    }
+//    //if the first fighter has been selected, make the buttons add the second figther ID instead
+//    else if (!sessionStorage.secondID) {
+//        let buttonArr = $$("cardRadio");
+//        buttonArr.forEach(thing => {
+//            thing.addEventListener("click", (evt) => {
+//                sessionStorage.setItem("secondID", evt.target.value);
+//                $("FTwoID").value = evt.target.value;
+//                console.log(evt.target.value);
+//                console.log(gifss(2));
+//            });
+
+//        });
+//    }
+//    else {
+
+//        console.log(gifss(1))
+//        console.log(gifss(2))
+//    }
+//});
+
+//function saveSessioninfo() {
+//    $("FOneID").value = gifss(1);
+//    $("FTwoID").value = gifss(2);
+//}   
