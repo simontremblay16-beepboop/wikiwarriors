@@ -3,144 +3,18 @@
 @{
     ViewData["Title"] = "Selection";
 }
-<script>
-    // Content loaded listenter
-    document.addEventListener("DOMContentLoaded", documentReady);
 
-    function Selection(imageUrl, pageId, title) {
-
-        const activeSlot = sessionStorage.getItem("ActiveFighterSlot");
-
-        if (activeSlot == "1") {
-            sessionStorage.setItem("ImageUrl1", imageUrl);
-            sessionStorage.setItem("PageId1", pageId);
-            sessionStorage.setItem("Title1", title);
-
-            document.getElementById("img1").src = imageUrl;
-            document.getElementById("fighterTitle1").textContent = title;
-            document.getElementById("fighter1Id").value = pageId;
-
-            sessionStorage.removeItem("ActiveFighterSlot");
-            document.getElementById("fighterCard1").classList.remove("selectedSlot");
-            return;
-        }
-
-        if (activeSlot == "2") {
-            sessionStorage.setItem("ImageUrl2", imageUrl);
-            sessionStorage.setItem("PageId2", pageId);
-            sessionStorage.setItem("Title2", title);
-
-            document.getElementById("img2").src = imageUrl;
-            document.getElementById("fighterTitle2").textContent = title;
-            document.getElementById("fighter2Id").value = pageId;
-
-            sessionStorage.removeItem("ActiveFighterSlot");
-            document.getElementById("fighterCard2").classList.remove("selectedSlot");
-            return;
-        }
-
-        if (!sessionStorage.getItem("ImageUrl1")) {
-            sessionStorage.setItem("ImageUrl1", imageUrl);
-            sessionStorage.setItem("PageId1", pageId);
-            sessionStorage.setItem("Title1", title);
-
-            document.getElementById("img1").src = imageUrl;
-            document.getElementById("fighterTitle1").textContent = title;
-            document.getElementById("fighter1Id").value = pageId;
-        }
-        else if (!sessionStorage.getItem("ImageUrl2")) {
-            sessionStorage.setItem("ImageUrl2", imageUrl);
-            sessionStorage.setItem("PageId2", pageId);
-            sessionStorage.setItem("Title2", title);
-
-            document.getElementById("img2").src = imageUrl;
-            document.getElementById("fighterTitle2").textContent = title;
-            document.getElementById("fighter2Id").value = pageId;
-        }
-    }
-    
-    function SelectFighterSlot(slotNumber) {
-        sessionStorage.setItem("ActiveFighterSlot", slotNumber);
-
-        document.getElementById("fighterCard1").classList.remove("selectedSlot");
-        document.getElementById("fighterCard2").classList.remove("selectedSlot");
-
-        if (slotNumber == 1) {
-            document.getElementById("fighterCard1").classList.add("selectedSlot");
-        }
-        else if (slotNumber == 2) {
-            document.getElementById("fighterCard2").classList.add("selectedSlot");
-        }
-    }
-
-    function documentReady() {
-
-        const imageUrl1 = sessionStorage.getItem("ImageUrl1");
-        const imageUrl2 = sessionStorage.getItem("ImageUrl2");
-        const title1 = sessionStorage.getItem("Title1");
-        const title2 = sessionStorage.getItem("Title2");
-        const pageId1 = sessionStorage.getItem("PageId1");
-        const pageId2 = sessionStorage.getItem("PageId2");
-
-        if (imageUrl1) {
-            document.getElementById("img1").src = imageUrl1;
-        }
-        if (imageUrl2) {
-            document.getElementById("img2").src = imageUrl2;
-        }
-
-        if (title1) {
-            document.getElementById("fighterTitle1").textContent = title1;
-        }
-        if (title2) {
-            document.getElementById("fighterTitle2").textContent = title2;
-        }
-
-        if (pageId1) {
-            document.getElementById("fighter1Id").value = pageId1;
-        }
-        if (pageId2) {
-            document.getElementById("fighter2Id").value = pageId2;
-        }
-    }
-
-    function ClearSessionStorage() {
-        sessionStorage.removeItem("ImageUrl1");
-        sessionStorage.removeItem("PageId1");
-        sessionStorage.removeItem("Title1");
-
-        sessionStorage.removeItem("ImageUrl2");
-        sessionStorage.removeItem("PageId2");
-        sessionStorage.removeItem("Title2");
-
-        document.getElementById("img1").src = "";
-        document.getElementById("img2").src = "";
-
-        document.getElementById("fighterTitle1").textContent = "Fighter 1";
-        document.getElementById("fighterTitle2").textContent = "Fighter 2";
-
-        document.getElementById("fighter1Id").value = "";
-        document.getElementById("fighter2Id").value = "";
-    }
-</script>
-
-
-
-<form method="post" >
+<form method="post">
     <div class="searchBar">
-        <input type="hidden" id="FOneID" asp-for="FOneID"/>
-        <input type="hidden" id="FTwoID" asp-for="FTwoID" />
+        <input asp-for="Search" />
+       
+        <button class="searchButton" type="submit" asp-page-handler="Search">Search</button>
+        
+        
+    </div>
 
-        <input asp-for="Name" />
-        <button type="submit" onsubmit="saveSessioninfo()" asp-page-handler="Search">Search</button>
-        <button type="submit" onsubmit="saveSessioninfo()" asp-page-handler="Fight">Choose Fighter</button>
-        <button type="submit">Search</button>
-    </div>
-    
-    <div class="actionButtons">
-        <input type="hidden" class="clearButton" name="Fighter1Id" />
-        <input type="hidden" class="makeFightButton" name="Fighter2Id" />
-    </div>
+    <input type="hidden" class="Fighter1Id" name="Fighter1Id" />
+    <input type="hidden" class="Fighter2Id" name="Fighter2Id" />
 
     <div class="fighterSelection">
         <label id="fighterCard1" class="playerCard" onclick="SelectFighterSlot(1)">
@@ -161,7 +35,7 @@
         <br />
         <button type="submit" class="makeFightButton" name="makeFight">Make Fight!</button>
     </div>
-</form>
+
     @if (Model.Results?.Count > 0)
     {
         <h3>Results</h3>
@@ -173,7 +47,7 @@
                     <input class="cardRadio"
                            name="PageId"
                            type="radio"
-                           value="@result.PageId" 
+                           value="@result.PageId"
                            onclick="Selection('@result.ImageUrl.Source', '@result.PageId', '@result.Title')"/>
 
                     <img src="@result.ImageUrl.Source" alt="@result.Title" />
@@ -183,8 +57,7 @@
                 </label>
             }
         </div>
-
-    }
-
+        }
+</form>
 
 
