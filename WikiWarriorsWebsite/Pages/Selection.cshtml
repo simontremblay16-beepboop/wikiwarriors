@@ -17,8 +17,6 @@
 
         <input asp-for="Name" />
         <button type="submit" onsubmit="saveSessioninfo()" asp-page-handler="Search">Search</button>
-        <!--<button type="submit" onsubmit="saveSessioninfo()" asp-page-handler="Fight">Choose Fighter</button>-->
-        <!--<button type="submit">Search</button>-->
     </div>
     
     <div class="actionButtons">
@@ -28,8 +26,8 @@
 
     -->
 
-    <input type="hidden" class="Fighter1Id" name="Fighter1Id" />
-    <input type="hidden" class="Fighter2Id" name="Fighter2Id" />
+    <input type="hidden" id="fighter1Id" class="fighter1Id" name="Fighter1Id" />
+    <input type="hidden" id="fighter2Id" class="fighter2Id" name="Fighter2Id" />
 
     <div class="fighterSelection">
         <label id="fighterCard1" class="playerCard" onclick="SelectFighterSlot(1)">

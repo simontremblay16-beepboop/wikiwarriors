@@ -60,6 +60,8 @@ namespace WikiWarriorsWebsite.Pages
                 currentDayStr = "0" + currentDayStr;
             }
 
+
+            /*
             int featuredArticle = await _searcher.GetFeaturedArticle(currentYearStr, currentMonthStr, currentDayStr);
 
             ViewData["featuredArticle"] = featuredArticle;
@@ -67,7 +69,7 @@ namespace WikiWarriorsWebsite.Pages
             int inTheNews = await _searcher.GetInTheNews(currentYearStr, currentMonthStr, currentDayStr);
 
             ViewData["inTheNews"] = inTheNews;
-
+            */
 
             // This code is only used if the page is called with
             // Url variables indicating that a "Victory" popup
@@ -95,6 +97,13 @@ namespace WikiWarriorsWebsite.Pages
             // This code will run if the CreateDaily url variable is set, indicating that its a new day and we must make a new daily fight
             if (CreateDaily != null)
             {
+                int featuredArticle = await _searcher.GetFeaturedArticle(currentYearStr, currentMonthStr, currentDayStr);
+
+                ViewData["featuredArticle"] = featuredArticle;
+
+                int inTheNews = await _searcher.GetInTheNews(currentYearStr, currentMonthStr, currentDayStr);
+
+                ViewData["inTheNews"] = inTheNews;
 
                 // Add daily fight
                 FightHistory NewFightRecord = new FightHistory();

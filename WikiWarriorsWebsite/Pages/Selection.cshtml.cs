@@ -48,11 +48,11 @@ namespace WikiWarriorsWebsite.Pages
 
             // Call dataloader, to create the fighters and 
             // save the fighters to the database
-            await _searcher.SaveSelectedArticleInfoAsync(FOneID);
-            await _searcher.SaveSelectedArticleInfoAsync(FTwoID);
+            await _searcher.SaveSelectedArticleInfoAsync(Fighter1Id);
+            await _searcher.SaveSelectedArticleInfoAsync(Fighter2Id);
 
-            Fighter Fighter1 = _context.Fighter.FirstOrDefault(m => m.FighterId == FOneID);
-            Fighter Fighter2 = _context.Fighter.FirstOrDefault(m => m.FighterId == FTwoID);
+            Fighter Fighter1 = _context.Fighter.FirstOrDefault(m => m.FighterId == Fighter1Id);
+            Fighter Fighter2 = _context.Fighter.FirstOrDefault(m => m.FighterId == Fighter2Id);
 
             // Calculate winner
             // Temporary fight victory equasion
@@ -68,12 +68,12 @@ namespace WikiWarriorsWebsite.Pages
                 winnerId = Fighter2.FighterId;
             }
 
-            // Update database with the daily fight
+            // Update database with the new fight
             NewFightRecord.Fighter1Id = Fighter1.FighterId;
             NewFightRecord.Fighter2Id = Fighter2.FighterId;
             NewFightRecord.WinnerId = winnerId;
             NewFightRecord.FightDate = DateTime.Now;
-            NewFightRecord.DailyFight = true;
+            NewFightRecord.DailyFight = false;
             NewFightRecord.Fighter1 = _context.Fighter.FirstOrDefault(m => m.FighterId == NewFightRecord.Fighter1Id);
             NewFightRecord.Fighter2 = _context.Fighter.FirstOrDefault(m => m.FighterId == NewFightRecord.Fighter2Id);
             NewFightRecord.Winner = _context.Fighter.FirstOrDefault(m => m.FighterId == NewFightRecord.WinnerId);
@@ -83,7 +83,7 @@ namespace WikiWarriorsWebsite.Pages
                 _context.SaveChanges();
             }
 
-            return RedirectToPage("/Fight");//return Page();
+            return RedirectToPage("/Fight/Index", new { fighter1 = Fighter1Id.ToString(), fighter2 = Fighter2Id.ToString() });//return Page();
         }
     }
 }

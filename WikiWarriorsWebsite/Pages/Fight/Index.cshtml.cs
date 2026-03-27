@@ -74,13 +74,13 @@ namespace WikiWarriorsWebsite.Pages.Fight
             //ViewData["WinnerId"] = new SelectList(_context.Fighter, "FighterId", "FighterId");
             //return Page();
             // Fighter ids can be accessed through ViewData
-            int fighter1Id = int.Parse(Fighter1);
+            int Fighter1Id = int.Parse(Fighter1);
             int fighter2Id = int.Parse(Fighter2);
-            ViewData["fighter1Id"] = fighter1Id;
+            ViewData["Fighter1Id"] = Fighter1Id;
             ViewData["fighter2Id"] = fighter2Id;
 
             // Get database entries for the fighter
-            Fighter fighter1Record = await _context.Fighter.FirstOrDefaultAsync(m => m.FighterId == fighter1Id);
+            Fighter fighter1Record = await _context.Fighter.FirstOrDefaultAsync(m => m.FighterId == Fighter1Id);
             Fighter fighter2Record = await _context.Fighter.FirstOrDefaultAsync(m => m.FighterId == fighter2Id);
 
             if (fighter1Record is not null && fighter2Record is not null)
