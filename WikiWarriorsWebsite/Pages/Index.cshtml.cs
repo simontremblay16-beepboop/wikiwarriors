@@ -96,29 +96,21 @@ namespace WikiWarriorsWebsite.Pages
             if (CreateDaily != null)
             {
 
-                // Get featured article from wikipedia
-                //ViewData["featuredArticle"] = await _searcher.GetFeaturedArticle();
-
                 // Add daily fight
                 FightHistory NewFightRecord = new FightHistory();
-                // Get the fighter Ids for todays fight
-                // Uncomment once dataloader is added
-                //string firstWikiURL = "https://en.wikipedia.org/wiki/Westminster_Cathedral"; // Get from API
-                //string secondWikiURL = "https://en.wikipedia.org/wiki/Wikipedia"; // Get from API
-
-                // *** Do something to call dataloader, passing in to URLs so that the items are added to the database ***
+                
+                // Call dataloader, to create the fighters
                 await _searcher.SaveSelectedArticleInfoAsync(featuredArticle);
                 await _searcher.SaveSelectedArticleInfoAsync(inTheNews);
 
-                // Comment out once dataloader added
                 Fighter Fighter1 = _context.Fighter.FirstOrDefault(m => m.FighterId == featuredArticle);
                 Fighter Fighter2 = _context.Fighter.FirstOrDefault(m => m.FighterId == inTheNews);
 
                 // Calculate the winner
                 // Temporary fight victory equasion
                 int winnerId;
-                int fighter1Score = Fighter1.WordCount + Fighter1.ReferenceCount + Fighter1.LinkCount;
-                int fighter2Score = Fighter2.WordCount + Fighter2.ReferenceCount + Fighter2.LinkCount;
+                int fighter1Score = (Fighter1.LinkCount * Fighter1.ReferenceCount) + Fighter1.WordCount;
+                int fighter2Score = (Fighter2.LinkCount * Fighter2.ReferenceCount) + Fighter2.WordCount;
                 if (fighter1Score > fighter2Score)
                 {
                     winnerId = Fighter1.FighterId;

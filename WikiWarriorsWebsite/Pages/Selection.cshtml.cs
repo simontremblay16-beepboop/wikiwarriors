@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;   
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;   
 using WikiWarriorsWebsite.Data;
 using WikiWarriorsWebsite.Models;
 
@@ -14,10 +14,16 @@ namespace WikiWarriorsWebsite.Pages
 {
     public class SelectionModel : PageModel
     {
-       
+
+        private readonly WikiWarriorsWebsite.Data.WikiWarriorsWebsiteContext _context;
+
         private readonly SearchService _searcher;
 
-        public SelectionModel(SearchService searcher) { _searcher = searcher;}
+        public SelectionModel(WikiWarriorsWebsite.Data.WikiWarriorsWebsiteContext context, SearchService searcher)
+        {
+            _context = context;
+            _searcher = searcher;
+        }
         [BindProperty]
         public string? Name { get; set; }
         [BindProperty]
@@ -37,11 +43,47 @@ namespace WikiWarriorsWebsite.Pages
 
         public async Task<IActionResult> OnPostFight()
         {
+            // Add fight to databasee
+            FightHistory NewFightRecord = new FightHistory();
 
+            // Call dataloader, to create the fighters and 
+            // save the fighters to the database
             await _searcher.SaveSelectedArticleInfoAsync(FOneID);
             await _searcher.SaveSelectedArticleInfoAsync(FTwoID);
 
-            return Page();
+            Fighter Fighter1 = _context.Fighter.FirstOrDefault(m => m.FighterId == FOneID);
+            Fighter Fighter2 = _context.Fighter.FirstOrDefault(m => m.FighterId == FTwoID);
+
+            // Calculate winner
+            // Temporary fight victory equasion
+            int winnerId;
+            int fighter1Score = (Fighter1.LinkCount * Fighter1.ReferenceCount) + Fighter1.WordCount;
+            int fighter2Score = (Fighter2.LinkCount * Fighter2.ReferenceCount) + Fighter2.WordCount;
+            if (fighter1Score > fighter2Score)
+            {
+                winnerId = Fighter1.FighterId;
+            }
+            else
+            {
+                winnerId = Fighter2.FighterId;
+            }
+
+            // Update database with the daily fight
+            NewFightRecord.Fighter1Id = Fighter1.FighterId;
+            NewFightRecord.Fighter2Id = Fighter2.FighterId;
+            NewFightRecord.WinnerId = winnerId;
+            NewFightRecord.FightDate = DateTime.Now;
+            NewFightRecord.DailyFight = true;
+            NewFightRecord.Fighter1 = _context.Fighter.FirstOrDefault(m => m.FighterId == NewFightRecord.Fighter1Id);
+            NewFightRecord.Fighter2 = _context.Fighter.FirstOrDefault(m => m.FighterId == NewFightRecord.Fighter2Id);
+            NewFightRecord.Winner = _context.Fighter.FirstOrDefault(m => m.FighterId == NewFightRecord.WinnerId);
+            if (ModelState.IsValid)
+            {
+                _context.FightHistory.Add(NewFightRecord);
+                _context.SaveChanges();
+            }
+
+            return RedirectToPage("/Fight");//return Page();
         }
     }
 }

@@ -109,8 +109,8 @@ namespace WikiWarriorsWebsite.Pages.Fight
                 // Temporary fight victory equasion
                 int winnerId;
                 int loserId;
-                int fighter1Score = Fighter1.WordCount + Fighter1.ReferenceCount + Fighter1.LinkCount;
-                int fighter2Score = Fighter2.WordCount + Fighter2.ReferenceCount + Fighter2.LinkCount;
+                int fighter1Score = (Fighter1.LinkCount * Fighter1.ReferenceCount) + Fighter1.WordCount;
+                int fighter2Score = (Fighter2.LinkCount * Fighter2.ReferenceCount) + Fighter2.WordCount;
                 if (fighter1Score > fighter2Score)
                 {
                     winnerId = Fighter1.FighterId;

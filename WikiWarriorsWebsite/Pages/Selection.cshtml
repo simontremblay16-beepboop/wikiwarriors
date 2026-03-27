@@ -133,8 +133,8 @@
 
         <input asp-for="Name" />
         <button type="submit" onsubmit="saveSessioninfo()" asp-page-handler="Search">Search</button>
-        <button type="submit" onsubmit="saveSessioninfo()" asp-page-handler="Fight">Choose Fighter</button>
-        <button type="submit">Search</button>
+        <!--<button type="submit" onsubmit="saveSessioninfo()" asp-page-handler="Fight">Choose Fighter</button>-->
+        <!--<button type="submit">Search</button>-->
     </div>
     
     <div class="actionButtons">
@@ -159,7 +159,7 @@
     <div class="actionButtons">
         <button type="button" class="clearButton" onclick="ClearSessionStorage()">Clear Fighters</button>
         <br />
-        <button type="submit" class="makeFightButton" name="makeFight">Make Fight!</button>
+        <button type="submit" class="makeFightButton" name="makeFight" asp-page-handler="Fight">Make Fight!</button>
     </div>
 </form>
     @if (Model.Results?.Count > 0)
