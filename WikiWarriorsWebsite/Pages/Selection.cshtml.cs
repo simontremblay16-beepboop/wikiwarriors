@@ -25,18 +25,18 @@ namespace WikiWarriorsWebsite.Pages
             _searcher = searcher;
         }
         [BindProperty]
-        public string? Name { get; set; }
+        public string? Search { get; set; }
         [BindProperty]
         public int? PageId { get; set; }
         [BindProperty]
-        public int FOneID { get; set; }
+        public int Fighter1Id { get; set; }
         [BindProperty]
-        public int FTwoID { get; set; }
+        public int Fighter2Id { get; set; }
         public List<ResultStruct>? Results { get; set; }
 
         public async Task<IActionResult> OnPostSearch()
         {
-            Results = await _searcher.Search(Name);
+            Results = await _searcher.Search(Search);
 
             return Page();
         }
