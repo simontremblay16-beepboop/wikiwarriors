@@ -85,7 +85,8 @@ public class SearchService
                     // If we STILL have no image url
                     if (newFighter.ImageUrl == null)
                     {
-                        newFighter.ImageUrl = "image not found";
+                        // Then we will set the url to be our selection placeholder image instead.
+                        newFighter.ImageUrl = "/SelectionPlaceholder.png";//"image not found";
                     }
 
                 }
