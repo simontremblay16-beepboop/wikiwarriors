@@ -118,18 +118,10 @@ namespace WikiWarriorsWebsite.Pages
                 Fighter Fighter2 = _context.Fighter.FirstOrDefault(m => m.FighterId == inTheNews);
 
                 // Calculate the winner
-                // Temporary fight victory equasion
+                // Fight equation 
                 int winnerId;
-                int fighter1Score =
-                    BitOperations.PopCount((uint)Fighter1.WordCount) +
-                    BitOperations.PopCount((uint)Fighter1.ReferenceCount) +
-                    BitOperations.PopCount((uint)Fighter1.LinkCount);
-
-                int fighter2Score =
-                    BitOperations.PopCount((uint)Fighter2.WordCount) +
-                    BitOperations.PopCount((uint)Fighter2.ReferenceCount)+
-                    BitOperations.PopCount((uint)Fighter2.LinkCount);
-
+                int fighter1Score = (Fighter1.LinkCount * Fighter1.ReferenceCount) + Fighter1.WordCount;
+                int fighter2Score = (Fighter2.LinkCount * Fighter2.ReferenceCount) + Fighter2.WordCount;
                 if (fighter1Score >= fighter2Score)
                 {
                     winnerId = Fighter1.FighterId;
