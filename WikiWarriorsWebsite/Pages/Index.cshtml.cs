@@ -121,14 +121,7 @@ namespace WikiWarriorsWebsite.Pages
                 int fighter1Score = Fighter1.WordCount + Fighter1.ReferenceCount + Fighter1.LinkCount;
                 int fighter2Score = Fighter2.WordCount + Fighter2.ReferenceCount + Fighter2.LinkCount;
 
-                // This is unlikely to happen; however, it is possible.
-                if (fighter1Score == fighter2Score)
-                {
-                    fighter1Score++;
-                }
-
-
-                if (fighter1Score > fighter2Score)
+                if (fighter1Score >= fighter2Score)
                 {
                     winnerId = Fighter1.FighterId;
                 }
