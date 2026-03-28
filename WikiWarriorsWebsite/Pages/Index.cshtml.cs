@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
+using System.Numerics;
 using System.Threading.Tasks;
 using WikiWarriorsWebsite.Data;
 using WikiWarriorsWebsite.Models;
@@ -116,11 +118,11 @@ namespace WikiWarriorsWebsite.Pages
                 Fighter Fighter2 = _context.Fighter.FirstOrDefault(m => m.FighterId == inTheNews);
 
                 // Calculate the winner
-                // Temporary fight victory equasion
+                // Fight equation 
                 int winnerId;
                 int fighter1Score = (Fighter1.LinkCount * Fighter1.ReferenceCount) + Fighter1.WordCount;
                 int fighter2Score = (Fighter2.LinkCount * Fighter2.ReferenceCount) + Fighter2.WordCount;
-                if (fighter1Score > fighter2Score)
+                if (fighter1Score >= fighter2Score)
                 {
                     winnerId = Fighter1.FighterId;
                 }

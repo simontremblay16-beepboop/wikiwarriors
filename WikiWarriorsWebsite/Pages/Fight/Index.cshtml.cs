@@ -74,6 +74,13 @@ namespace WikiWarriorsWebsite.Pages.Fight
             //ViewData["WinnerId"] = new SelectList(_context.Fighter, "FighterId", "FighterId");
             //return Page();
             // Fighter ids can be accessed through ViewData
+
+            // If null return to selection page instead of error
+            if (Fighter1 == null || Fighter2 == null)
+            {
+                return Redirect("/Selection");
+            }
+            
             int Fighter1Id = int.Parse(Fighter1);
             int fighter2Id = int.Parse(Fighter2);
             ViewData["Fighter1Id"] = Fighter1Id;
@@ -111,7 +118,8 @@ namespace WikiWarriorsWebsite.Pages.Fight
                 int loserId;
                 int fighter1Score = (Fighter1.LinkCount * Fighter1.ReferenceCount) + Fighter1.WordCount;
                 int fighter2Score = (Fighter2.LinkCount * Fighter2.ReferenceCount) + Fighter2.WordCount;
-                if (fighter1Score > fighter2Score)
+
+                if (fighter1Score >= fighter2Score)
                 {
                     winnerId = Fighter1.FighterId;
                     loserId = Fighter2.FighterId;
