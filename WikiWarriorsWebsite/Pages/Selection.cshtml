@@ -5,20 +5,24 @@
 }
 
 
+<form method="post">
     <div class="searchBar">
         <input asp-for="Search" />
+       
         <button class="searchButton" type="submit" asp-page-handler="Search">Search</button>
+        
+        
     </div>
 
-   
 
     <input type="hidden" id="fighter1Id" class="fighter1Id" name="Fighter1Id" />
     <input type="hidden" id="fighter2Id" class="fighter2Id" name="Fighter2Id" />
 
-    
-
-<form method="post" >
-    <div class="searchBar">
+    <div class="fighterSelection">
+        <label id="fighterCard1" class="playerCard" onclick="SelectFighterSlot(1)">
+            <img id="img1" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Fighter 1" />
+            <div id="fighterTitle1" class="cardTitle">Fighter 1</div>
+        </label>
 
         <div class="vs">VS</div>
 
