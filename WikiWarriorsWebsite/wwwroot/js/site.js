@@ -98,6 +98,19 @@ function documentReady() {
     if (pageId2) {
         document.getElementById("fighter2Id").value = pageId2;
     }
+
+    // Prevent start error without both fighters
+    const makeFightButton = document.querySelector(".makeFightButton");
+    if (makeFightButton) {
+        document.querySelector(".makeFightButton").addEventListener("click", function (e) {
+            const url1 = sessionStorage.getItem("ImageUrl1");
+            const url2 = sessionStorage.getItem("ImageUrl2");
+
+            if (!url1 || !url2) {
+                e.preventDefault();
+            }
+        });
+    }
 }
 
 function ClearSessionStorage() {
@@ -109,8 +122,8 @@ function ClearSessionStorage() {
     sessionStorage.removeItem("PageId2");
     sessionStorage.removeItem("Title2");
 
-    document.getElementById("img1").src = "";
-    document.getElementById("img2").src = "";
+    document.getElementById("img1").src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+    document.getElementById("img2").src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
 
     document.getElementById("fighterTitle1").textContent = "Fighter 1";
     document.getElementById("fighterTitle2").textContent = "Fighter 2";
@@ -119,16 +132,6 @@ function ClearSessionStorage() {
     document.getElementById("fighter2Id").value = "";
 }
 
-// Prevent start error without both fighters
-document.querySelector(".makeFightButton").addEventListener("click", function (e) {
-    const url1 = sessionStorage.getItem("ImageUrl1");
-    const url2 = sessionStorage.getItem("ImageUrl2");
-
-    if (!url1 || !url2) {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-    }
-});
 
 
 
