@@ -71,6 +71,9 @@
     background: white;
     border-radius: 6px;
 }
+#img1[src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"], #img2[src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"] {
+    background: url('SelectionPlaceholder.png') center/cover no-repeat;
+}
 
 /* fighter selection area */
 .fighterSelection {

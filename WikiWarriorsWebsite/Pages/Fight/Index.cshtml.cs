@@ -74,13 +74,20 @@ namespace WikiWarriorsWebsite.Pages.Fight
             //ViewData["WinnerId"] = new SelectList(_context.Fighter, "FighterId", "FighterId");
             //return Page();
             // Fighter ids can be accessed through ViewData
-            int fighter1Id = int.Parse(Fighter1);
+
+            // If null return to selection page instead of error
+            if (Fighter1 == null || Fighter2 == null)
+            {
+                return Redirect("/Selection");
+            }
+            
+            int Fighter1Id = int.Parse(Fighter1);
             int fighter2Id = int.Parse(Fighter2);
-            ViewData["fighter1Id"] = fighter1Id;
+            ViewData["Fighter1Id"] = Fighter1Id;
             ViewData["fighter2Id"] = fighter2Id;
 
             // Get database entries for the fighter
-            Fighter fighter1Record = await _context.Fighter.FirstOrDefaultAsync(m => m.FighterId == fighter1Id);
+            Fighter fighter1Record = await _context.Fighter.FirstOrDefaultAsync(m => m.FighterId == Fighter1Id);
             Fighter fighter2Record = await _context.Fighter.FirstOrDefaultAsync(m => m.FighterId == fighter2Id);
 
             if (fighter1Record is not null && fighter2Record is not null)
@@ -109,9 +116,10 @@ namespace WikiWarriorsWebsite.Pages.Fight
                 // Temporary fight victory equasion
                 int winnerId;
                 int loserId;
-                int fighter1Score = Fighter1.WordCount + Fighter1.ReferenceCount + Fighter1.LinkCount;
-                int fighter2Score = Fighter2.WordCount + Fighter2.ReferenceCount + Fighter2.LinkCount;
-                if (fighter1Score > fighter2Score)
+                int fighter1Score = (Fighter1.LinkCount * Fighter1.ReferenceCount) + Fighter1.WordCount;
+                int fighter2Score = (Fighter2.LinkCount * Fighter2.ReferenceCount) + Fighter2.WordCount;
+
+                if (fighter1Score >= fighter2Score)
                 {
                     winnerId = Fighter1.FighterId;
                     loserId = Fighter2.FighterId;

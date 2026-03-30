@@ -13,19 +13,32 @@
         
     </div>
 
-    <input type="hidden" class="Fighter1Id" name="Fighter1Id" />
-    <input type="hidden" class="Fighter2Id" name="Fighter2Id" />
+<!--
+
+        <input asp-for="Name" />
+        <button type="submit" onsubmit="saveSessioninfo()" asp-page-handler="Search">Search</button>
+    </div>
+    
+    <div class="actionButtons">
+        <input type="hidden" class="clearButton" name="Fighter1Id" />
+        <input type="hidden" class="makeFightButton" name="Fighter2Id" />
+    </div>
+
+    -->
+
+    <input type="hidden" id="fighter1Id" class="fighter1Id" name="Fighter1Id" />
+    <input type="hidden" id="fighter2Id" class="fighter2Id" name="Fighter2Id" />
 
     <div class="fighterSelection">
         <label id="fighterCard1" class="playerCard" onclick="SelectFighterSlot(1)">
-            <img id="img1" src="" alt="Fighter 1" />
+            <img id="img1" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Fighter 1" />
             <div id="fighterTitle1" class="cardTitle">Fighter 1</div>
         </label>
 
         <div class="vs">VS</div>
 
         <label id="fighterCard2" class="playerCard" onclick="SelectFighterSlot(2)">
-            <img id="img2" src="" alt="Fighter 2" />
+            <img id="img2" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Fighter 2" />
             <div id="fighterTitle2" class="cardTitle">Fighter 2</div>
         </label>
     </div>
@@ -33,7 +46,7 @@
     <div class="actionButtons">
         <button type="button" class="clearButton" onclick="ClearSessionStorage()">Clear Fighters</button>
         <br />
-        <button type="submit" class="makeFightButton" name="makeFight">Make Fight!</button>
+        <button type="submit" class="makeFightButton" name="makeFight" asp-page-handler="Fight">Make Fight!</button>
     </div>
 
     @if (Model.Results?.Count > 0)
@@ -59,5 +72,3 @@
         </div>
         }
 </form>
-
-
