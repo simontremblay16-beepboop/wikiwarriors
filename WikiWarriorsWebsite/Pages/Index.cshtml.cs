@@ -109,7 +109,7 @@ namespace WikiWarriorsWebsite.Pages
 
                 // Add daily fight
                 FightHistory NewFightRecord = new FightHistory();
-                
+
                 // Call dataloader, to create the fighters
                 await _searcher.SaveSelectedArticleInfoAsync(featuredArticle);
                 await _searcher.SaveSelectedArticleInfoAsync(inTheNews);
@@ -178,7 +178,8 @@ namespace WikiWarriorsWebsite.Pages
                     {
                         CurrentLoser = _context.Fighter.FirstOrDefault(m => m.FighterId == FightHistory[index].Fighter2Id);
                     }
-                    else {
+                    else
+                    {
                         CurrentLoser = _context.Fighter.FirstOrDefault(m => m.FighterId == FightHistory[index].Fighter1Id);
                     }
 
@@ -188,7 +189,7 @@ namespace WikiWarriorsWebsite.Pages
                     DailyFightsId = index;
                     index = -1;
                 }
-                index --;
+                index--;
             }
 
             // Check if daily fight winner has even been set. If not, that means
@@ -218,12 +219,7 @@ namespace WikiWarriorsWebsite.Pages
                 ViewData["dailyFightFighter1ImageUrl"] = DailyFightsWinner.ImageUrl;
                 ViewData["dailyFightFighter2ImageUrl"] = DailyFightsLoser.ImageUrl;
             }
-
-            
             return Page();
-
         }
-
-
     }
 }

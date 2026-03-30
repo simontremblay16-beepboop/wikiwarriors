@@ -66,7 +66,6 @@ function SelectFighterSlot(slotNumber) {
     else if (slotNumber == 2) {
         document.getElementById("fighterCard2").classList.add("selectedSlot");
     }
-
 }
 
 function documentReady() {
