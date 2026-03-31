@@ -137,14 +137,31 @@ namespace WikiWarriorsWebsite.Models
             _id = PageId;
             _Name = Title;
 
-            for (int i = 0; i < Links.Length; i++)
+            try
             {
-                _Links += 1;
+                for (int i = 0; i < Links.Length; i++)
+                {
+                    _Links += 1;
+                }
             }
+            catch
+            {
+                _Links = 1;
+            }
+
+            int length;
 
             _Wordcount = WordCounter(Extract);
 
-            for (int i = 0; i < Extlinks.Length; i++)
+            if (Extlinks == null)
+            {
+                length = 1;
+            }
+            else
+            {
+                length = Extlinks.Length;
+            }
+                for (int i = 0; i < length; i++)
             {
                 _References += 1;
             }
