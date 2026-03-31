@@ -69,6 +69,7 @@ function SelectFighterSlot(slotNumber) {
     else if (slotNumber == 2) {
         $("fighterCard2").classList.add("selectedSlot");
     }
+
 }
 
 function documentReady() {
@@ -121,10 +122,20 @@ function ClearSessionStorage() {
     $("fighter2Id").value = "";
 }
 
+// Prevent start error without both fighters
+document.querySelector(".makeFightButton").addEventListener("click", function (e) {
+    const url1 = sessionStorage.getItem("ImageUrl1");
+    const url2 = sessionStorage.getItem("ImageUrl2");
+
+    if (!url1 || !url2) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+    }
+});
+
+
 
 // old functional code
-
-
 ////Helpful functions!
 ////returns the element by id
 //function $(a) { return document.getElementById(a); }
