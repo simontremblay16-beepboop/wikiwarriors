@@ -33,7 +33,7 @@ function Selection(imageUrl, pageId, title) {
         $("fighter2Id").value = pageId;
 
         sessionStorage.removeItem("ActiveFighterSlot");
-        document.getElementById("fighterCard2").classList.remove("selectedSlot");
+        $("fighterCard2").classList.remove("selectedSlot");
         return;
     }
 
@@ -104,16 +104,17 @@ function documentReady() {
 
 function ClearSessionStorage() {
 
+
     sessionStorage.clear();
 
-    document.getElementById("fighterTitle1").textContent = "Fighter 1";
-    document.getElementById("fighterTitle2").textContent = "Fighter 2";
+    $("fighterTitle1").textContent = "Fighter 1";
+    $("fighterTitle2").textContent = "Fighter 2";
 
-    document.getElementById("fighter1Id").value = "";
-    document.getElementById("fighter2Id").value = "";
+    $("fighter1Id").value = "";
+    $("fighter2Id").value = "";
 
-    document.getElementById("img1").src = "/SelectionPlaceholder.png";
-    document.getElementById("img2").src = "/SelectionPlaceholder.png";
+    $("img1").src = "/SelectionPlaceholder.png";
+    $("img2").src = "/SelectionPlaceholder.png";
 
     sessionStorage.setItem("ActiveFighterSlot", 1);
     slotNumber = 1

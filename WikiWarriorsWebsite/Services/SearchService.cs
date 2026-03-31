@@ -65,24 +65,10 @@ public class SearchService
                 newFighter.WordCount = item.Value._Wordcount;
                 newFighter.PageUrl = item.Value._ArticleUrl;
 
-                // Sometimes there is no image url
                 newFighter.ImageUrl = item.Value._ImageUrl;
                 if (newFighter.ImageUrl == null)
                 {
-                    // If no image is found, use backup image api
-                    try
-                    {
-                        string backupImageUrl = "https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=name&titles=" + newFighter.Name;
-                        string backupJson = await _httpClient.GetStringAsync(backupImageUrl);
-                        dynamic backupObj = JsonConvert.DeserializeObject(backupJson);
-                        newFighter.ImageUrl = (string)backupObj.pageimage;
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-
-                    // If we STILL have no image url
+                    // If we have no image url
                     if (newFighter.ImageUrl == null)
                     {
                         // Then we will set the url to be our selection placeholder image instead.
@@ -140,22 +126,7 @@ public class SearchService
         {
             foreach (var page in resultsObj.query.pages.Values)
             {
-                //if (page.ImageUrl.Source == null)
-                //{
-                //    Image nullImage = new Image { Source = "/SelectionPlaceholder.png" };
-                //    ResultStruct tempItem = new ResultStruct
-                //    {
-                //        PageId = page.PageId,
-                //        Title = page.Title,
-                //        Description = page.Description,
-                //        ArticleUrl = page.ArticleUrl,
-                //        ImageUrl = nullImage,
-                //        ThumbImageUrl = page.ThumbImageUrl
-                //    });
-                //    resultsList.Add(tempItem);
-                //}
-                //else
-                //{
+
                     ResultStruct tempItem = new ResultStruct
                     {
                         PageId = page.PageId,
@@ -167,7 +138,7 @@ public class SearchService
                     };
                 tempItem.doingWizardry();
                 resultsList.Add(tempItem);
-                //}
+                
 
 
             }
