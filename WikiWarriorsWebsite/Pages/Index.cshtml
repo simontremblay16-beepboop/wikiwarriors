@@ -7,10 +7,6 @@
 <script>
     sessionStorage.clear();
 
-    //function hidePopup() {
-    //    document.getElementById("divPopup").style.display = "none";
-    //}
-
     // Content loaded listenter
     document.addEventListener("DOMContentLoaded", documentReady);
     
@@ -65,34 +61,6 @@
     }
 </script>
 
-<style>
-    .imgSquare {
-        object-fit: cover;
-        width: 250px;
-        height: 250px;
-    }
-    /*
-    .popup {
-        display: @ViewData["popupDisplay"];
-        position: fixed;
-        left: 10%;
-        right: 10%;
-        top: 5%;
-        bottom: 5%;
-        width: 80%;
-        max-width: 600px;
-        border: 2px solid red;
-        background-color: lightgray;
-        z-index: 9;
-    }
-
-    */
-
-    .btnClose {
-        float: right;
-    }
-</style>
-
 <div hidden>
     DEBUG INFO:
     <p>Current Date: <span id="currentDate"></span></p>
@@ -102,8 +70,6 @@
 </div>
 
 <div class="text-center">
-
-    <hr />
 
     <p>
         Welcome to WIKI WARRIORS. A website all about sending wikipedia pages to
@@ -115,20 +81,25 @@
         <h2>Fight of the day:</h2>
 
         <h3>
-            Daily Fight #@ViewData["dailyFightNum"]:
             @ViewData["dailyFightFighter1Name"]
             VS
             @ViewData["dailyFightFighter2Name"]
-            - Winner: @ViewData["dailyFightWinnerName"]
-            (@ViewData["dailyFightDate"])
         </h3>
+        <p>
+            Winner: @ViewData["dailyFightWinnerName"]
+            (@ViewData["dailyFightDate"])
+        </p>
 
         <div class="divRow">
-
-            <img src="@ViewData["dailyFightFighter1ImageUrl"]"
-                 class="decorationImage"
-                 alt="Fighter 1"
-                 style="max-width:20%" />
+            <div class="fighterDisplay">
+                <p class="fighterName">@ViewData["dailyFightFighter1Name"]</p>
+                <a href="@ViewData["dailyFightFighter1ImageUrl"]">
+                    <img src="@ViewData["dailyFightFighter1ImageUrl"]"
+                         class="decorationImage"
+                         alt="Fighter 1"
+                         style="max-width: 100%" />
+                </a>
+            </div>
 
             <img src="~/swordLeft.png"
                  class="decorationImage"
@@ -142,49 +113,18 @@
                  alt="Sword"
                  style="max-width:20%" />
 
-            <img src="@ViewData["dailyFightFighter2ImageUrl"]"
-                 class="decorationImage"
-                 alt="Fighter 2"
-                 style="max-width:20%" />
+            <div class="fighterDisplay">
+                <p class="fighterName">@ViewData["dailyFightFighter2Name"]</p>
+                <a href="@ViewData["dailyFightFighter2ImageUrl"]">
+                    <img src="@ViewData["dailyFightFighter2ImageUrl"]"
+                     class="decorationImage"
+                     alt="Fighter 2" 
+                         style="max-width: 100%" />
+                </a>
+            </div>
         </div>
     </div>
 </div>
-
-<!--
-<div class="popup" id="divPopup">
-
-    <button type="button"
-            class="btnClose"
-            onclick="hidePopup()">
-        X
-    </button>
-
-    <h1 class="text-center">:::WINNER:::</h1>
-    <h2 class="text-center">GAGNANT!</h2>
-
-    <div class="divRow">
-
-        <div class="divColumn">
-            <img src="~/flame.png" class="decorationImage" alt="Cool Flames" />
-            <img src="~/flame.png" class="decorationImage" alt="Cool Flames" />
-        </div>
-
-        <img src="@ViewData["winnerImageUrl"]"
-             alt="winner"
-             class="imgSquare" />
-
-        <div class="divColumn">
-            <img src="~/flame.png" class="decorationImage" alt="Cool Flames" />
-            <img src="~/flame.png" class="decorationImage" alt="Cool Flames" />
-        </div>
-    </div>
-
-    <h3 class="text-center">@ViewData["winnerName"]</h3>
-
-    <p class="text-center">
-        Won against @ViewData["loserName"]
-    </p>
-</div>-->
 
 @if (Model.FightHistory != null && Model.FightHistory.Count > 0)
 {
@@ -216,16 +156,10 @@
                             <span class="tableText">@item.FightDate.ToString("yyyy-MM-dd")</span>
                         </td>
 
-                        <td>
-                            <a class="tableLink" href="@item.Fighter1.PageUrl">
-                                @item.Fighter1.Name
-                            </a>
+                        <td><a class="tableLink" href="@item.Fighter1.PageUrl">@item.Fighter1.Name</a>
                         </td>
 
-                        <td>
-                            <a class="tableLink" href="@item.Fighter2.PageUrl">
-                                @item.Fighter2.Name
-                            </a>
+                        <td><a class="tableLink" href="@item.Fighter2.PageUrl">@item.Fighter2.Name</a>
                         </td>
 
                         <td>

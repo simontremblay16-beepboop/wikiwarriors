@@ -4,18 +4,16 @@
     ViewData["Title"] = "Selection";
 }
 
+<form method="post">
+    <h4>Search for your fighters:</h4>
 
     <div class="searchBar">
         <input asp-for="Search" />
         <button class="searchButton" type="submit" asp-page-handler="Search">Search</button>
     </div>
 
-   
-
-    <input type="hidden" id="fighter1Id" class="fighter1Id" name="Fighter1Id" />
-    <input type="hidden" id="fighter2Id" class="fighter2Id" name="Fighter2Id" />
-
-    
+    <input type="hidden" id="fighter1Id" name="Fighter1Id" />
+    <input type="hidden" id="fighter2Id" name="Fighter2Id" />
 
     <div class="fighterSelection">
         <label id="fighterCard1" class="playerCard" onclick="SelectFighterSlot(1)">
@@ -52,7 +50,6 @@
                            onclick="Selection('@result.ImageUrl.Source', '@result.PageId', '@result.Title')"/>
 
                     <img src="@result.ImageUrl.Source" alt="@result.Title" />
-
                     <div class="cardTitle">@result.Title</div>
                     <p class="cardDescription">@result.Description</p>
                 </label>
