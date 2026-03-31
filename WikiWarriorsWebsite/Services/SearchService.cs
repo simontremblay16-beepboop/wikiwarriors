@@ -48,7 +48,7 @@ public class SearchService
         {
             //word count??
             //test pageId: 18978754
-            string wikiUrl = $"https://en.wikipedia.org/w/api.php?action=query&pageids={PageId}&format=json&prop=extlinks|info|extracts|links|pageimages&ellimit=max&inprop=url&pllimit=max&explaintext&piprop=original";
+            string wikiUrl = $"https://en.wikipedia.org/w/api.php?action=query&pageids={PageId}&format=json&prop=extlinks|info|extracts|links|pageimages&ellimit=max&inprop=url&pllimit=max&explaintext&piprop=thumbnail|original";
 
             string json = await _httpClient.GetStringAsync(wikiUrl);
 
@@ -125,7 +125,7 @@ public class SearchService
     private async Task<List<ResultStruct>> SearchWikipedia(string name)
     {
         string wikiUrl =
-            $"https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch={name}&gsrlimit=8&format=json&titles={name}&prop=info|pageimages|description&inprop=url&piprop=original";
+            $"https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch={name}&gsrlimit=8&format=json&titles={name}&prop=info|pageimages|description&inprop=url&piprop=thumbnail|original";
 
 
 
@@ -140,30 +140,34 @@ public class SearchService
         {
             foreach (var page in resultsObj.query.pages.Values)
             {
-                if (page.ImageUrl.Source == null)
-                {
-                    Image nullImage = new Image { Source = "/SelectionPlaceholder.png" };
-                    resultsList.Add(new ResultStruct
+                //if (page.ImageUrl.Source == null)
+                //{
+                //    Image nullImage = new Image { Source = "/SelectionPlaceholder.png" };
+                //    ResultStruct tempItem = new ResultStruct
+                //    {
+                //        PageId = page.PageId,
+                //        Title = page.Title,
+                //        Description = page.Description,
+                //        ArticleUrl = page.ArticleUrl,
+                //        ImageUrl = nullImage,
+                //        ThumbImageUrl = page.ThumbImageUrl
+                //    });
+                //    resultsList.Add(tempItem);
+                //}
+                //else
+                //{
+                    ResultStruct tempItem = new ResultStruct
                     {
                         PageId = page.PageId,
                         Title = page.Title,
                         Description = page.Description,
                         ArticleUrl = page.ArticleUrl,
-                        ImageUrl = nullImage
-                    });
-                   
-                }
-                else
-                {
-                    resultsList.Add(new ResultStruct
-                    {
-                        PageId = page.PageId,
-                        Title = page.Title,
-                        Description = page.Description,
-                        ArticleUrl = page.ArticleUrl,
-                        ImageUrl = page.ImageUrl 
-                    });
-                }
+                        OriginalImageUrl = page.OriginalImageUrl,
+                        ThumbImageUrl = page.ThumbImageUrl
+                    };
+                tempItem.doingWizardry();
+                resultsList.Add(tempItem);
+                //}
 
 
             }
