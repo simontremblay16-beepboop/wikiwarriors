@@ -14,7 +14,6 @@
         
     </div>
 
-
     <input type="hidden" id="fighter1Id" class="fighter1Id" name="Fighter1Id" />
     <input type="hidden" id="fighter2Id" class="fighter2Id" name="Fighter2Id" />
 
@@ -27,7 +26,7 @@
         <div class="vs">VS</div>
 
         <label id="fighterCard2" class="playerCard" onclick="SelectFighterSlot(2)">
-            <img id="img2" src="" alt="Fighter 2" />
+            <img id="img2" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Fighter 2" />
             <div id="fighterTitle2" class="cardTitle">Fighter 2</div>
         </label>
     </div>
@@ -50,9 +49,9 @@
                            name="PageId"
                            type="radio"
                            value="@result.PageId"
-                           onclick="Selection('@result.ImageUrl.Source', '@result.PageId', '@result.Title')"/>
+                           onclick="Selection('@result.img', '@result.PageId', '@result.Title')"/>
 
-                    <img src="@result.ImageUrl.Source" alt="@result.Title" />
+                    <img src="@result.img" alt="@result.Title" />
 
                     <div class="cardTitle">@result.Title</div>
                     <p class="cardDescription">@result.Description</p>

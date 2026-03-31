@@ -48,7 +48,7 @@ public class SearchService
         {
             //word count??
             //test pageId: 18978754
-            string wikiUrl = $"https://en.wikipedia.org/w/api.php?action=query&pageids={PageId}&format=json&prop=extlinks|info|extracts|links|pageimages&ellimit=max&inprop=url&pllimit=max&explaintext&piprop=original";
+            string wikiUrl = $"https://en.wikipedia.org/w/api.php?action=query&pageids={PageId}&format=json&prop=extlinks|info|extracts|links|pageimages&ellimit=max&inprop=url&pllimit=max&explaintext&piprop=thumbnail|original";
 
             string json = await _httpClient.GetStringAsync(wikiUrl);
 
@@ -124,7 +124,7 @@ public class SearchService
     private async Task<List<ResultStruct>> SearchWikipedia(string name)
     {
         string wikiUrl =
-            $"https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch={name}&gsrlimit=8&format=json&titles={name}&prop=info|pageimages|description&inprop=url&piprop=original";
+            $"https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch={name}&gsrlimit=8&format=json&titles={name}&prop=info|pageimages|description&inprop=url&piprop=thumbnail|original";
 
 
 
@@ -132,21 +132,27 @@ public class SearchService
         string json = await _httpClient.GetStringAsync(wikiUrl);
         // read raw JSON and deserialize 
         ResultRoot? resultsObj = JsonConvert.DeserializeObject<ResultRoot>(json);
-
+        
         var resultsList = new List<ResultStruct>();
         // check if the results are valid
         if (resultsObj?.query?.pages != null)
         {
             foreach (var page in resultsObj.query.pages.Values)
             {
-                resultsList.Add(new ResultStruct
+                ResultStruct temp = new ResultStruct
                 {
                     PageId = page.PageId,
                     Title = page.Title,
                     Description = page.Description,
                     ArticleUrl = page.ArticleUrl,
-                    ImageUrl = page.ImageUrl
-                });
+                    ImageUrl = page.ImageUrl,
+                    ThumbUrl = page.ThumbUrl,
+                    img = ""
+
+                };
+                //does a little img magic :)
+                temp.doingMagic();
+                resultsList.Add(temp);
             }
         }
 

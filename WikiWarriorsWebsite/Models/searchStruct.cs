@@ -1,6 +1,7 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 
 namespace WikiWarriorsWebsite.Models
@@ -48,6 +49,7 @@ namespace WikiWarriorsWebsite.Models
     }
     public struct ResultStruct
     {
+        public string img;
         [JsonProperty("pageid")]
         public int PageId { get; set; }
 
@@ -57,8 +59,24 @@ namespace WikiWarriorsWebsite.Models
         public string Description { get; set; }
         [JsonProperty("fullurl")]
         public string ArticleUrl { get; set; }
+
+        [JsonProperty("thumbnail")]
+        public Image ThumbUrl { get; set; }
         [JsonProperty("original")]
         public Image ImageUrl { get; set; }
+
+        public void doingMagic() 
+        {
+            img = ImageUrl.Source;
+            if(img.IsNullOrEmpty()) 
+            {
+                img = ThumbUrl.Source;
+                if (img.IsNullOrEmpty()) 
+                {
+                    img = "..\\wwwroot\\SelectionPlaceholder.png";
+                }
+            }
+        }
     }
 
     public class NewFighterInfo
@@ -87,6 +105,10 @@ namespace WikiWarriorsWebsite.Models
         public Link[]? Links { get; set; }
         [JsonProperty("fullurl")]
         public string ArticleUrl { get; set; }
+
+
+        [JsonProperty("thumbnail")]
+        public Image ThumbUrl { get; set; }
 
         [JsonProperty("original")]
         public Image ImageUrl { get; set; }
@@ -120,7 +142,23 @@ namespace WikiWarriorsWebsite.Models
                 _References += 1;
             }
 
-            _ImageUrl = ImageUrl.Source;
+            try{
+                _ImageUrl = ImageUrl.Source;
+            }
+            catch 
+            {
+                Console.WriteLine("No main image found, attempting to get Thumbnail image instead.");
+                try
+                {
+                    _ImageUrl = ThumbUrl.Source; 
+                }
+                catch 
+                {
+                    Console.WriteLine("No thumbnail image either, defaulting to fallback image.");
+                    _ImageUrl = "..\\wwwroot\\SelectionPlaceholder.png";
+                }
+            }
+            
             _ArticleUrl = ArticleUrl;
 
         }
