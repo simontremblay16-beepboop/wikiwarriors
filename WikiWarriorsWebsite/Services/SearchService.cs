@@ -48,7 +48,7 @@ public class SearchService
         {
             //word count??
             //test pageId: 18978754
-            string wikiUrl = $"https://en.wikipedia.org/w/api.php?action=query&pageids={PageId}&format=json&prop=extlinks|info|extracts|links|pageimages&ellimit=max&inprop=url&pllimit=max&explaintext&piprop=original";
+            string wikiUrl = $"https://en.wikipedia.org/w/api.php?action=query&pageids={PageId}&format=json&prop=extlinks|info|extracts|links|pageimages&ellimit=max&inprop=url&pllimit=max&explaintext&piprop=thumbnail|original";
 
             string json = await _httpClient.GetStringAsync(wikiUrl);
 
@@ -65,24 +65,10 @@ public class SearchService
                 newFighter.WordCount = item.Value._Wordcount;
                 newFighter.PageUrl = item.Value._ArticleUrl;
 
-                // Sometimes there is no image url
                 newFighter.ImageUrl = item.Value._ImageUrl;
                 if (newFighter.ImageUrl == null)
                 {
-                    // If no image is found, use backup image api
-                    try
-                    {
-                        string backupImageUrl = "https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=name&titles=" + newFighter.Name;
-                        string backupJson = await _httpClient.GetStringAsync(backupImageUrl);
-                        dynamic backupObj = JsonConvert.DeserializeObject(backupJson);
-                        newFighter.ImageUrl = (string)backupObj.pageimage;
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-
-                    // If we STILL have no image url
+                    // If we have no image url
                     if (newFighter.ImageUrl == null)
                     {
                         // Then we will set the url to be our selection placeholder image instead.
@@ -125,7 +111,7 @@ public class SearchService
     private async Task<List<ResultStruct>> SearchWikipedia(string name)
     {
         string wikiUrl =
-            $"https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch={name}&gsrlimit=8&format=json&titles={name}&prop=info|pageimages|description&inprop=url&piprop=original";
+            $"https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch={name}&gsrlimit=8&format=json&titles={name}&prop=info|pageimages|description&inprop=url&piprop=thumbnail|original";
 
 
 
@@ -140,16 +126,24 @@ public class SearchService
         {
             foreach (var page in resultsObj.query.pages.Values)
             {
-                resultsList.Add(new ResultStruct
-                {
-                    PageId = page.PageId,
-                    Title = page.Title,
-                    Description = page.Description,
-                    ArticleUrl = page.ArticleUrl,
-                    ImageUrl = page.ImageUrl
-                });
+
+                    ResultStruct tempItem = new ResultStruct
+                    {
+                        PageId = page.PageId,
+                        Title = page.Title,
+                        Description = page.Description,
+                        ArticleUrl = page.ArticleUrl,
+                        OriginalImageUrl = page.OriginalImageUrl,
+                        ThumbImageUrl = page.ThumbImageUrl
+                    };
+                tempItem.doingWizardry();
+                resultsList.Add(tempItem);
+                
+
+
             }
         }
+ 
 
         return resultsList;
     }

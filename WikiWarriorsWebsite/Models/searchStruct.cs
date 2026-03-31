@@ -1,6 +1,7 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 
 namespace WikiWarriorsWebsite.Models
@@ -48,6 +49,8 @@ namespace WikiWarriorsWebsite.Models
     }
     public struct ResultStruct
     {
+        public Image ImageUrl { get; set; }
+
         [JsonProperty("pageid")]
         public int PageId { get; set; }
 
@@ -58,7 +61,33 @@ namespace WikiWarriorsWebsite.Models
         [JsonProperty("fullurl")]
         public string ArticleUrl { get; set; }
         [JsonProperty("original")]
-        public Image ImageUrl { get; set; }
+        public Image OriginalImageUrl { get; set; }
+        [JsonProperty("thumbnail")]
+        public Image ThumbImageUrl { get; set; }
+
+        public void doingWizardry()
+            {
+            Image finalImg = new Image();
+            // if the original image fails use check thumbnail.
+            if (OriginalImageUrl.Source == "/SelectionPlaceholder.png" || OriginalImageUrl.Source.IsNullOrEmpty())
+            {
+                //if the thumbnail fails, use the placeholder
+                if (ThumbImageUrl.Source.IsNullOrEmpty())
+                {
+                    finalImg.Source = "/SelectionPlaceholder.png";
+                }
+                //otherwise use the thumbnail img
+                else
+                {
+                    finalImg = ThumbImageUrl;
+                }
+            }
+            else
+            {
+                finalImg = OriginalImageUrl;
+            }
+            ImageUrl = finalImg;
+        }
     }
 
     public class NewFighterInfo
