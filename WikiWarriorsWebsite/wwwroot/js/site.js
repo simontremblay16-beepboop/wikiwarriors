@@ -1,4 +1,7 @@
-﻿
+﻿function $(id) {
+    return document.getElementById(id);
+}
+
 // Content loaded listenter
 document.addEventListener("DOMContentLoaded", documentReady);
 
@@ -11,12 +14,12 @@ function Selection(imageUrl, pageId, title) {
         sessionStorage.setItem("PageId1", pageId);
         sessionStorage.setItem("Title1", title);
 
-        document.getElementById("img1").src = imageUrl;
-        document.getElementById("fighterTitle1").textContent = title;
-        document.getElementById("fighter1Id").value = pageId;
+        $("img1").src = imageUrl;
+        $("fighterTitle1").textContent = title;
+        $("fighter1Id").value = pageId;
 
         sessionStorage.removeItem("ActiveFighterSlot");
-        document.getElementById("fighterCard1").classList.remove("selectedSlot");
+        $("fighterCard1").classList.remove("selectedSlot");
         return;
     }
 
@@ -25,12 +28,12 @@ function Selection(imageUrl, pageId, title) {
         sessionStorage.setItem("PageId2", pageId);
         sessionStorage.setItem("Title2", title);
 
-        document.getElementById("img2").src = imageUrl;
-        document.getElementById("fighterTitle2").textContent = title;
-        document.getElementById("fighter2Id").value = pageId;
+        $("img2").src = imageUrl;
+        $("fighterTitle2").textContent = title;
+        $("fighter2Id").value = pageId;
 
         sessionStorage.removeItem("ActiveFighterSlot");
-        document.getElementById("fighterCard2").classList.remove("selectedSlot");
+        $("fighterCard2").classList.remove("selectedSlot");
         return;
     }
 
@@ -39,34 +42,33 @@ function Selection(imageUrl, pageId, title) {
         sessionStorage.setItem("PageId1", pageId);
         sessionStorage.setItem("Title1", title);
 
-        document.getElementById("img1").src = imageUrl;
-        document.getElementById("fighterTitle1").textContent = title;
-        document.getElementById("fighter1Id").value = pageId;
+        $("img1").src = imageUrl;
+        $("fighterTitle1").textContent = title;
+        $("fighter1Id").value = pageId;
     }
     else if (!sessionStorage.getItem("ImageUrl2")) {
         sessionStorage.setItem("ImageUrl2", imageUrl);
         sessionStorage.setItem("PageId2", pageId);
         sessionStorage.setItem("Title2", title);
 
-        document.getElementById("img2").src = imageUrl;
-        document.getElementById("fighterTitle2").textContent = title;
-        document.getElementById("fighter2Id").value = pageId;
+        $("img2").src = imageUrl;
+        $("fighterTitle2").textContent = title;
+        $("fighter2Id").value = pageId;
     }
 }
 
 function SelectFighterSlot(slotNumber) {
     sessionStorage.setItem("ActiveFighterSlot", slotNumber);
 
-    document.getElementById("fighterCard1").classList.remove("selectedSlot");
-    document.getElementById("fighterCard2").classList.remove("selectedSlot");
+    $("fighterCard1").classList.remove("selectedSlot");
+    $("fighterCard2").classList.remove("selectedSlot");
 
     if (slotNumber == 1) {
-        document.getElementById("fighterCard1").classList.add("selectedSlot");
+        $("fighterCard1").classList.add("selectedSlot");
     }
     else if (slotNumber == 2) {
-        document.getElementById("fighterCard2").classList.add("selectedSlot");
+        $("fighterCard2").classList.add("selectedSlot");
     }
-
 }
 
 function documentReady() {
@@ -79,24 +81,24 @@ function documentReady() {
     const pageId2 = sessionStorage.getItem("PageId2");
 
     if (imageUrl1) {
-        document.getElementById("img1").src = imageUrl1;
+        $("img1").src = imageUrl1;
     }
     if (imageUrl2) {
-        document.getElementById("img2").src = imageUrl2;
+        $("img2").src = imageUrl2;
     }
 
     if (title1) {
-        document.getElementById("fighterTitle1").textContent = title1;
+        $("fighterTitle1").textContent = title1;
     }
     if (title2) {
-        document.getElementById("fighterTitle2").textContent = title2;
+        $("fighterTitle2").textContent = title2;
     }
 
     if (pageId1) {
-        document.getElementById("fighter1Id").value = pageId1;
+        $("fighter1Id").value = pageId1;
     }
     if (pageId2) {
-        document.getElementById("fighter2Id").value = pageId2;
+        $("fighter2Id").value = pageId2;
     }
 
     // Prevent start error without both fighters
@@ -114,24 +116,22 @@ function documentReady() {
 }
 
 function ClearSessionStorage() {
-    sessionStorage.removeItem("ImageUrl1");
-    sessionStorage.removeItem("PageId1");
-    sessionStorage.removeItem("Title1");
+    sessionStorage.clear();
 
-    sessionStorage.removeItem("ImageUrl2");
-    sessionStorage.removeItem("PageId2");
-    sessionStorage.removeItem("Title2");
 
-    document.getElementById("img1").src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
-    document.getElementById("img2").src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+    $("fighterTitle1").textContent = "Fighter 1";
+    $("fighterTitle2").textContent = "Fighter 2";
 
-    document.getElementById("fighterTitle1").textContent = "Fighter 1";
-    document.getElementById("fighterTitle2").textContent = "Fighter 2";
+    $("fighter1Id").value = "";
+    $("fighter2Id").value = "";
 
-    document.getElementById("fighter1Id").value = "";
-    document.getElementById("fighter2Id").value = "";
+    $("img1").src = "/SelectionPlaceholder.png";
+    $("img2").src = "/SelectionPlaceholder.png";
+
+    sessionStorage.setItem("ActiveFighterSlot", 1);
+    slotNumber = 1
+
 }
-
 
 
 
