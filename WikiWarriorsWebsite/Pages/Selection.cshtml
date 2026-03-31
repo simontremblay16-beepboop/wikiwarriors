@@ -46,9 +46,9 @@
                            name="PageId"
                            type="radio"
                            value="@result.PageId"
-                           onclick="Selection('@result.img', '@result.PageId', '@result.Title')"/>
+                           onclick="Selection('@result.ImageUrl.Source', '@result.PageId', '@result.Title')"/>
 
-                    <img src="@result.img" alt="@result.Title" />
+                    <img src="@result.ImageUrl.Source" alt="@result.Title" />
 
                     <div class="cardTitle">@result.Title</div>
                     <p class="cardDescription">@result.Description</p>
