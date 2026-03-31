@@ -66,7 +66,6 @@ function SelectFighterSlot(slotNumber) {
     else if (slotNumber == 2) {
         document.getElementById("fighterCard2").classList.add("selectedSlot");
     }
-
 }
 
 function documentReady() {
@@ -101,22 +100,21 @@ function documentReady() {
 }
 
 function ClearSessionStorage() {
-    sessionStorage.removeItem("ImageUrl1");
-    sessionStorage.removeItem("PageId1");
-    sessionStorage.removeItem("Title1");
 
-    sessionStorage.removeItem("ImageUrl2");
-    sessionStorage.removeItem("PageId2");
-    sessionStorage.removeItem("Title2");
-
-    document.getElementById("img1").src = "";
-    document.getElementById("img2").src = "";
+    sessionStorage.clear();
 
     document.getElementById("fighterTitle1").textContent = "Fighter 1";
     document.getElementById("fighterTitle2").textContent = "Fighter 2";
 
     document.getElementById("fighter1Id").value = "";
     document.getElementById("fighter2Id").value = "";
+
+    document.getElementById("img1").src = "/SelectionPlaceholder.png";
+    document.getElementById("img2").src = "/SelectionPlaceholder.png";
+
+    sessionStorage.setItem("ActiveFighterSlot", 1);
+    slotNumber = 1
+
 }
 
 // Prevent start error without both fighters
@@ -129,81 +127,3 @@ document.querySelector(".makeFightButton").addEventListener("click", function (e
         e.stopImmediatePropagation();
     }
 });
-
-
-
-// old functional code
-////Helpful functions!
-////returns the element by id
-//function $(a) { return document.getElementById(a); }
-////returns the elements by class in an array
-//function $$(a) { return Array.from(document.getElementsByClassName(a)); }
-
-//// Very helpful article for understanding debounce, rest arguments & spread syntax :D
-//// https://levelup.gitconnected.com/debounce-from-scratch-8616c8209b54
-
-//function gifss(a) {
-//    if (a == 1) {
-//        return sessionStorage.getItem("firstID");
-//    }
-//    else if (a == 2){
-//        return sessionStorage.getItem("secondID");
-//    }
-//    else {
-//        return "lookup failed!";
-//    }
-
-//}
-
-//const debounce = (callback, delay) => {
-//    let timer;
-
-//    return (...args) => {
-//        clearTimeout(timer);
-//        timer = setTimeout(() => callback(...args), delay);
-//    };
-//};
-
-//document.addEventListener("DOMContentLoaded", () => {
-
-//   // console.log(gifss(1));
-//   // console.log(gifss(2));
-
-//    //if no fighters have been selected make the buttons add the first figther ID
-//    if (!sessionStorage.firstID) {
-//        let buttonArr = $$("cardRadio");
-//        buttonArr.forEach(thing => {
-//            thing.addEventListener("click", (evt) => {
-//                sessionStorage.setItem("firstID", evt.target.value);
-//                $("FOneID").value = evt.target.value;
-//                console.log(evt.target.value);
-//                console.log(gifss(1));
-
-//            });
-
-//        });
-//    }
-//    //if the first fighter has been selected, make the buttons add the second figther ID instead
-//    else if (!sessionStorage.secondID) {
-//        let buttonArr = $$("cardRadio");
-//        buttonArr.forEach(thing => {
-//            thing.addEventListener("click", (evt) => {
-//                sessionStorage.setItem("secondID", evt.target.value);
-//                $("FTwoID").value = evt.target.value;
-//                console.log(evt.target.value);
-//                console.log(gifss(2));
-//            });
-
-//        });
-//    }
-//    else {
-
-//        console.log(gifss(1))
-//        console.log(gifss(2))
-//    }
-//});
-
-//function saveSessioninfo() {
-//    $("FOneID").value = gifss(1);
-//    $("FTwoID").value = gifss(2);
-//}   

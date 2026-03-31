@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using WikiWarriorsWebsite.Data;
 using WikiWarriorsWebsite.Models;
 
-
 namespace WikiWarriorsWebsite.Pages
 {
     public class SelectionModel : PageModel

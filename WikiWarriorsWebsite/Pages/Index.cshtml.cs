@@ -109,7 +109,7 @@ namespace WikiWarriorsWebsite.Pages
 
                 // Add daily fight
                 FightHistory NewFightRecord = new FightHistory();
-                
+
                 // Call dataloader, to create the fighters
                 await _searcher.SaveSelectedArticleInfoAsync(featuredArticle);
                 await _searcher.SaveSelectedArticleInfoAsync(inTheNews);
@@ -163,8 +163,8 @@ namespace WikiWarriorsWebsite.Pages
             Fighter DailyFightsWinner = null;
             Fighter DailyFightsLoser = null;
             DateTime DailyFightsDate = DateTime.Now;
-            int DailyFightsId;
-            while (index >= 0)
+            int DailyFightsId = 0;
+            while (index > 0)
             {
                 if (FightHistory[index].DailyFight)
                 {
@@ -178,17 +178,18 @@ namespace WikiWarriorsWebsite.Pages
                     {
                         CurrentLoser = _context.Fighter.FirstOrDefault(m => m.FighterId == FightHistory[index].Fighter2Id);
                     }
-                    else {
+                    else
+                    {
                         CurrentLoser = _context.Fighter.FirstOrDefault(m => m.FighterId == FightHistory[index].Fighter1Id);
                     }
 
                     DailyFightsWinner = CurrentWinner;
                     DailyFightsLoser = CurrentLoser;
                     DailyFightsDate = FightHistory[index].FightDate;
-                    DailyFightsId = index;
+                    DailyFightsId = FightHistory[index].FightHistoryId;
                     index = -1;
                 }
-                index --;
+                index--;
             }
 
             // Check if daily fight winner has even been set. If not, that means
@@ -217,13 +218,9 @@ namespace WikiWarriorsWebsite.Pages
                 ViewData["dailyFightDate"] = parsedDate;
                 ViewData["dailyFightFighter1ImageUrl"] = DailyFightsWinner.ImageUrl;
                 ViewData["dailyFightFighter2ImageUrl"] = DailyFightsLoser.ImageUrl;
+                ViewData["dailyFightsId"] = DailyFightsId;
             }
-
-            
             return Page();
-
         }
-
-
     }
 }
