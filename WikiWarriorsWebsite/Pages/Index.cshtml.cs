@@ -163,8 +163,8 @@ namespace WikiWarriorsWebsite.Pages
             Fighter DailyFightsWinner = null;
             Fighter DailyFightsLoser = null;
             DateTime DailyFightsDate = DateTime.Now;
-            int DailyFightsId;
-            while (index >= 0)
+            int DailyFightsId = 0;
+            while (index > 0)
             {
                 if (FightHistory[index].DailyFight)
                 {
@@ -186,7 +186,7 @@ namespace WikiWarriorsWebsite.Pages
                     DailyFightsWinner = CurrentWinner;
                     DailyFightsLoser = CurrentLoser;
                     DailyFightsDate = FightHistory[index].FightDate;
-                    DailyFightsId = index;
+                    DailyFightsId = FightHistory[index].FightHistoryId;
                     index = -1;
                 }
                 index--;
@@ -218,6 +218,7 @@ namespace WikiWarriorsWebsite.Pages
                 ViewData["dailyFightDate"] = parsedDate;
                 ViewData["dailyFightFighter1ImageUrl"] = DailyFightsWinner.ImageUrl;
                 ViewData["dailyFightFighter2ImageUrl"] = DailyFightsLoser.ImageUrl;
+                ViewData["dailyFightsId"] = DailyFightsId;
             }
             return Page();
         }
