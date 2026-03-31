@@ -140,16 +140,35 @@ public class SearchService
         {
             foreach (var page in resultsObj.query.pages.Values)
             {
-                resultsList.Add(new ResultStruct
+                if (page.ImageUrl.Source == null)
                 {
-                    PageId = page.PageId,
-                    Title = page.Title,
-                    Description = page.Description,
-                    ArticleUrl = page.ArticleUrl,
-                    ImageUrl = page.ImageUrl
-                });
+                    Image nullImage = new Image { Source = "/SelectionPlaceholder.png" };
+                    resultsList.Add(new ResultStruct
+                    {
+                        PageId = page.PageId,
+                        Title = page.Title,
+                        Description = page.Description,
+                        ArticleUrl = page.ArticleUrl,
+                        ImageUrl = nullImage
+                    });
+                   
+                }
+                else
+                {
+                    resultsList.Add(new ResultStruct
+                    {
+                        PageId = page.PageId,
+                        Title = page.Title,
+                        Description = page.Description,
+                        ArticleUrl = page.ArticleUrl,
+                        ImageUrl = page.ImageUrl 
+                    });
+                }
+
+
             }
         }
+ 
 
         return resultsList;
     }
