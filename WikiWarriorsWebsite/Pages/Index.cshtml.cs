@@ -199,6 +199,8 @@ namespace WikiWarriorsWebsite.Pages
                 ViewData["dailyFightFighter1Name"] = DailyFightsWinner.Name;
                 ViewData["dailyFightFighter2Name"] = DailyFightsLoser.Name;
                 ViewData["dailyFightWinnerName"] = DailyFightsWinner.Name;
+                ViewData["dailyFighter1Url"] = DailyFightsWinner.PageUrl;
+                ViewData["dailyFighter2Url"] = DailyFightsLoser.PageUrl;
                 string year = DailyFightsDate.Year.ToString();
                 string month = DailyFightsDate.Month.ToString();
                 string day = DailyFightsDate.Day.ToString();
