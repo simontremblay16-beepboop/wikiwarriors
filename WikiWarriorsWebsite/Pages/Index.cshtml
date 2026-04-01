@@ -3,188 +3,72 @@
 @{
     ViewData["Title"] = "Home page";
 }
-
-<script>
-    sessionStorage.clear();
-
-    //function hidePopup() {
-    //    document.getElementById("divPopup").style.display = "none";
-    //}
-
-    // Content loaded listenter
-    document.addEventListener("DOMContentLoaded", documentReady);
-    
-    function FormatDateAsStr (fullDateTime) {
-        //const fullDateTime = date;
-        // Format the current date to match the format from the database (i.e. leading zeroes, Year Month Day)
-        year = fullDateTime.getFullYear().toString();
-        if (year.length < 2) {
-            year = "0" + year;
-        }
-        // months are number from 0 by default, so we add 1
-        month = (fullDateTime.getMonth() + 1).toString();
-        if (month.length < 2) {
-            month = "0" + month;
-        }
-        dayOfMonth = fullDateTime.getDate().toString();
-        if (dayOfMonth.length < 2) {
-            dayOfMonth = "0" + dayOfMonth;
-        }
-        const formattedDate = year + "-" + month + "-" + dayOfMonth;
-        return formattedDate;
-    }
-
-    // document ready event handler
-    // called automatically when pages done loading
-    function documentReady() {
-        // If the createDaily parameter is shown in the URL, remove it, because we will have already
-        // added a new daily fight and don't want reloading the page to create another.
-        let URLparameters = new URLSearchParams(document.location.search);
-        if (URLparameters.get("createDaily")) {
-            window.location.replace("/Index");
-        }
-        // Get the current date and compare to the last Daily fight date to
-        // figure out if we need to create a NEW daily fight
-
-        const currentDate = FormatDateAsStr(new Date());
-
-        // This will extract only the date part from the dailyfightDate string, ignoring the time.
-        const lastDate = "@ViewData["dailyFightDate"]".split(" ")[0];
-
-        // Debug info display
-        document.getElementById("currentDate").innerHTML = currentDate;
-        document.getElementById("lastDate").innerHTML = lastDate;
-
-        // Check if current date does not match last daily fight date
-        if (currentDate != lastDate) {
-            // If not, then we will redirect with a URL variable to indicate
-            // that we DO need to create a new daily fight
-
-            window.location.replace("/Index?createDaily=true"); // NOTE: Comment out this line to disable daily fights
-        }
-    }
-</script>
-
-<style>
-    .imgSquare {
-        object-fit: cover;
-        width: 250px;
-        height: 250px;
-    }
-    /*
-    .popup {
-        display: @ViewData["popupDisplay"];
-        position: fixed;
-        left: 10%;
-        right: 10%;
-        top: 5%;
-        bottom: 5%;
-        width: 80%;
-        max-width: 600px;
-        border: 2px solid red;
-        background-color: lightgray;
-        z-index: 9;
-    }
-
-    */
-
-    .btnClose {
-        float: right;
-    }
-</style>
-
+<script src="~/js/Index.js"></script>
 <div hidden>
     DEBUG INFO:
     <p>Current Date: <span id="currentDate"></span></p>
     <p>Last Daily Fight: <span id="lastDate"></span></p>
     <p>Article of the day: @ViewData["featuredArticle"]</p>
     <p>In the news: @ViewData["inTheNews"]</p>
+    <p id="dailyFightDate">@ViewData["dailyFightDate"]</p>
 </div>
 
 <div class="text-center">
-
-    <hr />
-
-    <p>
-        Welcome to WIKI WARRIORS. A website all about sending wikipedia pages to
-        "Fight" (Have a friendly competition) to the "Death" (Fainting, we don't condone violence)
-    </p>
+    <div class="mainP">
+        <p>
+            Welcome to WIKI WARRIORS. A website all about sending wikipedia pages to
+            "Fight" (Have a friendly competition) to the "Death" (Fainting, we don't condone violence)
+        </p>
+        <hr />
+    </div>
 
     <div class="divFightOfTheDay">
 
-        <h2>Fight of the day:</h2>
+        <h1>Fight of the day #@ViewData["dailyFightsId"]</h1>
 
-        <h3>
-            Daily Fight #@ViewData["dailyFightNum"]:
-            @ViewData["dailyFightFighter1Name"]
-            VS
-            @ViewData["dailyFightFighter2Name"]
-            - Winner: @ViewData["dailyFightWinnerName"]
+        <h4>
+            Winner: @ViewData["dailyFightWinnerName"]
             (@ViewData["dailyFightDate"])
-        </h3>
+        </h4>
+        <br />
 
         <div class="divRow">
-
-            <img src="@ViewData["dailyFightFighter1ImageUrl"]"
-                 class="decorationImage"
-                 alt="Fighter 1"
-                 style="max-width:20%" />
+            <div class="fighterDisplay">
+                <p class="fighterName">@ViewData["dailyFightFighter1Name"]</p>
+                <a href="@ViewData["dailyFighter1Url"]">
+                    <img src="@ViewData["dailyFightFighter1ImageUrl"]"
+                         class="decorationImage"
+                         alt="Fighter 1"
+                         style="max-width: 100%" />
+                </a>
+            </div>
 
             <img src="~/swordLeft.png"
                  class="decorationImage"
                  alt="Sword"
-                 style="max-width:20%" />
+                 style="max-width:25%" />
 
-                 <span class="divRowSpan">VS</span>
+                 <span class="vs">VS</span>
 
             <img src="~/swordRight.png"
                  class="decorationImage"
                  alt="Sword"
-                 style="max-width:20%" />
+                 style="max-width:25%" />
 
-            <img src="@ViewData["dailyFightFighter2ImageUrl"]"
-                 class="decorationImage"
-                 alt="Fighter 2"
-                 style="max-width:20%" />
+            <div class="fighterDisplay">
+                <p class="fighterName">@ViewData["dailyFightFighter2Name"]</p>
+                <a href="@ViewData["dailyFighter2Url"]">
+                    <img src="@ViewData["dailyFightFighter2ImageUrl"]"
+                     class="decorationImage"
+                     alt="Fighter 2" 
+                         style="max-width: 100%" />
+                </a>
+            </div>
         </div>
     </div>
+    <h2 class="TableSumm">Fight History:</h2>
+    <p class="TableSumm">These are all the fights that have been created around the world by your fellow Wiki Warriors!</p>
 </div>
-
-<!--
-<div class="popup" id="divPopup">
-
-    <button type="button"
-            class="btnClose"
-            onclick="hidePopup()">
-        X
-    </button>
-
-    <h1 class="text-center">:::WINNER:::</h1>
-    <h2 class="text-center">GAGNANT!</h2>
-
-    <div class="divRow">
-
-        <div class="divColumn">
-            <img src="~/flame.png" class="decorationImage" alt="Cool Flames" />
-            <img src="~/flame.png" class="decorationImage" alt="Cool Flames" />
-        </div>
-
-        <img src="@ViewData["winnerImageUrl"]"
-             alt="winner"
-             class="imgSquare" />
-
-        <div class="divColumn">
-            <img src="~/flame.png" class="decorationImage" alt="Cool Flames" />
-            <img src="~/flame.png" class="decorationImage" alt="Cool Flames" />
-        </div>
-    </div>
-
-    <h3 class="text-center">@ViewData["winnerName"]</h3>
-
-    <p class="text-center">
-        Won against @ViewData["loserName"]
-    </p>
-</div>-->
 
 @if (Model.FightHistory != null && Model.FightHistory.Count > 0)
 {
@@ -216,16 +100,10 @@
                             <span class="tableText">@item.FightDate.ToString("yyyy-MM-dd")</span>
                         </td>
 
-                        <td>
-                            <a class="tableLink" href="@item.Fighter1.PageUrl">
-                                @item.Fighter1.Name
-                            </a>
+                        <td><a class="tableLink" href="@item.Fighter1.PageUrl">@item.Fighter1.Name</a>
                         </td>
 
-                        <td>
-                            <a class="tableLink" href="@item.Fighter2.PageUrl">
-                                @item.Fighter2.Name
-                            </a>
+                        <td><a class="tableLink" href="@item.Fighter2.PageUrl">@item.Fighter2.Name</a>
                         </td>
 
                         <td>

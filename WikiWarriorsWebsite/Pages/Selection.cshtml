@@ -5,40 +5,26 @@
 }
 
 <form method="post">
+    <h4>Search for your fighters:</h4>
+
     <div class="searchBar">
         <input asp-for="Search" />
-       
         <button class="searchButton" type="submit" asp-page-handler="Search">Search</button>
-        
-        
     </div>
 
-<!--
-
-        <input asp-for="Name" />
-        <button type="submit" onsubmit="saveSessioninfo()" asp-page-handler="Search">Search</button>
-    </div>
-    
-    <div class="actionButtons">
-        <input type="hidden" class="clearButton" name="Fighter1Id" />
-        <input type="hidden" class="makeFightButton" name="Fighter2Id" />
-    </div>
-
-    -->
-
-    <input type="hidden" id="fighter1Id" class="fighter1Id" name="Fighter1Id" />
-    <input type="hidden" id="fighter2Id" class="fighter2Id" name="Fighter2Id" />
+    <input type="hidden" id="fighter1Id" name="Fighter1Id" />
+    <input type="hidden" id="fighter2Id" name="Fighter2Id" />
 
     <div class="fighterSelection">
         <label id="fighterCard1" class="playerCard" onclick="SelectFighterSlot(1)">
-            <img id="img1" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Fighter 1" />
+            <img id="img1" src="/SelectionPlaceholder.png" alt="Fighter 1" />
             <div id="fighterTitle1" class="cardTitle">Fighter 1</div>
         </label>
 
         <div class="vs">VS</div>
 
         <label id="fighterCard2" class="playerCard" onclick="SelectFighterSlot(2)">
-            <img id="img2" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Fighter 2" />
+            <img id="img2" src="/SelectionPlaceholder.png" alt="Fighter 2" />
             <div id="fighterTitle2" class="cardTitle">Fighter 2</div>
         </label>
     </div>
@@ -64,7 +50,6 @@
                            onclick="Selection('@result.ImageUrl.Source', '@result.PageId', '@result.Title')"/>
 
                     <img src="@result.ImageUrl.Source" alt="@result.Title" />
-
                     <div class="cardTitle">@result.Title</div>
                     <p class="cardDescription">@result.Description</p>
                 </label>
