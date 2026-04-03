@@ -34,20 +34,21 @@ namespace WikiWarriorsWebsite.Pages
         //[BindProperty(SupportsGet = true)]
         //public string? Loser { get; set; }
         // URL variable for if we need to create a new daily fight
-        [BindProperty(SupportsGet = true)]
-        public string? CreateDaily { get; set; }
+        //[BindProperty(SupportsGet = true)]
+        //public string? CreateDaily { get; set; }
 
         // Fight history list object
         public IList<FightHistory> FightHistory { get; set; } = default!;
 
         public async Task<IActionResult> OnGet()
         {
-            int currentYear = DateTime.Now.Year;
-            int currentMonth = DateTime.Now.Month;
-            int currentDay = DateTime.Now.Day;
+            DateTime currentDate = DateTime.UtcNow;
+            int currentYear = currentDate.Year;
+            int currentMonth = currentDate.Month;
+            int currentDay = currentDate.Day;
 
             string currentYearStr = currentYear.ToString();
-            if (currentYearStr.Length < 2)
+            if (currentYearStr.Length < 4)
             {
                 currentYearStr = "0" + currentYearStr;
             }
@@ -96,8 +97,12 @@ namespace WikiWarriorsWebsite.Pages
             //    ViewData["popupDisplay"] = "none";
             //}
 
+            string currentDateStr = currentYearStr + "-" + currentMonthStr + "-" + currentDayStr;
+
+            string lastDailyStr = GetDailyFights();
+
             // This code will run if the CreateDaily url variable is set, indicating that its a new day and we must make a new daily fight
-            if (CreateDaily != null)
+            if (currentDateStr != lastDailyStr)
             {
                 int featuredArticle = await _searcher.GetFeaturedArticle(currentYearStr, currentMonthStr, currentDayStr);
 
@@ -135,7 +140,7 @@ namespace WikiWarriorsWebsite.Pages
                 NewFightRecord.Fighter1Id = Fighter1.FighterId;
                 NewFightRecord.Fighter2Id = Fighter2.FighterId;
                 NewFightRecord.WinnerId = winnerId;
-                NewFightRecord.FightDate = DateTime.Now;
+                NewFightRecord.FightDate = currentDate;//DateTime.Now;
                 NewFightRecord.DailyFight = true;
                 NewFightRecord.Fighter1 = _context.Fighter.FirstOrDefault(m => m.FighterId == NewFightRecord.Fighter1Id);
                 NewFightRecord.Fighter2 = _context.Fighter.FirstOrDefault(m => m.FighterId == NewFightRecord.Fighter2Id);
@@ -146,7 +151,17 @@ namespace WikiWarriorsWebsite.Pages
                     _context.SaveChanges();
                 }
 
+                // Recalculate daily fights now that one more is added.
+                lastDailyStr = GetDailyFights();
             }
+
+            return Page();
+        }
+
+        public string GetDailyFights() {
+            // Default value for parsed date
+            // Meaning no prior daily fight
+            string parsedDate = "";
 
             // Load in FightHistory Table
             FightHistory = _context.FightHistory
@@ -162,9 +177,9 @@ namespace WikiWarriorsWebsite.Pages
             // the lastest fight first, and exits as soon as the daily fight is found.
             Fighter DailyFightsWinner = null;
             Fighter DailyFightsLoser = null;
-            DateTime DailyFightsDate = DateTime.Now;
+            DateTime DailyFightsDate = DateTime.UtcNow;
             int DailyFightsId = 0;
-            while (index > 0)
+            while (index > -1)
             {
                 if (FightHistory[index].DailyFight)
                 {
@@ -216,13 +231,13 @@ namespace WikiWarriorsWebsite.Pages
                 {
                     day = "0" + day;
                 }
-                string parsedDate = year + "-" + month + "-" + day;
+                parsedDate = year + "-" + month + "-" + day;
                 ViewData["dailyFightDate"] = parsedDate;
                 ViewData["dailyFightFighter1ImageUrl"] = DailyFightsWinner.ImageUrl;
                 ViewData["dailyFightFighter2ImageUrl"] = DailyFightsLoser.ImageUrl;
                 ViewData["dailyFightsId"] = DailyFightsId;
             }
-            return Page();
+            return parsedDate;
         }
     }
 }
