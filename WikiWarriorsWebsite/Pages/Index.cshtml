@@ -26,7 +26,7 @@
 
         <h1>Fight of the day #@ViewData["dailyFightsId"]</h1>
 
-        <h4>
+        <h4 style="color: #3b923d;">
             Winner: @ViewData["dailyFightWinnerName"]
             (@ViewData["dailyFightDate"])
         </h4>
@@ -39,7 +39,7 @@
                     <img src="@ViewData["dailyFightFighter1ImageUrl"]"
                          class="decorationImage"
                          alt="Fighter 1"
-                         style="max-width: 100%" />
+                         style="max-width: 100%; border: 2px solid #7d939e;" />
                 </a>
             </div>
 
@@ -48,7 +48,7 @@
                  alt="Sword"
                  style="max-width:25%" />
 
-                 <span class="vs">VS</span>
+            <span class="vs">VS</span>
 
             <img src="~/swordRight.png"
                  class="decorationImage"
@@ -59,9 +59,9 @@
                 <p class="fighterName">@ViewData["dailyFightFighter2Name"]</p>
                 <a href="@ViewData["dailyFighter2Url"]">
                     <img src="@ViewData["dailyFightFighter2ImageUrl"]"
-                     class="decorationImage"
-                     alt="Fighter 2" 
-                         style="max-width: 100%" />
+                         class="decorationImage"
+                         alt="Fighter 2"
+                         style="max-width: 100%; border: 2px solid #7d939e;" />
                 </a>
             </div>
         </div>
