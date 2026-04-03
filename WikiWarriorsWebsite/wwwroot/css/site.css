@@ -168,4 +168,5 @@ main {
     .navDecorationImage {
         width: clamp(42px, 12vw, 90px);
     }
+
 }
