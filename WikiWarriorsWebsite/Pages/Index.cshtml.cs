@@ -216,6 +216,8 @@ namespace WikiWarriorsWebsite.Pages
                 ViewData["dailyFightWinnerName"] = DailyFightsWinner.Name;
                 ViewData["dailyFighter1Url"] = DailyFightsWinner.PageUrl;
                 ViewData["dailyFighter2Url"] = DailyFightsLoser.PageUrl;
+                ViewData["dailyFighter1Id"] = DailyFightsWinner.FighterId;
+                ViewData["dailyFighter2Id"] = DailyFightsLoser.FighterId;
                 string year = DailyFightsDate.Year.ToString();
                 string month = DailyFightsDate.Month.ToString();
                 string day = DailyFightsDate.Day.ToString();
@@ -238,6 +240,12 @@ namespace WikiWarriorsWebsite.Pages
                 ViewData["dailyFightsId"] = DailyFightsId;
             }
             return parsedDate;
+        }
+
+        // To be able to watch the daily fight
+        public IActionResult OnPostWatchDaily(int Fighter1Id, int Fighter2Id)
+        {
+            return RedirectToPage("/Fight/Index", new { fighter1 = Fighter1Id.ToString(), fighter2 = Fighter2Id.ToString() });
         }
     }
 }

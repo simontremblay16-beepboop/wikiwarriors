@@ -48,7 +48,13 @@
                  alt="Sword"
                  style="max-width:25%" />
 
-                 <span class="vs">VS</span>
+            <form method="post">
+                <button class="vs" title="Watch Daily Fight" type="submit" asp-page-handler="WatchDaily" 
+                    asp-route-Fighter1Id="@ViewData["dailyFighter1Id"]"
+                    asp-route-Fighter2Id="@ViewData["dailyFighter2Id"]">
+                    VS
+                </button>
+            </form>
 
             <img src="~/swordRight.png"
                  class="decorationImage"
