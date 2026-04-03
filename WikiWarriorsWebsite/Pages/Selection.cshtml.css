@@ -97,7 +97,7 @@
     flex-wrap: wrap;
 }
 
-.fighterCard {
+.fighterSelection .playerCard {
     flex: 0 1 280px;
     max-width: 280px;
     min-height: 390px;
@@ -111,14 +111,8 @@
     justify-content: center;
     width: 72px;
     height: 72px;
-    border-radius: 50%;
-    background-color: #5E6769;
-    border: 1px solid #555;
-    color: white;
-    font-size: 1.5rem;
-    font-weight: bold;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-    user-select: none;
+    color: floralwhite;
+    font-size: 2rem;
     font-family: "Cinzel", Georgia, serif;
     text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.8);
 }
@@ -132,13 +126,12 @@
 /* mobile modeee */
 @media (max-width: 900px) {
     .fighterSelection {
+        justify-content: center;
         flex-direction: column;
     }
 
     .vs {
-        width: 60px;
-        height: 60px;
-        font-size: 1.2rem;
+        font-size: 1rem;
         font-family: "Cinzel", Georgia, serif;
     }
 }
@@ -205,3 +198,19 @@
         background-color: #9f5252;
         text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
     }
+
+
+
+.fightWarning {
+    min-height: 24px;
+    margin: 0.5rem 0 1rem;
+    text-align: center;
+    color: #b00020;
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.cardWarmomg {
+    border: 2px solid #b00020 !important;
+    box-shadow: 0 0 0 3px rgba(176, 0, 32, 0.2);
+}
