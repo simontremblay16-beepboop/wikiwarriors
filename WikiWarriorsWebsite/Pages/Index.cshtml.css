@@ -96,6 +96,9 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
     border-radius: 6px;
 }
+    ::deep .dailyFightBtn:hover {
+        background-color: #303945;
+    }
 
 .mainP {
     margin-bottom: 30px;
