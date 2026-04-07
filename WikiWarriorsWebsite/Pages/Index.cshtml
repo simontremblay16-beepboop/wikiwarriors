@@ -47,14 +47,7 @@
                  alt="Sword"
                  style="max-width:25%" />
 
-            <form method="post">
-                <button class="vs" title="Watch Daily Fight" type="submit" asp-page-handler="WatchDaily" 
-                    asp-route-Fighter1Id="@ViewData["dailyFighter1Id"]"
-                    asp-route-Fighter2Id="@ViewData["dailyFighter2Id"]">
-                    VS
-                </button>
-            </form>
-            <!--<span class="vs">VS</span>-->
+            <span class="vs">VS</span>
 
             <img src="~/swordRight.png"
                  class="decorationImage"
@@ -70,6 +63,13 @@
                 </a>
             </div>
         </div>
+        <form method="post">
+            <button class="dailyFightBtn" title="Watch Daily Fight" type="submit" asp-page-handler="WatchDaily"
+                    asp-route-Fighter1Id="@ViewData["dailyFighter1Id"]"
+                    asp-route-Fighter2Id="@ViewData["dailyFighter2Id"]">
+                    Watch Daily Fight
+            </button>
+        </form>
     </div>
     <h2 class="TableSumm">Fight History:</h2>
     <p class="TableSumm">These are all the fights that have been created around the world by your fellow Wiki Warriors!</p>

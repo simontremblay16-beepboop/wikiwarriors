@@ -78,18 +78,26 @@
     max-width: 100%;
 }
 
-::deep .vs {
-    all: unset;
-    cursor: pointer;
+.vs {
     font-size: 2.7rem;
     font-family: "Cinzel", Georgia, serif;
     color: floralwhite;
     text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.8);
 }
 
+::deep .dailyFightBtn {
+    all: unset;
+    cursor: pointer;
+    font-family: "Cinzel", Georgia, serif;
+    background-color: #303b5b;
+    color: white;
+    padding: 15px;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+}
+
 .mainP {
     margin-bottom: 30px;
-
 }
 
     .mainP p {
