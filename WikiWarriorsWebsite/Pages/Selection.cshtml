@@ -5,16 +5,18 @@
 }
 
 <form method="post">
-    <h4>Search for your fighters:</h4>
 
+    <label for="Search" class="searchLabel">Search WikiPedia for your fighters:</label>
     <div class="searchBar">
-        <input asp-for="Search" />
+        <input asp-for="Search" placeholder="article name:" />
         <button class="searchButton" type="submit" asp-page-handler="Search">Search</button>
     </div>
+    <hr /> 
 
     <input type="hidden" id="fighter1Id" name="Fighter1Id" />
     <input type="hidden" id="fighter2Id" name="Fighter2Id" />
-
+    
+    <h4>Selected Fighters:</h4>
     <div class="fighterSelection">
         <label id="fighterCard1" class="playerCard" onclick="SelectFighterSlot(1)">
             <img id="img1" src="/SelectionPlaceholder.png" alt="Fighter 1" />
@@ -29,6 +31,8 @@
         </label>
     </div>
 
+    <div id="fightWarning" class="fightWarning"></div>
+
     <div class="actionButtons">
         <button type="button" class="clearButton" onclick="ClearSessionStorage()">Clear Fighters</button>
         <br />
@@ -37,7 +41,8 @@
 
     @if (Model.Results?.Count > 0)
     {
-        <h3>Results</h3>
+        <hr />
+        <h3>Articles:</h3>
 
         <div class="playerCards">
             @foreach (var result in Model.Results)

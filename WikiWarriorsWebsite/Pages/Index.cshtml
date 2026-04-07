@@ -38,8 +38,7 @@
                 <a href="@ViewData["dailyFighter1Url"]">
                     <img src="@ViewData["dailyFightFighter1ImageUrl"]"
                          class="decorationImage"
-                         alt="Fighter 1"
-                         style="max-width: 100%" />
+                         alt="Fighter 1" />
                 </a>
             </div>
 
@@ -55,6 +54,7 @@
                     VS
                 </button>
             </form>
+            <!--<span class="vs">VS</span>-->
 
             <img src="~/swordRight.png"
                  class="decorationImage"
@@ -65,9 +65,8 @@
                 <p class="fighterName">@ViewData["dailyFightFighter2Name"]</p>
                 <a href="@ViewData["dailyFighter2Url"]">
                     <img src="@ViewData["dailyFightFighter2ImageUrl"]"
-                     class="decorationImage"
-                     alt="Fighter 2" 
-                         style="max-width: 100%" />
+                         class="decorationImage"
+                         alt="Fighter 2" />
                 </a>
             </div>
         </div>
@@ -112,7 +111,7 @@
                         <td><a class="tableLink" href="@item.Fighter2.PageUrl">@item.Fighter2.Name</a>
                         </td>
 
-                        <td>
+                        <td id="winner">
                             <span class="tableText">@item.Winner.Name</span>
                         </td>
 

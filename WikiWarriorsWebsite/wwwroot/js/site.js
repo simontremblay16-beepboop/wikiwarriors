@@ -18,6 +18,7 @@ function Selection(imageUrl, pageId, title) {
         $("fighterTitle1").textContent = title;
         $("fighter1Id").value = pageId;
 
+        clearFightWarning();
         sessionStorage.removeItem("ActiveFighterSlot");
         $("fighterCard1").classList.remove("selectedSlot");
         return;
@@ -32,6 +33,7 @@ function Selection(imageUrl, pageId, title) {
         $("fighterTitle2").textContent = title;
         $("fighter2Id").value = pageId;
 
+        clearFightWarning();
         sessionStorage.removeItem("ActiveFighterSlot");
         $("fighterCard2").classList.remove("selectedSlot");
         return;
@@ -45,6 +47,7 @@ function Selection(imageUrl, pageId, title) {
         $("img1").src = imageUrl;
         $("fighterTitle1").textContent = title;
         $("fighter1Id").value = pageId;
+        clearFightWarning();
     }
     else if (!sessionStorage.getItem("ImageUrl2")) {
         sessionStorage.setItem("ImageUrl2", imageUrl);
@@ -54,6 +57,7 @@ function Selection(imageUrl, pageId, title) {
         $("img2").src = imageUrl;
         $("fighterTitle2").textContent = title;
         $("fighter2Id").value = pageId;
+        clearFightWarning();
     }
 }
 
@@ -69,6 +73,20 @@ function SelectFighterSlot(slotNumber) {
     else if (slotNumber == 2) {
         $("fighterCard2").classList.add("selectedSlot");
     }
+}
+
+function clearFightWarning() {
+    $("fightWarning").textContent = "";
+
+    $("fighterCard1").classList.remove("cardWarning");
+    $("fighterCard2").classList.remove("cardWarning");
+}
+
+function showFightWarning(message, warnCard1, warnCard2) {
+    $("fightWarning").textContent = message;
+
+    $("fighterCard1").classList.toggle("cardWarning", warnCard1);
+    $("fighterCard2").classList.toggle("cardWarning", warnCard2);
 }
 
 function documentReady() {
@@ -103,13 +121,46 @@ function documentReady() {
 
     // Prevent start error without both fighters
     const makeFightButton = document.querySelector(".makeFightButton");
+
     if (makeFightButton) {
-        document.querySelector(".makeFightButton").addEventListener("click", function (e) {
+        makeFightButton.addEventListener("click", function (e) {
             const url1 = sessionStorage.getItem("ImageUrl1");
             const url2 = sessionStorage.getItem("ImageUrl2");
 
+            const warning = $("fightWarning");
+            const fighterCard1 = $("fighterCard1");
+            const fighterCard2 = $("fighterCard2");
+
+            if (warning) {
+                warning.textContent = "";
+            }
+            if (fighterCard1) {
+                fighterCard1.classList.remove("cardWarning");
+            }
+            if (fighterCard2) {
+                fighterCard2.classList.remove("cardWarning");
+            }
+
             if (!url1 || !url2) {
                 e.preventDefault();
+
+                if (warning) {
+                    if (!url1 && !url2) {
+                        warning.textContent = "Please select two fighters before starting the fight!";
+                    }
+                    else if (!url1) {
+                        warning.textContent = "Please select fighter 1 before starting a fight!";
+                    }
+                    else if (!url2) {
+                        warning.textContent = "Please select fighter 2 before starting a fight!";
+                    }
+                }
+                if (!url1 && fighterCard1) {
+                    fighterCard1.classList.add("cardWarning");
+                }
+                if (!url2 && fighterCard2) {
+                    fighterCard2.classList.add("cardWarning");
+                }
             }
         });
     }
@@ -128,85 +179,10 @@ function ClearSessionStorage() {
     $("img1").src = "/SelectionPlaceholder.png";
     $("img2").src = "/SelectionPlaceholder.png";
 
+    clearFightWarning();
+
+    $("fighterCard1").classList.remove("selectedSlot");
+    $("fighterCard2").classList.remove("selectedSlot");
+
     sessionStorage.setItem("ActiveFighterSlot", 1);
-    slotNumber = 1
-
 }
-
-
-
-// old functional code
-////Helpful functions!
-////returns the element by id
-//function $(a) { return document.getElementById(a); }
-////returns the elements by class in an array
-//function $$(a) { return Array.from(document.getElementsByClassName(a)); }
-
-//// Very helpful article for understanding debounce, rest arguments & spread syntax :D
-//// https://levelup.gitconnected.com/debounce-from-scratch-8616c8209b54
-
-//function gifss(a) {
-//    if (a == 1) {
-//        return sessionStorage.getItem("firstID");
-//    }
-//    else if (a == 2){
-//        return sessionStorage.getItem("secondID");
-//    }
-//    else {
-//        return "lookup failed!";
-//    }
-
-//}
-
-//const debounce = (callback, delay) => {
-//    let timer;
-
-//    return (...args) => {
-//        clearTimeout(timer);
-//        timer = setTimeout(() => callback(...args), delay);
-//    };
-//};
-
-//document.addEventListener("DOMContentLoaded", () => {
-
-//   // console.log(gifss(1));
-//   // console.log(gifss(2));
-
-//    //if no fighters have been selected make the buttons add the first figther ID
-//    if (!sessionStorage.firstID) {
-//        let buttonArr = $$("cardRadio");
-//        buttonArr.forEach(thing => {
-//            thing.addEventListener("click", (evt) => {
-//                sessionStorage.setItem("firstID", evt.target.value);
-//                $("FOneID").value = evt.target.value;
-//                console.log(evt.target.value);
-//                console.log(gifss(1));
-
-//            });
-
-//        });
-//    }
-//    //if the first fighter has been selected, make the buttons add the second figther ID instead
-//    else if (!sessionStorage.secondID) {
-//        let buttonArr = $$("cardRadio");
-//        buttonArr.forEach(thing => {
-//            thing.addEventListener("click", (evt) => {
-//                sessionStorage.setItem("secondID", evt.target.value);
-//                $("FTwoID").value = evt.target.value;
-//                console.log(evt.target.value);
-//                console.log(gifss(2));
-//            });
-
-//        });
-//    }
-//    else {
-
-//        console.log(gifss(1))
-//        console.log(gifss(2))
-//    }
-//});
-
-//function saveSessioninfo() {
-//    $("FOneID").value = gifss(1);
-//    $("FTwoID").value = gifss(2);
-//}   
